@@ -1,7 +1,74 @@
-<div class="logo">
-    <div class="container">
-        <div class="row">
-            <img src="images/logo.jpg" alt=""/>
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>{{title}}</title>
+    <link rel='stylesheet' href='/stylesheets/dat.css' />
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/bootstrap.css' />
+    <script src='/javascripts/jquery-3.5.1.js'></script>
+    <script src='/javascripts/bootstrap.bundle.js'></script>
+    <script src='/javascripts/auth.js'></script>
+</head>
+
+<body>
+    <class="container">
+        <div class="row justify-content-center">
+            <div class="logo">
+                <a href="/"> <img class="customLogo" src="images/logo-name.png" alt=""/> </a>
+            </div>
         </div>
-    </div>
-</div>
+        <div class="row justify-content-center">
+            <div class="inputBox">
+                <form id="registerForm">
+                    <div class="row">
+                        <div class="col-12 d-flex justify-content-center">
+                            <h1> Register </h1>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 d-flex justify-content-center">
+                            <input type="text" id="username" placeholder="Name" data-toggle="tooltip" data-placement="bottom" title="Please enter your username"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 d-flex justify-content-center">
+                            <input type="text" id="email" placeholder="Your email" data-toggle="tooltip" data-placement="bottom" title="Invalid email syntax ( example: abc@xyz.com )"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 d-flex justify-content-center">
+                            <input type="password" id="password" placeholder="Password" data-toggle="tooltip" data-placement="bottom" title="Please enter your password ( within length limit )"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 d-flex justify-content-center">
+                            <p> Should contain at least 8 characters ( max of 25 ) </p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 d-flex justify-content-center">
+                            <label>
+                                <input type="checkbox" id="term" data-toggle="tooltip" data-placement="bottom" title="Please check this box if you want to proceed">
+                                <span> By signing up you agree to our Terms and Privacy Policy </span> 
+                            </label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 d-flex justify-content-center">
+                            <button type="submit" class="myButton" id="registerBtn"> Register </button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 d-flex justify-content-center">
+                            <P> Or <a href="/login">Login</a> </P>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+</body>
+
+</class>
+
+</html>
