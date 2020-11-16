@@ -9,6 +9,7 @@ const usersRouter = require('./routes/users');
 const pricingRouter = require('./routes/pricing');
 const registerRouter = require('./routes/register');
 const loginRouter = require('./routes/login');
+const forgotRouter = require('./routes/forgot');
 const hbs = require('hbs');
 
 
@@ -31,6 +32,7 @@ app.use('/users', usersRouter);
 app.use('/pricing',pricingRouter);
 app.use('/register',registerRouter);
 app.use('/login',loginRouter);
+app.use('/forgot',forgotRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
