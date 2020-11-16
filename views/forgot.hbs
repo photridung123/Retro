@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>{{title}}</title>
+    <link rel='stylesheet' href='/stylesheets/reg-log-for.css' />
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/bootstrap.css' />
+    <script src='/javascripts/jquery-3.5.1.js'></script>
+    <script src='/javascripts/bootstrap.bundle.js'></script>
+    <script src='/javascripts/auth.js'></script>
+</head>
+
+<body>
+    <class="container">
+        <div class="row justify-content-center">
+            <div class="logo">
+                <a href="/"> <img class="customLogo" src="images/logo-name.png" alt="" /> </a>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="inputBoxForgot">
+                <form id="forgotForm">
+                    <div class="row">
+                        <div class="col-12 d-flex justify-content-center">
+                            <div id="forgotAlert" class="offset4 alert alert-primary" role="alert">
+                                Password reset email sent successfully!
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 d-flex justify-content-center">
+                            <h1> Password reset </h1>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 d-flex justify-content-center">
+                            <input type="text" id="email" placeholder="Your email" data-toggle="tooltip"
+                                data-placement="bottom" title="Invalid email syntax ( example: abc@xyz.com )" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 d-flex justify-content-center">
+                            <button type="submit" class="myButton" id="sendBtn"> Send </button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 d-flex justify-content-center">
+                            <div class="loginBox">
+                                <P> Or <a href="/Login">Back to login</a> </P>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+</body>
+
+</class>
+
+</html>
