@@ -1,0 +1,152 @@
+.inputBoxRegister{
+    border-radius: 2px;
+    background-color: white;
+    -webkit-box-shadow: 0px 0px 17px 5px rgba(81,81,81,0.53); 
+    box-shadow: 0px 0px 17px 5px rgba(81,81,81,0.53);
+    height: 500px;
+    width: 450px;
+}
+
+.inputBoxLogin{
+    border-radius: 2px;
+    background-color: white;
+    -webkit-box-shadow: 0px 0px 17px 5px rgba(81,81,81,0.53); 
+    box-shadow: 0px 0px 17px 5px rgba(81,81,81,0.53);
+    height: 400px;
+    width: 450px;
+}
+
+.inputBoxForgot{
+    border-radius: 2px;
+    background-color: white;
+    -webkit-box-shadow: 0px 0px 17px 5px rgba(81,81,81,0.53); 
+    box-shadow: 0px 0px 17px 5px rgba(81,81,81,0.53);
+    height: 320px;
+    width: 450px;
+}
+
+
+#username{
+    width: 350px;
+    border: 0;
+    outline: 0;
+    border-bottom: solid 1px grey;
+    margin-top: 30px;
+}
+
+#username:focus{
+    border-bottom: solid 2px orange;
+}
+
+#email{
+    width: 350px;
+    border: none;
+    outline: none;
+    border-bottom: solid 1px grey;
+    margin-top: 30px;
+}
+
+#email:focus{
+    border-bottom: solid 2px orange;
+}
+
+#password{
+    width: 350px;
+    border: 0;
+    outline: 0;
+    border-bottom: solid 1px grey;
+    margin-top: 30px;
+}
+
+#password:focus{
+    border-bottom: solid 2px orange;
+}
+
+h1{
+    padding-top: 3rem;
+    color: grey;
+}
+
+p{
+    white-space: pre;
+    font-size: 13px;
+    color: grey;
+}
+
+.myButton{
+    width: 350px;
+    background-color: rgb(255, 115, 0);
+    border: none;
+    color: black;
+    font-size: 18px;
+    height: 40px;
+    border-radius: 2px;
+    font-weight: bold;
+    margin-top: 2rem;
+}
+
+.myButton:hover{
+    background-color: rgb(255, 123, 0);
+}
+
+.myButton:focus{
+    outline: none;
+}
+
+
+p a{
+    color: blue;
+}
+
+p a:hover{
+    text-decoration: none;
+    color: blue;
+}
+
+.customLogo{
+    width: 300px;
+    height: auto;
+    margin: 50px;
+}
+
+@media only screen and (max-width: 500px) {
+    .inputBox{
+        height: 500px;
+        width: 400px;
+    }
+}
+
+#term{
+    padding-bottom: 1rem;
+}
+
+body{
+    background-image: linear-gradient(45deg, #e0f0ff 16.67%, #ffffff 16.67%, #ffffff 33.33%, #fff 33.33%, #fff 50%, #e0f0ff 50%, #e0f0ff 66.67%, #ffffff 66.67%, #ffffff 83.33%, #fff 83.33%, #fff 100%);
+    background-size: 8.49px 8.49px;
+}
+
+span:before {
+    vertical-align: middle;
+    position: relative;
+ }
+ 
+ 
+span{
+    font-size: 13px;
+}
+
+.loginBox{
+    padding-top: 1rem;
+}
+
+.registerBox{
+    padding-top: 1rem;
+}
+
+#forgotAlert{
+    margin-top: 3rem;
+    width: 350px;
+    border-radius: 2px;
+    margin-bottom: -1rem;
+    text-align: center;
+}
