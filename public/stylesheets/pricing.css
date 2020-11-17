@@ -4,7 +4,7 @@
     --heading-font-family: 'Poppins', sans-serif;
     --body-font-family: 'Lato', sans-serif;
   }
-  body {
+  .price-comparison {
     background-image: linear-gradient(45deg, #e0f0ff 16.67%, #ffffff 16.67%, #ffffff 33.33%, #fff 33.33%, #fff 50%, #e0f0ff 50%, #e0f0ff 66.67%, #ffffff 66.67%, #ffffff 83.33%, #fff 83.33%, #fff 100%);
     background-size: 8.49px 8.49px;
   }
