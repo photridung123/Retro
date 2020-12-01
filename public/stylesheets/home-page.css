@@ -172,13 +172,17 @@
 
 /* CONTENT 3 */
 .feedback .quote{
-    width: 29%;
+    width: 28%;
     margin: 1rem;
 }
 
 .users-feedback img{
     border-radius: 50%;
     width: 30%;   
+}
+.users-feedback{
+  display: block;
+  text-align: end;
 }
 
 .feedback .question{
@@ -197,5 +201,9 @@
     filter:opacity(30%);
 }
 
+@media (max-width:995px){
+  .feedback .quote{
+    width: 80%;
+  }
+}
 /* ----------------- */
-
