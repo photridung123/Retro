@@ -1,7 +1,6 @@
 
-.container-fluid{
-    max-width: 95%;
-    
+.container-board{
+    padding-bottom: 2rem;
 }
 
 body{
@@ -25,9 +24,19 @@ h1{
 }
 
 .board-cards{
-    display: inline-block;
-    margin: 1rem;
+   
+   padding: 0 2rem;
+   padding-bottom: 1rem;
 }
+
+.container-board a {
+    color: black;
+}
+.container-board a:hover{
+    text-decoration: none;
+    color: blue;
+}
+
 .group-boards{
     padding-bottom: 1rem;
 }

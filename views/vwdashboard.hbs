@@ -1,48 +1,96 @@
-<div class="container-fluid">
+<div class="alert alert-success" id="get-id-alert" style="text-align: center;">
+    <strong>COPY LINK SUCCESSFULLY!</strong>
+</div>
+
+<!-- Modal Delete -->
+<div class="modal fade" id="ModalDelete" tabindex="-1" role="dialog" aria-labelledby="ModalDelete" aria-hidden="true">
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header justify-content-center team-divider">
+                <h5 class="modal-titler" id="ModalDeleteTitle" style="font-weight: bolder;">Delete Board</h5>
+            </div>
+            <div class="modal-body">
+                <div class="pb-3" style="text-align: center;">
+                    <svg width="100px" height="100px" viewBox="0 0 17 16" class="bi bi-exclamation-triangle-fill"
+                        fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd"
+                            d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 5zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
+                    </svg>
+                </div>
+                <div class="row justify-content-center">
+                    Are you sure to delete this board?
+                </div>
+            </div>
+            <div class="modal-footer justify-content-center team-divider">
+                <button type="button" class="btn btn-primary okBtn" id="okBtn">Yes</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">No, keep it</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="container-board container-fluid">
     <h1>My boards</h1>
 
     <div class="group-boards">
         <h3><span>Public boards</span></h3>
+        <div class="d-flex flex-wrap align-items-start">
+            <button type="button" class="select-box" data-toggle="modal" data-target="#createTeamModal">
+                <svg viewBox="0 0 16 16" class="bi bi-plus-circle-fill add-icon" fill="currentColor"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd"
+                        d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
+                </svg>
+            </button>
+            {{#each public_boards}}
+            <div class="board-link">
+                <a href={{this.boardURL}}>
+                    <div class="board-cards">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">{{this.boardName}}</h5>
+                                <div class="pt-4">
+                                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-clock"
+                                        fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd"
+                                            d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm8-7A8 8 0 1 1 0 8a8 8 0 0 1 16 0z" />
+                                        <path fill-rule="evenodd"
+                                            d="M7.5 3a.5.5 0 0 1 .5.5v5.21l3.248 1.856a.5.5 0 0 1-.496.868l-3.5-2A.5.5 0 0 1 7 9V3.5a.5.5 0 0 1 .5-.5z" />
+                                    </svg>
 
-        <img src="images/icons/dashboard.png" width="100px" height="100px">
-        {{#each public_boards}}
-        <div class="board-cards">
-            <div class="card" style="width: 18rem;">
-                <div class="card-body">
-                    <h5 class="card-title">{{this.boardName}}</h5>
-                    <div class="pt-4">
-                        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-clock" fill="currentColor"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd"
-                                d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm8-7A8 8 0 1 1 0 8a8 8 0 0 1 16 0z" />
-                            <path fill-rule="evenodd"
-                                d="M7.5 3a.5.5 0 0 1 .5.5v5.21l3.248 1.856a.5.5 0 0 1-.496.868l-3.5-2A.5.5 0 0 1 7 9V3.5a.5.5 0 0 1 .5-.5z" />
-                        </svg>
+                                    {{format_date this.date_created}}
+                                    <div class="d-inline pl-5">{{this.total_card}} cards</div>
+                                </div>
+                            </div>
 
-                        {{format_date this.date_created}}
-                        <div class="d-inline pl-5">{{this.total_card}} cards</div>
+                            <div class="card-footer">
+                                <a href="#" class="pl-5 pr-4 card-link copy-url" value={{this.boardURL}}>Clone</a>
+                                <a href="#" class="card-link" data-toggle="modal" data-target="#ModalDelete">Delete</a>
+                            </div>
+                        </div>
                     </div>
-                </div>
-
-                <div class="card-footer">
-                    <a class="pl-5 pr-5" href={{this.boardURL}} class="card-link">Clone</a>
-                    <a href="#" class="card-link">Delete</a>
-                </div>
-            </div>
+                </a></div>
+            {{/each}}
         </div>
-        {{/each}}
-
-
     </div>
 
+    {{#each team}}
     <div class="group-boards">
-        {{#each team}}
-            <h3><span>{{this.teamName}}</span></h3>
 
-            <img src="images/icons/dashboard.png" width="100px" height="100px">
-            {{#each public_boards}}
+        <h3><span>{{this.teamName}}</span></h3>
+        <div class="d-flex flex-wrap align-items-start">
+            <button type="button" class="select-box" data-toggle="modal" data-target="#createTeamModal">
+                <svg viewBox="0 0 16 16" class="bi bi-plus-circle-fill add-icon" fill="currentColor"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd"
+                        d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
+                </svg>
+            </button>
+            {{#each this.team_boards}}
             <div class="board-cards">
-                <div class="card" style="width: 18rem;">
+                <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">{{this.boardName}}</h5>
                         <div class="pt-4">
@@ -60,13 +108,12 @@
                     </div>
 
                     <div class="card-footer">
-                        <a class="pl-5 pr-5" href={{this.boardURL}} class="card-link">Clone</a>
-                        <a href="#" class="card-link">Delete</a>
+                        <a href="#" class="card-link row justify-content-center">Delete</a>
                     </div>
                 </div>
             </div>
             {{/each}}
-        {{/each}}
-
+        </div>
     </div>
+    {{/each}}
 </div>
