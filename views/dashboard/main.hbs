@@ -2,24 +2,23 @@
 <html>
   <head>
     <title>{{title}}</title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-    <link rel="stylesheet" href='/stylesheets/home-page.css'>
     <link rel="stylesheet" href='/stylesheets/bootstrap.css'>
-    <link rel="stylesheet" href="/stylesheets/pricing.css">
+    <link rel="stylesheet" href='/stylesheets/dashboard.css'>
+    
     <script src='/javascripts/jquery-3.5.1.js'></script>
     <script src='/javascripts/bootstrap.min.js'></script>  
-    <script src='/javascripts/home-page.js'></script>  
+    <script src='/javascripts/dashboard.js'></script>  
   </head>
 
   <body>
     {{!-- header --}}
-    {{> page/header title=this.title }}
+    {{> dashboard/header }}
 
     {{!-- content --}}
     {{{body}}}
 
     {{!-- footer --}}
-    {{> page/footer}}
+    {{> dashboard/footer }}
   </body>
 
 </html>

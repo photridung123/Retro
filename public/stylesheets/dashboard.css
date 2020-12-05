@@ -1,0 +1,33 @@
+
+.container-fluid{
+    max-width: 95%;
+    
+}
+
+body{
+    background-color: #EAEAEA;
+}
+
+h1{
+    margin: 2rem 1rem;
+}
+
+.group-boards h3 {
+    width: 100%; 
+    border-bottom: 1px solid #BDBDBD; 
+    line-height: 1rem;
+    margin: 2rem 0.5rem ; 
+ } 
+
+.group-boards h3 span { 
+    background: #EAEAEA;
+    padding:0 10px; 
+}
+
+.board-cards{
+    display: inline-block;
+    margin: 1rem;
+}
+.group-boards{
+    padding-bottom: 1rem;
+}

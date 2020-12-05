@@ -1,0 +1,62 @@
+<nav class="navbar navbar-expand-lg bg-dark navbar-dark">
+
+    <!-- Brand -->
+    <a class="navbar-brand" href="/">
+        <img src="../../images/logo-name.png" width="150" height="auto" alt="">
+    </a>
+
+    <!-- Toggler/collapsibe Button -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Navbar links -->
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+        <ul class="navbar-nav mr-auto font-weight-bold text-white">
+            <li class="nav-item {{#if_eq title "Dashboard"}} active {{/if_eq}}">
+                <a class="nav-link" href="/">
+                    <img src="../../images/icons/dashboard.png" width="30px" height="30px">
+                    Dashboard
+                </a>
+            </li>
+            <li class="nav-item {{#if_eq title "Team"}} active {{/if_eq}}">
+
+                <a class="nav-link" href="/team">
+                    <img src="../../images/icons/team.png" width="30px" height="30px">
+                    Team
+                </a>
+            </li>
+            <li class="nav-item {{#if_eq title "Analytics"}} active {{/if_eq}}">
+
+                <a class="nav-link" href="/analytics">
+                    <img src="../../images/icons/analytics.png" width="30px" height="30px">
+                    Analytics
+                </a>
+            </li>
+            {{!-- <li class="nav-item avatar dropdown">
+                <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-55" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    Nguyễn Văn A
+                    <img src="../../images/icons/avatar.png" width="30px" height="30px" class="rounded-circle z-depth-0"
+                        alt="avatar image">
+                </a>
+                <div class="dropdown-menu dropdown-menu-lg-right dropdown-secondary"
+                    aria-labelledby="navbarDropdownMenuLink-55">
+                    <a class="dropdown-item" href="/profile">Your Account</a>
+                    <a class="dropdown-item" href="/login">Logout</a>
+                </div>
+            </li> --}}
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-4" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    Phó Trí Dũng
+                   <img src="../../images/icons/avatar.png" width="30px" height="30px" class="rounded-circle z-depth-0"
+                        alt="avatar image"> </a>
+                <div class="dropdown-menu dropdown-menu-right dropdown-info" aria-labelledby="navbarDropdownMenuLink-4">
+                    <a class="dropdown-item" href="#">My account</a>
+                    <a class="dropdown-item" href="#">Log out</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+</nav>

@@ -11,6 +11,7 @@ const registerRouter = require('./routes/register');
 const loginRouter = require('./routes/login');
 const forgotRouter = require('./routes/forgot');
 const teamRouter = require('./routes/team');
+const dashboardRouter = require('./routes/dashboard');
 const hbs = require('hbs');
 
 
@@ -21,6 +22,19 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 app.set('view options', { layout: 'layouts/main' });
 hbs.registerPartials(__dirname + '/views/partials');
+hbs.registerPartials(__dirname + '/views/partials');
+hbs.registerHelper('if_eq', function(a, b, opts) {
+  if (a == b) {
+      return opts.fn(this);
+  } else {
+      return opts.inverse(this);
+  }
+});
+hbs.registerHelper('format_date', function(current_datetime) {
+  const months = ["January", "February", "March","April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  return current_datetime.getDate()  + " " + months[current_datetime.getMonth()];
+});
+
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -35,6 +49,7 @@ app.use('/register',registerRouter);
 app.use('/login',loginRouter);
 app.use('/forgot',forgotRouter);
 app.use('/team',teamRouter);
+app.use('/dashboard',dashboardRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
