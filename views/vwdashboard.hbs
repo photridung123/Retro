@@ -8,28 +8,66 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header justify-content-center team-divider">
-                <h5 class="modal-titler" id="ModalDeleteTitle" style="font-weight: bolder;">Delete Board</h5>
+                <h3 class="modal-titler mt-3" id="ModalDeleteTitle" style="font-weight: bolder;">Delete Board</h3>
             </div>
             <div class="modal-body">
                 <div class="pb-3" style="text-align: center;">
-                    <svg width="100px" height="100px" viewBox="0 0 17 16" class="bi bi-exclamation-triangle-fill"
+                    <svg width="100px" height="100px" viewBox="0 0 17 16" class="bi bi-exclamation-triangle"
                         fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd"
-                            d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 5zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
+                            d="M7.938 2.016a.146.146 0 0 0-.054.057L1.027 13.74a.176.176 0 0 0-.002.183c.016.03.037.05.054.06.015.01.034.017.066.017h13.713a.12.12 0 0 0 .066-.017.163.163 0 0 0 .055-.06.176.176 0 0 0-.003-.183L8.12 2.073a.146.146 0 0 0-.054-.057A.13.13 0 0 0 8.002 2a.13.13 0 0 0-.064.016zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z" />
+                        <path
+                            d="M7.002 12a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 5.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995z" />
                     </svg>
                 </div>
-                <div class="row justify-content-center">
+                <div class="row justify-content-center" style="font-weight: bolder;">
                     Are you sure to delete this board?
                 </div>
             </div>
             <div class="modal-footer justify-content-center team-divider">
-                <button type="button" class="btn btn-primary okBtn" id="okBtn">Yes</button>
+                <button type="button" class="btn btn-primary okBtn">Yes</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">No, keep it</button>
             </div>
         </div>
     </div>
 </div>
 
+<!-- Modal Create Board -->
+<div class="modal fade" id="CreateBoardModal" tabindex="-1" role="dialog" aria-labelledby="CreateBoardModal"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header justify-content-center mt-3 team-divider">
+                <h3 class="modal-titler" id="ModalCreateTitle" style="font-weight: bolder;">Create Board</h3>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="BoardName"><strong>Board Name</strong></label>
+                    <input type="text" class="form-control" id="BoardName" placeholder="Enter board name">
+                </div>
+                <div class="form-group">
+                    <label for="MaxVote"><strong>Max vote per user</strong></label>
+                    <input type="text" class="form-control" id="MaxVote" placeholder="Enter max vote">
+                </div>
+                <div class="form-group" id="Columns">
+                    <label for="Columns"><strong>Columns</strong></label>
+                    <input type="text" class="form-control mb-3" id="column-1" placeholder="Enter name column">
+                    <input type="text" class="form-control mb-3" id="column-2" placeholder="Enter name column">
+                    <input type="text" class="form-control mb-3" id="column-3" placeholder="Enter name column">
+                </div>
+                <div style="text-align: center;">
+                    <button type="button" id="btn-add-col" class="btn btn-primary">Add new column</button>
+                </div>
+            </div>
+            <div class="modal-footer justify-content-center team-divider">
+                <div class="row justify-content-center">
+                    <button type="button" class="btn btn-primary okBtn reset-btn">Create</button>
+                    <button type="button" class="btn btn-secondary reset-btn" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div class="container-board container-fluid">
     <h1>My boards</h1>
@@ -37,7 +75,7 @@
     <div class="group-boards">
         <h3><span>Public boards</span></h3>
         <div class="d-flex flex-wrap align-items-start">
-            <button type="button" class="select-box" data-toggle="modal" data-target="#createTeamModal">
+            <button type="button" class="select-box" data-toggle="modal" data-target="#CreateBoardModal">
                 <svg viewBox="0 0 16 16" class="bi bi-plus-circle-fill add-icon" fill="currentColor"
                     xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd"
@@ -45,43 +83,41 @@
                 </svg>
             </button>
             {{#each public_boards}}
-            <div class="board-link">
-                <a href={{this.boardURL}}>
-                    <div class="board-cards">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title">{{this.boardName}}</h5>
-                                <div class="pt-4">
-                                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-clock"
-                                        fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                        <path fill-rule="evenodd"
-                                            d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm8-7A8 8 0 1 1 0 8a8 8 0 0 1 16 0z" />
-                                        <path fill-rule="evenodd"
-                                            d="M7.5 3a.5.5 0 0 1 .5.5v5.21l3.248 1.856a.5.5 0 0 1-.496.868l-3.5-2A.5.5 0 0 1 7 9V3.5a.5.5 0 0 1 .5-.5z" />
-                                    </svg>
+            <a href={{this.boardURL}}>
+                <div class="board-cards">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">{{this.boardName}}</h5>
+                            <div class="pt-4">
+                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-clock"
+                                    fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
+                                        d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm8-7A8 8 0 1 1 0 8a8 8 0 0 1 16 0z" />
+                                    <path fill-rule="evenodd"
+                                        d="M7.5 3a.5.5 0 0 1 .5.5v5.21l3.248 1.856a.5.5 0 0 1-.496.868l-3.5-2A.5.5 0 0 1 7 9V3.5a.5.5 0 0 1 .5-.5z" />
+                                </svg>
 
-                                    {{format_date this.date_created}}
-                                    <div class="d-inline pl-5">{{this.total_card}} cards</div>
-                                </div>
-                            </div>
-
-                            <div class="card-footer">
-                                <a href="#" class="pl-5 pr-4 card-link copy-url" value={{this.boardURL}}>Clone</a>
-                                <a href="#" class="card-link" data-toggle="modal" data-target="#ModalDelete">Delete</a>
+                                {{format_date this.date_created}}
+                                <div class="d-inline pl-5">{{this.total_card}} cards</div>
                             </div>
                         </div>
+
+                        <div class="card-footer">
+                            <a href="#" class="pl-5 pr-4 card-link copy-url" value={{this.boardURL}}>Clone</a>
+                            <a href="#" class="card-link" data-toggle="modal" data-target="#ModalDelete">Delete</a>
+                        </div>
                     </div>
-                </a></div>
+                </div>
+            </a>
             {{/each}}
         </div>
     </div>
 
     {{#each team}}
     <div class="group-boards">
-
         <h3><span>{{this.teamName}}</span></h3>
         <div class="d-flex flex-wrap align-items-start">
-            <button type="button" class="select-box" data-toggle="modal" data-target="#createTeamModal">
+            <button type="button" class="select-box" data-toggle="modal" data-target="#CreateBoardModal">
                 <svg viewBox="0 0 16 16" class="bi bi-plus-circle-fill add-icon" fill="currentColor"
                     xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd"
@@ -89,29 +125,32 @@
                 </svg>
             </button>
             {{#each this.team_boards}}
-            <div class="board-cards">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">{{this.boardName}}</h5>
-                        <div class="pt-4">
-                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-clock" fill="currentColor"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd"
-                                    d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm8-7A8 8 0 1 1 0 8a8 8 0 0 1 16 0z" />
-                                <path fill-rule="evenodd"
-                                    d="M7.5 3a.5.5 0 0 1 .5.5v5.21l3.248 1.856a.5.5 0 0 1-.496.868l-3.5-2A.5.5 0 0 1 7 9V3.5a.5.5 0 0 1 .5-.5z" />
-                            </svg>
+            <a href={{this.boardURL}}>
+                <div class="board-cards">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">{{this.boardName}}</h5>
+                            <div class="pt-4">
+                                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-clock"
+                                    fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd"
+                                        d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm8-7A8 8 0 1 1 0 8a8 8 0 0 1 16 0z" />
+                                    <path fill-rule="evenodd"
+                                        d="M7.5 3a.5.5 0 0 1 .5.5v5.21l3.248 1.856a.5.5 0 0 1-.496.868l-3.5-2A.5.5 0 0 1 7 9V3.5a.5.5 0 0 1 .5-.5z" />
+                                </svg>
 
-                            {{format_date this.date_created}}
-                            <div class="d-inline pl-5">{{this.total_card}} cards</div>
+                                {{format_date this.date_created}}
+                                <div class="d-inline pl-5">{{this.total_card}} cards</div>
+                            </div>
+                        </div>
+
+                        <div class="card-footer">
+                            <a href="#" class="card-link row justify-content-center" data-toggle="modal"
+                                data-target="#ModalDelete">Delete</a>
                         </div>
                     </div>
-
-                    <div class="card-footer">
-                        <a href="#" class="card-link row justify-content-center">Delete</a>
-                    </div>
                 </div>
-            </div>
+            </a>
             {{/each}}
         </div>
     </div>
