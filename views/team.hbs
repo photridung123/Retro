@@ -1,0 +1,57 @@
+<link rel="stylesheet" href="/stylesheets/team.css">
+<script src='/javascripts/team.js'></script>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <p class="my-team"> My teams </p>
+        </div>
+        <!-- Modal -->
+        <div class="modal fade" id="createTeamModal" tabindex="-1" role="dialog" aria-labelledby="createTeamModalTitle"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header justify-content-center team-divider">
+                        <h5 class="modal-titler" id="createTeamModalTitle">Team name</h5>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row justify-content-center">
+                            <input type="text" class="myteam-input" id="teamname" placeholder="Enter team name">
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-center team-divider">
+                        <div class="row justify-content-center">
+                            <button type="button" class="btn btn-primary okBtn" id="okBtn">Ok</button>
+                            <button type="button" class="btn btn-secondary cancelBtn"
+                                data-dismiss="modal">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            {{!-- button + phải có team.js --}}
+            <button type="button" class="select-box" data-toggle="modal" data-target="#createTeamModal">
+                <svg viewBox="0 0 16 16" class="bi bi-plus-circle-fill add-icon" fill="currentColor"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd"
+                        d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
+                </svg>
+            </button>
+            {{!-- {{#each team}} --}}
+                <div class="d-inline-block team-box">
+                    <div class="team-title">
+                        <p>Dteam</p>
+                    </div>
+                    <div class="team-owner">
+                        <div class="row">
+                        <p>Vo Van Ba Dat</p>
+                        <p>Owner</p>
+                        </div>
+                    </div>
+                </div>
+            {{!-- {{/each}} --}}
+        </div>
+    </div>
+</div>
