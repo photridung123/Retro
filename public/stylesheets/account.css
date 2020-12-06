@@ -10,9 +10,10 @@
 }
 .name-group{
     color: grey;
+    margin-bottom: 0rem;
 }
 .form-group{
-    padding-left: 22rem;
+    padding-left: 2rem;
     padding-top: .5rem;
 }
 
@@ -23,4 +24,19 @@
 
 .change-link{
     color: #B721B7;
+}
+
+.content-form{
+    margin-left: 20rem;
+    margin-right: 20rem;
+}
+
+.btn-changeEmail{
+    margin-bottom: .5rem;
+    background-color: #FF0000;
+}
+
+.btn-cancelChange{
+    margin-top: 0rem;
+    background-color: #C4C4C4;
 }

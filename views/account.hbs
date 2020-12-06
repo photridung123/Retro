@@ -1,8 +1,8 @@
 <div class="container mt-3" style="padding-bottom: 32rem;">
-    <div class="card">
+    <div class="card content-form">
     <br>
     <!-- Nav tabs -->
-    <ul class="nav nav-tabs" style="padding-left: 22rem">
+    <ul class="nav nav-tabs" style="padding-left: 2rem">
         <li class="nav-item">
         <a class="nav-link active" data-toggle="tab" href="#profile">User profile</a>
         </li>
@@ -23,7 +23,7 @@
             <div class="form-group">
                 <label class="name-group">Email</label><br>
                 <b>nva123@gmail.com</b><br>
-                <a class="change-link" href="#">Change email</a>
+                <a class="change-link" data-toggle="modal" data-target="#changeEmailModal">Change email</a>
             </div>
             <div class="form-group">
                 <label class="name-group">Password</label><br>
@@ -42,7 +42,7 @@
                 <input id="newImage" type="file" class="file-select ng-pristine ng-untouched ng-valid ng-empty" accept="image/*" aria-invalid="false">
             </div>
             <div class="row justify-content-center">
-                <button type="button" class="btn btn btn-primary inviteBtn" data-dismiss="modal">Update</button>
+                <button type="button" class="btn btn btn-primary inviteBtn">Update</button>
             </div>
         </div>
 
@@ -80,5 +80,34 @@
             </table>
         </div>
     </div>
+    </div>
+    <!-- Modal change email -->
+    <div class="modal fade" id="changeEmailModal" tabindex="-1" role="dialog"
+        aria-labelledby="changeEmailModalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header team-divider">
+                    <h3 class="modal-titler" style="font-weight: bolder; padding-left: 9rem">Change email</h3>
+                </div>
+                <div class="modal-body">
+                    <div class="row justify-content-center">
+                        <div class="input-boxes">
+                            <div class="pt-2">
+                                <input type="text" class="myteam-input" id="newEmail" placeholder="Enter new email">
+                            </div>
+                            <div class="pt-2">
+                                <input type="password" class="myteam-input" id="password" placeholder="Confirm password">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center">
+                        <button type="button" class="btn btn btn-primary inviteBtn btn-changeEmail">Change</button>
+                    </div>
+                    <div class="row justify-content-center">
+                        <button type="button" class="btn btn btn-primary inviteBtn btn-cancelChange" data-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
