@@ -13,6 +13,7 @@ const forgotRouter = require('./routes/forgot');
 const teamRouter = require('./routes/team');
 const dashboardRouter = require('./routes/dashboard');
 const analyticsRouter = require('./routes/analytics');
+const accountRouter = require('./routes/account');
 const hbs = require('hbs');
 
 
@@ -52,6 +53,7 @@ app.use('/forgot',forgotRouter);
 app.use('/team',teamRouter);
 app.use('/dashboard',dashboardRouter);
 app.use('/analytics',analyticsRouter);
+app.use('/account',accountRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

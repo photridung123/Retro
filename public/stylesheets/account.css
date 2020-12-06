@@ -1,0 +1,17 @@
+#name{
+    width: 350px;
+    border: none;
+    outline: none;
+    border-bottom: solid 1px grey;
+}
+
+#name:focus{
+    border-bottom: solid 2px orange;
+}
+.name-group{
+    color: grey;
+}
+.form-group{
+    padding-left: 1rem;
+    padding-top: .5rem;
+}
