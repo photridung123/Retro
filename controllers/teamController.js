@@ -30,6 +30,6 @@ exports.index = (req, res, next) => {
                 ]
             }
         ],
-        layout: 'dashboard/main', title: "Dashboard", ID: 1
+        layout: 'dashboard/main', title: "Team", ID: 1
     })
 };
