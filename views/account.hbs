@@ -2,7 +2,7 @@
     <div class="card">
     <br>
     <!-- Nav tabs -->
-    <ul class="nav nav-tabs" style="padding-left: 2rem">
+    <ul class="nav nav-tabs" style="padding-left: 22rem">
         <li class="nav-item">
         <a class="nav-link active" data-toggle="tab" href="#profile">User profile</a>
         </li>
@@ -15,7 +15,7 @@
     <div class="tab-content">
 
         <!-- account Tab -->
-        <div id="profile" class="container tab-pane active"><br>
+        <div id="profile" class="container tab-pane active" style="padding-bottom: 1rem;"><br>
             <div class="form-group">
                 <label class="name-group">Name</label><br>
                 <input type="text" id="name" placeholder="Nguyễn Văn A" data-toggle="tooltip" data-placement="bottom"/>
@@ -36,6 +36,13 @@
             <div class="form-group">
                 <label class="name-group">Subscription</label><br>
                 <b>Premium</b>
+            </div>
+            <div class="form-group">
+                <label class="name-group">User picture</label><br>
+                <input id="newImage" type="file" class="file-select ng-pristine ng-untouched ng-valid ng-empty" accept="image/*" aria-invalid="false">
+            </div>
+            <div class="row justify-content-center">
+                <button type="button" class="btn btn btn-primary inviteBtn" data-dismiss="modal">Update</button>
             </div>
         </div>
 

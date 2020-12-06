@@ -12,6 +12,15 @@
     color: grey;
 }
 .form-group{
-    padding-left: 1rem;
+    padding-left: 22rem;
     padding-top: .5rem;
+}
+
+#newImage{
+    
+    border-radius: 2px;
+}
+
+.change-link{
+    color: #B721B7;
 }
