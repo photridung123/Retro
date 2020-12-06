@@ -1,0 +1,65 @@
+<div class="container" style="padding-top: 5rem; padding-bottom: 5rem">
+    {{#each team}}
+    <div class="group-boards" style="padding-top: 3rem;">
+        <h2>{{this.teamName}}</h2>
+        <div class ="card">
+            <table class="table">
+                <thead>
+                    <tr class="table-light">
+                    <th>Retro name</th>
+                    <th>Date</th>
+                    <th>Cards</th>
+                    <th>Votes</th>
+                    <th>Members who wrote</th>
+                    <th>Members who voted</th>
+                    <th>Participation</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each this.team_boards}}
+                        <tr>
+                        <td>{{this.boardName}}</td>
+                        <td>{{format_date this.date_created}}</td>
+                        <td>{{this.total_card}}</td>
+                        <td>{{this.votes}}</td>
+                        <td>{{this.wroters}} of {{../this.owner}}</td>
+                        <td>{{this.voters}} of {{../this.owner}}</td>
+                        <td>{{this.participation}}</td>
+                        </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {{/each}}
+    <div class="group-boards" style="padding-top: 3rem;">
+        <h2>Publics boards</h2>
+        <div class="card">
+            <table class="table">
+            <thead>
+                <tr>
+                <th>Retro name</th>
+                <th>Date</th>
+                <th>Cards</th>
+                <th>Votes</th>
+                <th>Wroters</th>
+                <th>Voters</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each public_boards}}
+                <tr>
+                <td>{{this.boardName}}</td>
+                <td>{{format_date this.date_created}}</td>
+                <td>{{this.total_card}}</td>
+                <td>{{this.votes}}</td>
+                <td>{{this.wroters}}</td>
+                <td>{{this.voters}}</td>
+                </tr>
+                {{/each}}
+            </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+  
