@@ -100,17 +100,18 @@
             </svg>
         </button>
         {{#each team}}
-        <div class="team-cards">
+        <div class="team-cards pl-4">
             <div class="card" style="width: 18rem;">
                 <div class="card-body">
-                    <h5 class="card-title">{{this.name}}</h5>
-                    <div class="pt-1">
-                        <div class="d-inline">{{this.owner}}</div>
-                        <div class="d-inline title-tag">Owner</div>
+                    <h4 class="card-title">{{this.name}}</h4>
+                    <div class="pt-1 d-flex justify-content-between">
+                        <div class="d-inline" style="font-size: 1.25rem;">{{this.owner}}</div>
+                        <div class="d-inline title-tag" style=" font-weight: bolder;">Owner</div>
                     </div>
+                    <div class="title-members">Members</div>
                     {{#each this.member}}
                     <div class="pt-1">
-                        <div class="d-inline">{{name}}</div>
+                        <div class="d-inline" style="font-size: 1.25rem;">{{name}}</div>
                         <button type="button d-inline" class="close delete-member" id="delMemBtn" aria-label="Close"
                             data-toggle="modal" data-target="#deleteMemberModal">
                             <span aria-hidden="true">&times;</span>

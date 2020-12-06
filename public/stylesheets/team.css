@@ -1,7 +1,8 @@
 .my-team{
     font-weight: bold;
-    font-size: x-large;
+    font-size: 45px;
     margin-left: 4rem;
+    padding-bottom: 1rem;
 }
 
 .select-box{
@@ -67,10 +68,6 @@
     margin-bottom: 1rem;
 }
 
-.title-tag{
-    padding-left: 5rem;
-}
-
 .delete-member:focus{
     outline: none;
 }
@@ -101,11 +98,18 @@
 }
 
 .team-page{
-    padding-top: 10rem;
+    padding-top: 4rem;
     padding-bottom:25rem;
 }
 
 .delete-member:hover{
     color:red;
     outline:none;
+}
+
+.title-members{
+    font-weight: bolder;
+    font-size: 1rem;
+    padding-top: 0.75rem;
+    padding-bottom: 0.5rem;
 }
