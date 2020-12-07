@@ -40,3 +40,17 @@
     margin-top: 0rem;
     background-color: #C4C4C4;
 }
+.square {
+    height: 40px;
+    width: 40px;
+    display: inline-block;
+    margin-right: 1rem;
+  }
+
+#square1{
+    background-color: #b8daff;
+}
+#square2{
+    margin-left: 5rem;
+    background-color: #f5c6cb;
+}
