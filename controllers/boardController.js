@@ -6,6 +6,7 @@ exports.index = (req, res, next) => {
         {
             board_name: "Project CNPM",
             max_vote: 6,
+            total_columns: 3,
             columns:
                 [
                     {
@@ -49,10 +50,23 @@ exports.index = (req, res, next) => {
                                             comment_text: "Mọi người check với"
                                         }
                                     ]
+                                },
+                                {
+                                    task_name: "Thiết kế use case",
+                                    task_owner: "Phạm Văn C",
+                                    total_vote: 0,
+                                    total_comment: 1,
+                                    comment: [
+                                        {
+                                            comment_owner: "Phạm Văn C",
+                                            comment_text: "Mọi người check với"
+                                        }
+                                    ]
                                 }
 
                             ],
                     },
+                    
                 ],
             layout: 'dashboard/main', title: "Board", ID: 1
         });
