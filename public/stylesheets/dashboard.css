@@ -1,10 +1,12 @@
 
 .container-board{
-    padding-bottom: 2rem;
+    padding-bottom: 5rem;
 }
 
 body{
     background-color: #EAEAEA;
+    position: relative;
+    min-height: 100vh;
 }
 
 h1{
