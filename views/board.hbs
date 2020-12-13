@@ -1,0 +1,28 @@
+<div class="page-heading-board d-flex justify-content-between">
+    <h2>{{board_name}}</h2>
+    <button type="button" class="btn-add-col">New column</button>
+</div>
+<div class="board-body d-flex justify-content-between ">
+    {{#each columns}}
+    <div class="col-retro">
+        <div class="d-flex justify-content-between">
+            <div class="col-name">{{this.column_name}}</div>
+            <i class="fas fa-trash"></i>
+        </div>
+        <button type="button" class="btn-add-task">+</button>
+        {{#each this.task}}
+        <div class="task-retro">
+            <div class="d-flex justify-content-between">
+                <div class="task-name">{{this.task_name}}</div>
+                <i class="fas fa-pen"></i>
+            </div>
+            <div class="d-flex ">
+                <div class="task-owner">{{this.task_owner}}</div>
+                <i class="fas fa-thumbs-up"> {{this.total_vote}}</i>
+                <i class='fas fa-comment-alt'> {{this.total_comment}}</i>
+            </div>
+        </div>
+        {{/each}}
+    </div>
+    {{/each}}
+</div>

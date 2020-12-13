@@ -1,0 +1,62 @@
+.page-heading-board{
+
+    background-color: white;
+    padding: 1.5rem;
+}
+
+.btn-add-col{
+    background-color: #2533AE;
+    color: white;
+    font-weight: bolder;
+    border-color: #2533AE;
+    border-radius: 5%;
+    height: 40px;
+}
+
+.board-body{
+    padding: 1rem 2rem;
+}
+
+.board-body .col-retro .col-name{
+    font-weight: bolder;
+    padding-bottom: 0.5rem;
+    font-size: 20px;
+}
+
+.board-body .col-retro .btn-add-task{
+    background-color: #F29EEA;
+    font-weight: bolder;
+    font-size: 30px;
+    border-color: #F29EEA;
+    width: 450px;
+    height: 50px;
+}
+
+.task-retro {
+    margin-top: 1rem;
+    padding-top: 0.75rem;
+    background-color: #2BCF80;
+}
+
+.task-retro .task-name{
+    padding-left: 1rem;
+    padding-bottom: 1rem;
+    font-weight: bolder;
+}
+
+.task-retro .fa-pen{
+
+    padding-right: 1rem;
+}
+
+.task-retro .task-owner{
+    padding-left: 2rem;
+    padding-bottom: 1rem;
+    font-weight: bolder;
+}
+
+.task-retro .fa-thumbs-up{
+    padding-left: 10rem;
+    padding-right: 2rem;
+}
+
