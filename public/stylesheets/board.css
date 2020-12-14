@@ -33,12 +33,7 @@
     font-weight: bolder;
     font-size: 30px;
     border-color: #F29EEA;
-    width: 450px;
     height: 50px;
-}
-
-.board-body .col-retro{
-    overflow: hidden;
 }
 
 .board-body .col-retro .btn-add-task:hover{
@@ -69,13 +64,7 @@
     font-weight: bolder;
 }
 
-.task-retro .fa-thumbs-up{
-    padding-left: 10rem;
-}
 
-.task-retro .fa-comment-alt{
-    padding-right: 2rem;
-}
 
 /* Dragula CSS  */
 .gu-mirror {
@@ -106,5 +95,48 @@
      font-size: 2px;
   }
 
+
+/* Chinh kich thuoc column dua tren so luong */
+::root {
+    counter-reset: total_columns 0;
+}
+
+.col-retro {
+    counter-increment: total_columns 1;
+}
+
+.drag-task, .btn-add-task{
+    width: 100%;
+}
+
+.col-retro:first-child:nth-last-child(1),
+.col-retro:first-child:nth-last-child(1) ~.col-retro{
+    width: 100vw;
+   
+}
+
+.col-retro:first-child:nth-last-child(2),
+.col-retro:first-child:nth-last-child(2) ~.col-retro{
+    width: 45vw;
+   
+}
+
+.col-retro:first-child:nth-last-child(3),
+.col-retro:first-child:nth-last-child(3) ~.col-retro{
+    width: 30vw;
+   
+}
+
+.col-retro:first-child:nth-last-child(4),
+.col-retro:first-child:nth-last-child(4) ~.col-retro{
+    width: 23vw;
+   
+}
+
+.col-retro:first-child:nth-last-child(5),
+.col-retro:first-child:nth-last-child(5) ~.col-retro{
+    width: 18vw;
+   
+}
 
 

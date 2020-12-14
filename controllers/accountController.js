@@ -1,8 +1,10 @@
-exports.index = (req, res, next) => {
+const accountModels = require('../models/accountModels');
+exports.index = async (req, res, next) => {
     // Get from model
-    
+    const list_user = await accountModels.list();
     // Pass data to view to display
     res.render('account',{
+        list_user,
         account_user:[
             {
                 name: 'Nguyễn Văn A',
@@ -43,4 +45,5 @@ exports.index = (req, res, next) => {
         ],
         layout: 'dashboard/main', title: "Account", ID: 1
     });
+    console.log(list_user);
 };
