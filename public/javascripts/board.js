@@ -1,10 +1,18 @@
 $(document).ready(function () {
 
-    if ($('.board-body').attr("total_columns") === 1) {
+    //Xoa icon thung rac khi con 1 column
+    const total_columns = $('.board-body').attr("total_columns");
+    if ( total_columns == 1) {
         $('.icon-trash').hide();
     }
+   
 
-    dragula([document.getElementById("Todo"), document.getElementById("Doing"), document.getElementById("Done")], {
+    //Drag & drop bang dragula js
+    let container = [];
+    for(let i=0;i<total_columns;i++){
+        container[i]=document.getElementById("drag-item-"+i.toString());
+    }
+    dragula(container, {
         revertOnSpill: false,
         accepts: function(el, target) {
             return  !el.classList.contains('no-drap')
@@ -13,9 +21,6 @@ $(document).ready(function () {
             return  !el.classList.contains('no-drag')
           }
     });
-
-
-    
 
 });
 

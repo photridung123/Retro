@@ -17,6 +17,8 @@ const dashboardRouter = require('./routes/dashboard');
 const analyticsRouter = require('./routes/analytics');
 const accountRouter = require('./routes/account');
 const logoutRouter = require('./routes/logout');
+const boardRouter = require('./routes/board');
+
 const hbs = require('hbs');
 
 
@@ -35,6 +37,10 @@ hbs.registerHelper('if_eq', function(a, b, opts) {
       return opts.inverse(this);
   }
 });
+hbs.registerHelper('add', function(a, b) {
+  return a + b;
+});
+
 hbs.registerHelper('format_date', function(current_datetime) {
   const months = ["January", "February", "March","April", "May", "June", "July", "August", "September", "October", "November", "December"];
   return current_datetime.getDate()  + " " + months[current_datetime.getMonth()];
@@ -87,7 +93,7 @@ app.use('/team', checkAcessible ,teamRouter);
 app.use('/dashboard', checkAcessible ,dashboardRouter);
 app.use('/analytics', checkAcessible ,analyticsRouter);
 app.use('/account', checkAcessible ,accountRouter);
-
+app.use('/board', checkAcessible ,boardRouter);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   res.status(404).render('404')
