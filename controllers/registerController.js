@@ -25,7 +25,6 @@ exports.addUser = async function(req,res) {
             dob: null,
             date: new Date(),
         }
-        // try {
             user = await userModel.addUser(newUser);
             req.login(user, function(err) {
                 if (err) {
@@ -33,16 +32,6 @@ exports.addUser = async function(req,res) {
                 }
                 return res.redirect('/dashboard');
               });
-        //    passport.authenticate('local',{
-        //        successRedirect: '/dashboard',
-        //        failureRedirect: '/register',
-        //        failureFlash: false
-        //    })
-        //    res.redirect('/dashboard');
-        // } catch (err) {
-        //     res.render("register");
-        //     return;
-        // }
     }
     else
     {

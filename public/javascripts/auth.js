@@ -9,6 +9,15 @@ $("document").ready(function () {
         $("#registerOnLoad").hide();
     }
 
+    if($("#loginFailed").length)
+    {
+        $(".inputBoxLogin").css("height", "500px");
+    }
+    else
+    {
+        $("#loginOnLoad").hide();
+    }
+
     $("#forgotAlert").hide();
 
     $('#email').on('input', function() {
