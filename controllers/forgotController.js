@@ -4,6 +4,6 @@ exports.index = (req, res, next) => {
     // Pass data to view to display
     res.render('forgot',
     {
-        layout: false, title: "forgot page"
+        layout: false, title: "forgot"
     });
 };

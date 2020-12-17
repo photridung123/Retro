@@ -1,5 +1,14 @@
 $("document").ready(function () {
 
+    if($("#registerFailed").length)
+    {
+        $(".inputBoxRegister").css("height", "600px");
+    }
+    else
+    {
+        $("#registerOnLoad").hide();
+    }
+
     $("#forgotAlert").hide();
 
     $('#email').on('input', function() {
@@ -72,8 +81,6 @@ $("document").ready(function () {
             e.preventDefault(e);
             $(".inputBoxForgot").css("height", "400px");
             $("#forgotAlert").show();
-            let postdata = $("#forgotForm").serialize();
-            $.post("forgot", postdata);
         }
     });
 })

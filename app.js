@@ -58,7 +58,6 @@ app.use(function(req,res,next){
 // middleware check loggedin
 
 function checkAcessible(req, res, next) {
-  console.log(req.user);
   if (req.user) {
       next();
   } else {
@@ -67,7 +66,6 @@ function checkAcessible(req, res, next) {
 }
 
 function isLogged(req, res, next) {
-  console.log(req.user);
   if (req.user) {
       res.redirect('/dashboard');
   } else {
