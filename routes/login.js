@@ -5,10 +5,20 @@ const passport = require('../passport');
 
 /* GET home page. */
 router.get('/', loginController.index);
-router.post('/' ,passport.authenticate('local',{
-    successRedirect: '/dashboard',
-    failureRedirect: '/register',
-    failureFlash: false
-}))
+router.post('/' ,function(req, res, next) {
+    passport.authenticate('local', function(err, user) {
+      if (err) { 
+          return next(err); }
+      if (!user) { 
+          return next(); }
+          req.login(user, function(err) {
+            if (err) {
+              console.log(err);
+            }
+            return res.redirect('/dashboard');
+          });
+         })
+    (req, res, next);
+  },loginController.fail);
 
 module.exports = router;

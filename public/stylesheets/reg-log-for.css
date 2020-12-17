@@ -160,3 +160,13 @@ span{
     background-color: pink;
     color: black;
 }
+
+#loginFailed{
+    margin-top: 3rem;
+    width: 350px;
+    border-radius: 2px;
+    margin-bottom: -1rem;
+    text-align: center;
+    background-color: pink;
+    color: black;
+}
