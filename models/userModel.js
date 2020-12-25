@@ -12,7 +12,7 @@ exports.addUser = async(newUser) => {
     user_email: newUser.email,
     user_password: hash,
     user_avatar: newUser.avatar,
-    date_dob: newUser.dob,
+    user_dob: newUser.dob,
     date_created: newUser.date,
   } 
   await userCollection.insertOne(user);

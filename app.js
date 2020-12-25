@@ -40,6 +40,26 @@ hbs.registerHelper('if_eq', function(a, b, opts) {
 hbs.registerHelper('add', function(a, b) {
   return a + b;
 });
+hbs.registerHelper('if_equal', function(a, b, opts) {
+  if (a == b) {
+      return opts.fn(this)
+  } else {
+      return opts.inverse(this)
+  }
+});
+hbs.registerHelper('if_not_equal', function(a, b, opts) {
+  if (a != b) {
+      return opts.fn(this)
+  } else {
+      return opts.inverse(this)
+  }
+});
+hbs.registerHelper('assign', function (varName, varValue, options) {
+  if (!options.data.root) {
+      options.data.root = {};
+  }
+  options.data.root[varName] = varValue;
+});
 
 hbs.registerHelper('format_date', function(current_datetime) {
   const months = ["January", "February", "March","April", "May", "June", "July", "August", "September", "October", "November", "December"];
