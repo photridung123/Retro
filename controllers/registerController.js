@@ -1,5 +1,6 @@
 const userModel = require("../models/userModel");
 const passport = require("../passport");
+const dateFormat = require("dateformat");
 
 exports.index = (req, res, next) => {
     // Get from model
@@ -14,6 +15,9 @@ exports.index = (req, res, next) => {
 exports.addUser = async function(req,res) {
 
     const valid = await userModel.checkValid(req.body.email);
+    const now = new Date();
+    const currentDate = dateFormat(now,"paddedShortDate");
+    console.log(currentDate);
 
     if(valid)
     {
@@ -23,7 +27,7 @@ exports.addUser = async function(req,res) {
             password: req.body.password,
             avatar: null,
             dob: null,
-            date: new Date(),
+            date: currentDate,
         }
             user = await userModel.addUser(newUser);
             req.login(user, function(err) {
