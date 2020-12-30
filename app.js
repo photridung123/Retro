@@ -102,7 +102,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/users', usersRouter);
-app.use('/', indexRouter);
 app.use('/logout',logoutRouter);
 app.use('/pricing',pricingRouter);
 app.use('/register', isLogged ,registerRouter);
@@ -114,6 +113,7 @@ app.use('/analytics', checkAcessible ,analyticsRouter);
 app.use('/account', checkAcessible ,accountRouter);
 app.use('/board', checkAcessible ,boardRouter);
 app.use('/join', joinRouter);
+app.use('/', isLogged, indexRouter);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   res.status(404).render('404')
