@@ -47,6 +47,9 @@ exports.index = (req, res, next) => {
                 ]
             }
         ],  
-        layout: 'dashboard/main', title: "Analytics", ID: 1
+        layout: 'dashboard/main', 
+        title: "Analytics", 
+        ID: 1,
+        username: res.locals.user.user_name
     })
 };

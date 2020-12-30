@@ -1,6 +1,6 @@
 
-const {db} = require('../db/db');
-const {ObjectId} = require('mongodb');
+const { db } = require('../db/db');
+const { ObjectId } = require('mongodb');
 const lodash = require('lodash');
 
 exports.add = (team) => {
@@ -11,7 +11,103 @@ exports.delete = (team) => {
     const teamCollection = db().collection('tbl_teams');
 }
 
-exports.getTeam = async (id) => {
+
+
+// team function dont touchy touchy 
+exports.getTeamByOwner = async (id) => {
+    const teamCollection = db().collection('tbl_teams');
+    const team = await teamCollection.findOne({ owner: ObjectId(id) });
+    return team;
+}
+
+exports.getUserIdByEmail = async (email) => {
+    const userCollection = db().collection('tbl_users');
+    const userInfo = await userCollection.findOne({ user_email: email });
+    if (userInfo != null) {
+        return userInfo._id;
+    }
+    else {
+        return null;
+    };
+}
+
+exports.delUserTeamByTeamId = async(teamId) => {
+    const teamCollection = db().collection('tbl_user_team');
+    teamCollection.deleteMany({
+        'team-id' : ObjectId(teamId)
+    });
+}
+
+exports.delTeamByTeamId = async(teamId) => {
+    const teamCollectinon = db().collection('tbl_teams');
+    teamCollectinon.deleteOne({
+        _id: ObjectId(teamId)
+    });
+}
+
+exports.delUserTeam = async(teamId, userId) => {
+    const teamCollection = db().collection('tbl_user_team');
+    teamCollection.deleteOne({
+        $and: [
+            { 'team-id': ObjectId(teamId) },
+            { 'user-id': ObjectId(userId) }
+        ]
+    })
+}
+
+exports.getUserTeam = async (teamId, userId) => {
+    const teamCollection = db().collection('tbl_user_team');
+    const userTeam = await teamCollection.findOne({
+        $and: [
+            { 'team-id': ObjectId(teamId) },
+            { 'user-id': ObjectId(userId) }
+        ]
+    });
+    return userTeam;
+}
+
+exports.addUserTeam = async (user_team) => {
+    const teamCollection = db().collection('tbl_user_team');
+    const result = await teamCollection.insertOne(user_team);
+    console.log(`New listing created with the following id: ${result.insertedId}`);
+}
+
+exports.setTotalMember = async (teamId,total_member) => {
+    const teamCollection = db().collection('tbl_teams');
+    teamCollection.updateOne({_id: ObjectId(teamId)}, { $set:
+        {
+          total_member: total_member
+        }
+     });
+}
+
+exports.joinTeam = async(invitationToken) => {
+    const invitationCollection = db().collection("tbl_invitation_token");
+    const teamCollectinon = db().collection("tbl_user_team");
+    const userInvited = await invitationCollection.findOne({"invitation-token": invitationToken});
+    teamCollectinon.updateOne({$and: [
+        { 'team-id': ObjectId(userInvited.teamId) },
+        { 'user-id': ObjectId(userInvited.userId) }
+    ]}, {
+        $set:
+        {
+          inteam: "true"
+        }
+    })
+}
+
+exports.addInvitationToken = async(invitationToken,userId,teamId) => {
+    const invitationCollection = db().collection("tbl_invitation_token");
+    invitationCollection.createIndex({ expireAfterSeconds: 86400});
+    invitationCollection.insert({
+        "createAt": new Date(),
+        "userId": ObjectId(userId),
+        "invitation-token": invitationToken,
+        "teamId": ObjectId(teamId)
+    })
+}
+
+exports.getMyTeam = async (id) => {
     teams = await db().collection('tbl_teams').aggregate([
         {
             $lookup:
@@ -23,33 +119,43 @@ exports.getTeam = async (id) => {
             }
         },
         {
-            $unset: ["ownerInfo._id","ownerInfo.user_password","ownerInfo.user_dob","ownerInfo.user_avatar","ownerInfo.date_created"]
+            $unset: ["ownerInfo._id", "ownerInfo.user_password", "ownerInfo.user_dob", "ownerInfo.user_avatar", "ownerInfo.date_created"]
         },
-        { $lookup: 
+        {
+            $lookup:
             {
                 from: "tbl_user_team",
                 let: { "teamId": "$_id" },
                 pipeline: [
-                  { $match: { "$expr": { "$eq": ["$team-id", "$$teamId"] }}},
-                  { $lookup: {
-                    from: "tbl_users",
-                    let: { "memberId": "$user-id" },
-                    pipeline: [
-                      { $match: { "$expr": { "$eq": ["$_id", "$$memberId"] }}}
-                    ],
-                    as: "memberInfo"
-                  }}
+                    { $match: { "$expr": { "$eq": ["$team-id", "$$teamId"] } } },
+                    {
+                        $lookup: {
+                            from: "tbl_users",
+                            let: { "memberId": "$user-id" },
+                            pipeline: [
+                                { $match: { "$expr": { "$eq": ["$_id", "$$memberId"] } } }
+                            ],
+                            as: "memberInfo"
+                        }
+                    }
                 ],
                 as: "members"
             }
         },
         {
-            $unset: ["members._id","members.team-id","members.memberInfo._id","members.memberInfo.user_password","members.memberInfo.user_avatar","members.memberInfo.date_created","members.memberInfo.user_dob"]
+            $unset: ["members._id", "members.team-id", "members.memberInfo._id", "members.memberInfo.user_password", "members.memberInfo.user_avatar", "members.memberInfo.date_created", "members.memberInfo.user_dob"]
         },
     ]).toArray();
-    picked = lodash.filter(teams,{ 'members': [{'user-id': id}]});
+    picked = lodash.filter(teams, { 'members': [{ 'user-id': id }] });
     // picked = lodash.merge(picked.members,picked.members.memberInfo)
-    console.log(JSON.stringify(picked));
+    //console.log(JSON.stringify(picked));
 
     return picked;
+}
+
+exports.createNewTeam = async(teamInfo) => {
+    const teamCollection = db().collection('tbl_teams');  
+    const result = await teamCollection.insertOne(teamInfo);
+    console.log(`New listing created with the following id: ${result.insertedId}`);
+    return result.insertedId;
 }

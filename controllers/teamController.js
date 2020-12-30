@@ -1,29 +1,124 @@
 const teamModel = require("../models/teamModel");
+const { ObjectId } = require('mongodb')
+const nodemailer = require("nodemailer");
+const { v4: uuidv4 } = require('uuid');
+require('dotenv').config();
 
-exports.index = async function(req, res) {
+exports.index = async function (req, res) {
     // Get from model
-    teams = await teamModel.getTeam(res.locals.user._id);
+    teams = await teamModel.getMyTeam(res.locals.user._id);
+    user = req.user;
     // Pass data to view to display
     res.render('team',
-    {
-        teams,
-        layout: 'dashboard/main', title: "Team", ID: 1
-    })
+        {
+            teams,
+            user,
+            layout: 'dashboard/main', 
+            title: "Team", 
+            username: res.locals.user.user_name,
+            ID: 1
+        })
 };
 
-exports.delete = (req, res, next) => {
+exports.delTeam = (req, res, next) => {
     // Get from model
+    teamModel.delUserTeamByTeamId(req.body.id);
+    teamModel.delTeamByTeamId(req.body.id);
+    // Pass data to view to display
+};
+
+exports.delMem = async function(req,res,next) {
+    team = await teamModel.getTeamByOwner(res.locals.user._id);
+    number = parseInt(team.total_member);
+
+    console.log(req.body.id);
+    console.log(team._id);
+
+
+    --number;
+    teamModel.delUserTeam(team._id,req.body.id);
+    teamModel.setTotalMember(team._id,number);
+
+    // Pass data to view to display
+    res.send({ redirect: '/team' });
+}
+
+exports.addMem = async function (req, res, next) {
+    // Get from model
+    team = await teamModel.getTeamByOwner(res.locals.user._id);
+    number = parseInt(team.total_member);
+    numOfBox = parseInt(req.body.numOfBox) + 1;
     
+    for (i = 1; i < numOfBox; i++) {
+        userId = await teamModel.getUserIdByEmail(req.body['member' + i]);
+        userTeam = await teamModel.getUserTeam(team._id, userId);
+
+        if (userId != null) {
+
+            if (userTeam == null) {
+                user = {
+                    ['team-id']: ObjectId(team._id),
+                    ['user-id']: ObjectId(userId),
+                    'inteam': false
+                }
+                ++number;
+                teamModel.addUserTeam(user);
+                teamModel.setTotalMember(team._id, number);
+            }
+
+            if (userTeam == null || userTeam.inteam === "false") {
+
+
+                // generate invitation code
+                inviteCode = uuidv4();
+                teamModel.addInvitationToken(inviteCode, userId, team._id);
+
+                
+                // link: to change
+                url = "http://" + req.get('host') + "/join/" + inviteCode;
+
+                // send email
+                let transporter = nodemailer.createTransport({
+                    service: "gmail",
+                    auth: {
+                        user: process.env.EMAIL,
+                        pass: process.env.PASSWORD
+                    }
+                });
+
+                let mailOptions = {
+                    from: "mninonesix@gmail.com",
+                    to: req.body['member' + i],
+                    subject: "[DRetro] Invitation to my team",
+                    html: "Please click this link to become a part of our team: <a href=\"" + url + "\">" + url + "</a>"
+                };
+
+                transporter.sendMail(mailOptions, function (err, data) {
+                    if (err) {
+                        console.log("Error Occurs");
+                    } else {
+                        console.log("Email sent");
+                    }
+                });
+            }
+        }
+    }
     // Pass data to view to display
+    res.send({ redirect: '/team' });
 };
 
-exports.add = (req, res, next) => {
-    // Get from model
-    const team = {
-        owner: req.user._id,
-        name : req.body.name,
-        total_member: req.body.member
+exports.addTeam = async function(req,res,next) {
+    team = {
+        owner: ObjectId(res.locals.user._id),
+        name: req.body.newTeam,
+        total_member: 1
     }
-    teamModel.add(team);
-    // Pass data to view to display
-};
+    teamId = await teamModel.createNewTeam(team);
+    userTeam = {
+        ['team-id']: ObjectId(teamId),
+        ['user-id']: ObjectId(res.locals.user._id),
+        'inteam': true
+    }
+    await teamModel.addUserTeam(userTeam);
+    res.redirect("/team");
+}

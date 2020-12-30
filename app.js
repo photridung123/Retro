@@ -18,6 +18,7 @@ const analyticsRouter = require('./routes/analytics');
 const accountRouter = require('./routes/account');
 const logoutRouter = require('./routes/logout');
 const boardRouter = require('./routes/board');
+const joinRouter = require('./routes/join');
 
 const hbs = require('hbs');
 
@@ -100,9 +101,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use('/users', usersRouter);
 app.use('/', indexRouter);
 app.use('/logout',logoutRouter);
-app.use('/users', usersRouter);
 app.use('/pricing',pricingRouter);
 app.use('/register', isLogged ,registerRouter);
 app.use('/login', isLogged ,loginRouter);
@@ -112,6 +113,7 @@ app.use('/dashboard', checkAcessible ,dashboardRouter);
 app.use('/analytics', checkAcessible ,analyticsRouter);
 app.use('/account', checkAcessible ,accountRouter);
 app.use('/board', checkAcessible ,boardRouter);
+app.use('/join', joinRouter);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   res.status(404).render('404')
