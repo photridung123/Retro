@@ -81,3 +81,8 @@ exports.changeUsername = async (req, res, next) => {
     });
     res.send({ redirect: "/account"});
 }
+
+exports.getUserType = async(req,res,next) => {
+    userType = await accountModel.getUserPricing(res.locals.user._id);
+    res.send({type: userType});
+}

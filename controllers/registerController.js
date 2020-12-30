@@ -1,4 +1,5 @@
 const userModel = require("../models/userModel");
+const accountModel = require("../models/accountModel");
 const passport = require("../passport");
 const dateFormat = require("dateformat");
 
@@ -30,6 +31,8 @@ exports.addUser = async function(req,res) {
             date: currentDate,
         }
             user = await userModel.addUser(newUser);
+            await accountModel.addNewUserPricing(user._id,"basic");
+            await accountModel.addNewPricingHistory(user._id,"basic");
             req.login(user, function(err) {
                 if (err) {
                   console.log(err);

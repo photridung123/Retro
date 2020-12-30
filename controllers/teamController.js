@@ -1,4 +1,5 @@
 const teamModel = require("../models/teamModel");
+const accountModel = require("../models/accountModel")
 const { ObjectId } = require('mongodb')
 const nodemailer = require("nodemailer");
 const { v4: uuidv4 } = require('uuid');
@@ -30,10 +31,6 @@ exports.delTeam = (req, res, next) => {
 exports.delMem = async function(req,res,next) {
     team = await teamModel.getTeamByOwner(res.locals.user._id);
     number = parseInt(team.total_member);
-
-    console.log(req.body.id);
-    console.log(team._id);
-
 
     --number;
     teamModel.delUserTeam(team._id,req.body.id);

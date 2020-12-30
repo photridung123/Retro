@@ -1,13 +1,21 @@
 $("document").ready(function () {
-    // teamname = {}; // lưu team name khi tạo team mới
-    // $("#okBtn").click(function () {
-    //     teamname = $("#teamname").val();
-    //     $('#createTeamModal').modal('hide');
-    //     $("#teamname").val('');
-    // })
     let member;
     let current = 4;
     let team;
+    let type;
+
+    $.ajax({
+        type: "POST",
+        url: '/account/user/type',
+        dataType: "json",
+        data: {
+            data: "get"
+        },
+        success: function (data){
+            type = data.type;
+        }
+    })
+
     $(".memberIncresement").click(function(){
         let my = "<div class=\"pt-2\"><input type=\"text\" class=\"myteam-input\" id=\"member"+ current.toString() +"\" name=\"member"+ current.toString()+"\" placeholder=\"Member's email\" +  autocomplete=\"new-email\"></div>";
         $(".input-boxes").append(my);
@@ -101,7 +109,7 @@ $("document").ready(function () {
     })
 
     $("#addNewTeamButton").on("mouseenter",function(){
-        if($("#delTeaBtn").length) {
+        if($("#delTeaBtn").length || type=="basic") {
             $("#addNewTeamButton").prop("disabled", true);   
         }
     })
