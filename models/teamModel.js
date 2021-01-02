@@ -96,6 +96,7 @@ exports.joinTeam = async(invitationToken) => {
             }
         })
     }
+    invitationCollection.deleteOne({"invitation-token": invitationToken});
 }
 
 exports.addInvitationToken = async(invitationToken,userId,teamId) => {
