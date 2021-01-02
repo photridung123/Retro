@@ -23,7 +23,8 @@
     "nodemailer": "^6.4.17",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
-    "uuid": "^8.3.2"
+    "uuid": "^8.3.2",
+    "uuidv4": "^6.2.6"
   },
   "devDependencies": {
     "nodemon": "^2.0.6"

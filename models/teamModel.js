@@ -85,15 +85,17 @@ exports.joinTeam = async(invitationToken) => {
     const invitationCollection = db().collection("tbl_invitation_token");
     const teamCollectinon = db().collection("tbl_user_team");
     const userInvited = await invitationCollection.findOne({"invitation-token": invitationToken});
-    teamCollectinon.updateOne({$and: [
-        { 'team-id': ObjectId(userInvited.teamId) },
-        { 'user-id': ObjectId(userInvited.userId) }
-    ]}, {
-        $set:
-        {
-          inteam: "true"
-        }
-    })
+    if(userInvited) {
+        teamCollectinon.updateOne({$and: [
+            { 'team-id': ObjectId(userInvited.teamId) },
+            { 'user-id': ObjectId(userInvited.userId) }
+        ]}, {
+            $set:
+            {
+              inteam: "true"
+            }
+        })
+    }
 }
 
 exports.addInvitationToken = async(invitationToken,userId,teamId) => {

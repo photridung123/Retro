@@ -84,7 +84,7 @@ exports.addMem = async function (req, res, next) {
                 });
 
                 let mailOptions = {
-                    from: "mninonesix@gmail.com",
+                    from: "dretro@gmail.com",
                     to: req.body['member' + i],
                     subject: "[DRetro] Invitation to my team",
                     html: "Please click this link to become a part of our team: <a href=\"" + url + "\">" + url + "</a>"
