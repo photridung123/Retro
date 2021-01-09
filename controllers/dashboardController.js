@@ -22,7 +22,6 @@ exports.index = async (req, res, next) => {
     for (let i = 0; i < team.length; i++) {
         team[i].team_name = team[i].name;
         let team_boards = await boardModel.FindBoards(team[i]._id,"team");
-        console.log(team_boards);
         if (team_boards.length > 0)
             for (let j = 0; j < team_boards.length; j++) {
                 let total_card = 0;
@@ -41,7 +40,6 @@ exports.index = async (req, res, next) => {
         delete team[i].members;
     }
 
-    console.log(team[0].team_boards);
     // Pass data to view to display
     res.render('vwdashboard',
         {
