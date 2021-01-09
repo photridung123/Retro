@@ -1,7 +1,7 @@
 $(document).ready(function () {
 
     //Xoa icon thung rac khi con 1 column
-    const total_columns = $('.board-body').attr("total_columns");
+    var total_columns = $('.board-body').attr("total_columns");
     if ( total_columns == 1) {
         $('.icon-trash').hide();
     }
@@ -22,6 +22,36 @@ $(document).ready(function () {
           }
     }).on('drop', function(el) {
         console.log(el.closest(".drag-task"));
+    });
+
+    $(".list-cmt").hide();
+    $(document).on("click",".icon-open-comment",function(){
+        let parent = $(this).closest(".task-retro");
+        parent.find(".list-cmt").show();
+    });
+
+    $(document).on("click",".icon-close-cmt",function(){
+        $(this).closest(".list-cmt").hide();
+    });
+
+    $(document).on("click",".btn-add-cmt",function(){
+        let card_id = $(this).closest(".task-retro").attr("card_id");
+        let comment_text = $(this).closest(".input-group").find(".current-user-comment-box").val();
+        let temp = comment_text.replace(/\s/g, '');
+        if(temp) {
+            $.ajax({
+                url: window.location.href + "/add-cmt",
+                type: 'post',
+                data: { card_id,comment_text },
+                success: function () {
+                    console.log("succesfully");
+                },
+                error: function (e) {
+                    console.log(e.message);
+                }
+            });
+        }
+     
     });
 
 });

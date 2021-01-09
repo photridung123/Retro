@@ -44,6 +44,12 @@ exports.index = async (req, res, next) => {
                         }
                         cards[j].comments = comments; 
                     }
+
+                    //FORMAT VOTE OF CARD
+                    for(let k=0;k<vote_of_current_user.length;k++){
+                        if(vote_of_current_user[k].card_id == cards[j]._id)
+                        cards[j].like = true; 
+                    }
                 }
                 columns[i].cards = cards;
             }
@@ -52,8 +58,8 @@ exports.index = async (req, res, next) => {
     let total_columns = 0;
     if(columns.length>0) total_columns = columns.length;
 
-    console.log("----------------------------");
-    for(let i=0;i<columns.length;i++){
+    console.log("--------------------");
+    for(let i =0;i<columns.length;i++){
         console.log(columns[i]);
     }
     // Pass data to view to display
@@ -67,3 +73,15 @@ exports.index = async (req, res, next) => {
             layout: 'dashboard/main', title: "Board", ID: 1
         });
 };
+
+exports.AddCmt = async (req,res) =>{
+
+    
+    let cmt = {
+        comment_text : req.body.comment_text,
+        comment_owner: res.locals.user._id,
+        card_id : ObjectId(req.body.card_id)
+    }
+    console.log(cmt);
+    await boardModel.AddComment(cmt);
+}

@@ -4,7 +4,7 @@
 </div>
 <div class="board-body d-flex justify-content-between" total_columns={{total_columns}}>
     {{#each columns}}
-    <div class="col-retro" total_columns={{total_columns}}>
+    <div class="col-retro">
         <div class="d-flex justify-content-between">
             <div class="col-name">{{this.column_name}}</div>
             <i class="fas fa-trash icon-trash"></i>
@@ -14,22 +14,37 @@
         <div class="drag-task" id="drag-item-{{@key}}">
             <div class="no-drag">.</div>
             {{#each this.cards}}
-            <div class="task-retro">
+            <div class="task-retro" card_id={{this._id}}>
                 <div class="d-flex justify-content-between">
                     <div class="task-name">{{this.card_name}}</div>
-                    <i class="fas fa-pen"></i>
+                    <i class="fas fa-pen icon-open-comment"></i>
                 </div>
                 <div class="d-flex justify-content-between ">
                     <div class="task-owner">{{this.card_owner}}</div>
                     <div class="icon-feedback pr-3">
-                    <i class="fas fa-thumbs-up mr-3"> {{this.total_vote}}</i>
-                    <i class='fas fa-comment-alt'> {{this.total_comment}}</i>
+                        <i class="fas fa-thumbs-up mr-3"> {{this.total_vote}}</i>
+                        <i class='fas fa-comment-alt'> {{this.total_comment}}</i>
                     </div>
                 </div>
                 <div class="list-cmt">
                     {{#each this.comments}}
-                    <div class="comment-box">{{this.comment_text}}</div>
+                    <div class="comment-box mt-3">
+                        <div class="d-flex justify-content-between">
+                            <div class="cmt-owner"><b>{{this.comment_owner}}: </b></div>
+                            <i class="fa fa-times"></i>
+                        </div>
+                        {{this.comment_text}}
+                    </div>
                     {{/each}}
+
+                    <div class="input-group pt-3" style="padding-left:3%;padding-right:15%">
+                        <textarea class="current-user-comment-box form-control" rows="1" style="resize:none"
+                            placeholder="Enter your comment..."></textarea>
+                        <span class="input-group-addon btn btn-primary btn-add-cmt">Send</span>
+                    </div>
+                    <div class="icon-close-cmt">
+                        <i class="fa fa-sort-up"></i>
+                    </div>
                 </div>
             </div>
             {{/each}}

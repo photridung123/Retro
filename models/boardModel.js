@@ -80,3 +80,8 @@ exports.FindComments = async (card_id) => {
     const comments = await commentCollection.find({ card_id: ObjectId(card_id) }).toArray();
     return comments;
 }
+
+exports.AddComment = async (cmt) => {
+    const commentCollection = db().collection(TBL_COMMENT);
+    await commentCollection.insertOne(cmt);
+}
