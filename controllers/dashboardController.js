@@ -22,6 +22,7 @@ exports.index = async (req, res, next) => {
     for (let i = 0; i < team.length; i++) {
         team[i].team_name = team[i].name;
         let team_boards = await boardModel.FindBoards(team[i]._id,"team");
+        console.log(team_boards);
         if (team_boards.length > 0)
             for (let j = 0; j < team_boards.length; j++) {
                 let total_card = 0;
@@ -32,7 +33,7 @@ exports.index = async (req, res, next) => {
                         total_card += cards.length;
                     }
                 team_boards[j].total_card = total_card;
-                team_boards[i].board_URL = "http://localhost:3000/board/" + team_boards[i]._id;
+                team_boards[j].board_URL = "http://localhost:3000/board/" + team_boards[j]._id;
             }
         team[i].team_boards = team_boards;
         delete team[i].name;
@@ -40,6 +41,7 @@ exports.index = async (req, res, next) => {
         delete team[i].members;
     }
 
+    console.log(team[0].team_boards);
     // Pass data to view to display
     res.render('vwdashboard',
         {
@@ -68,8 +70,9 @@ exports.AddBoard = async (req, res) => {
     }
 
     let board_type = "public";
+
     let team = await teamModels.getTeamById(board.owner_id);
-    if(team && team.length>0){
+    if(team){
         board_type = "team";
     }
 
