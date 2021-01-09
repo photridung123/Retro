@@ -97,3 +97,8 @@ exports.getUserType = async (req, res, next) => {
     userType = await accountModel.getUserPricing(res.locals.user._id);
     res.send({ type: userType });
 }
+
+exports.getUserId = async (req, res, next) => {
+    userId = res.locals.user._id;
+    res.send({ id: userId });
+}

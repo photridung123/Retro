@@ -7,6 +7,7 @@ router.get('/', accountController.index);
 router.post('/change/email', accountController.changeEmail);
 router.post('/change/username', accountController.changeUsername);
 router.post('/change/avatar',accountController.changeAvatar);
-router.post('/user/type',accountController.getUserType);
+router.get('/user/type',accountController.getUserType);
+router.get('/user/id',accountController.getUserId);
 
 module.exports = router;

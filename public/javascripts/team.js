@@ -2,17 +2,24 @@ $("document").ready(function () {
     let member;
     let current = 4;
     let team;
+    let userId;
     let type;
 
     $.ajax({
-        type: "POST",
+        type: "GET",
         url: '/account/user/type',
         dataType: "json",
-        data: {
-            data: "get"
-        },
         success: function (data){
             type = data.type;
+        }
+    })
+
+    $.ajax({
+        type: "GET",
+        url: '/account/user/id',
+        dataType: "json",
+        success: function (data){
+            userId = data.id;
         }
     })
 
@@ -82,6 +89,10 @@ $("document").ready(function () {
         team = $(this).parent().parent().parent().parent().parent();
     })
 
+    $("#leaTeaBtn").on("click", function () {
+        team = $(this).parent().parent().parent().parent().parent();
+    })
+
     $("#delTeamBtn").on("click", function() {
         let mydata = team.attr("name");
         $.ajax({
@@ -90,6 +101,21 @@ $("document").ready(function () {
             dataType : "json",
             data: {
                 id: mydata
+            }
+          });
+        team.remove();
+    })
+
+    $("#leaveTeamBtn").on("click", function() {
+        let mydata = team.attr("name");
+        let userid = userId;
+        $.ajax({
+            type: "POST",
+            url: '/team/leaTeam',
+            dataType : "json",
+            data: {
+                teamid: mydata,
+                userid: userid
             }
           });
         team.remove();

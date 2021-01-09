@@ -29,6 +29,17 @@ exports.delTeam = (req, res, next) => {
     // Pass data to view to display
 };
 
+exports.leaTeam = async function(req, res, next) {
+    // Get from model
+    await teamModel.delUserTeam(req.body.teamid,req.body.userid);
+    team = await teamModel.getTeamById(req.body.teamid);
+
+    number = parseInt(team.total_member);
+    --number;
+    teamModel.setTotalMember(team._id,number);
+    // Pass data to view to display
+};
+
 exports.delMem = async function(req,res,next) {
     team = await teamModel.getTeamByOwner(res.locals.user._id);
     number = parseInt(team.total_member);
@@ -64,7 +75,7 @@ exports.addMem = async function (req, res, next) {
                 teamModel.setTotalMember(team._id, number);
             }
 
-            if (userTeam == null || userTeam.inteam === "false") {
+            if (userTeam == null || userTeam.inteam == false ) {
 
 
                 // generate invitation code
