@@ -48,8 +48,7 @@ exports.index = async (req, res, next) => {
             layout: 'dashboard/main',
             title: "Dashboard",
             ID: 1,
-            username: res.locals.user.user_name,
-            avatar: res.locals.user.user_avatar
+            username: res.locals.user.user_name
         });
 };
 

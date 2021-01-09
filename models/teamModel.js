@@ -146,7 +146,7 @@ exports.getMyTeam = async (id) => {
             }
         },
         {
-            $unset: ["members._id", "members.team-id", "members.memberInfo._id", "members.memberInfo.user_password", "members.memberInfo.date_created", "members.memberInfo.user_dob"]
+            $unset: ["members._id", "members.team-id", "members.memberInfo._id", "members.memberInfo.user_password", "members.memberInfo.date_created", "members.memberInfo.user_dob", "members.memberInfo.user_avatar"]
         },
     ]).toArray();
     picked = lodash.filter(teams, { 'members': [{ 'user-id': id }] });
@@ -166,5 +166,11 @@ exports.createNewTeam = async(teamInfo) => {
 exports.getTeamById = async(teamid) => {
     const teamCollection = db().collection('tbl_teams');  
     const team = await teamCollection.findOne({_id: ObjectId(teamid)});
+    return team;
+}
+
+exports.getAllMyTeam = async(userid) => {
+    const teamCollection = db().collection('tbl_user_team');
+    const team = await teamCollection.find({['user-id']:ObjectId(userid)}).toArray();
     return team;
 }

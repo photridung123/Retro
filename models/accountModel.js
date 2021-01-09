@@ -126,7 +126,7 @@ exports.getUserPricingHistory = async (userId) => {
 // }
 
 exports.getAllUserId = async () => {
-  userIds = await db().collection('tbl_users').distinct(_id);
+  userIds = await db().collection('tbl_users').distinct("_id");
   return userIds;
 }
 

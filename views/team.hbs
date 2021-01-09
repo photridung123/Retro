@@ -150,7 +150,6 @@
                     {{#if_not_equal ./user_email @root.ownerEmail }}
                     <div class="pt-1 d-flex justify-content-between can-be-delete">
                         <div class="d-inline member-info" name="{{@root.memberId}}" style="font-size: 1.25rem;">{{./user_name}}</div>
-                        <div class="d-inline"><img id="userAvatar" src="{{./user_avatar}}" width="15px" height="15px" class="rounded-circle z-depth-0" alt=""></div>
                         {{#if_equal @root.inteam true}}
                         {{#if_equal @root.user.user_email @root.ownerEmail}}
                         <button type="button d-inline" class="close delete-member" aria-label="Close"
