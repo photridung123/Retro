@@ -46,14 +46,24 @@ $(document).ready(function () {
                 data: { card_id, comment_text },
                 success: function () {
                     console.log("succesfully");
+
                 },
                 error: function (e) {
                     console.log(e.message);
                 }
             });
+
+            //add cmt front end
+            let comment_owner = $('.board-body').attr("user_name");
+            $(this).closest(".list-cmt").find('.form-box-cmt').before($("<div class=\"comment-box mt-3\"><div class=\"d-flex justify-content-between\">"
+                + "<div class=\"cmt-owner\"><b>" + comment_owner + ": </b></div><i class=\"fa fa-times\"></i>"
+                + "</div>" + comment_text + "</div>"));
         }
 
+        $(this).closest(".list-cmt").find('.current-user-comment-box').val("");
+
     });
+    
     $(document).on("click", ".icon-vote", function () {
 
         let card_id = $(this).closest(".task-retro").attr("card_id");
@@ -64,12 +74,12 @@ $(document).ready(function () {
             max_vote++;
             let new_total_vote = parseInt($(this).text());
             new_total_vote--;
-            $(this).text(new_total_vote.toString()+" ");
+            $(this).text(new_total_vote.toString() + " ");
 
             $.ajax({
                 url: window.location.href + "/vote",
                 type: 'post',
-                data: { isLiked:false,card_id },
+                data: { isLiked: false, card_id },
                 success: function () {
                     console.log("succesfully");
                 },
@@ -84,11 +94,11 @@ $(document).ready(function () {
                 $(this).removeClass("fa-thumbs-up");
                 let new_total_vote = parseInt($(this).text());
                 new_total_vote++;
-                $(this).text(new_total_vote.toString()+" ");
+                $(this).text(new_total_vote.toString() + " ");
                 $.ajax({
                     url: window.location.href + "/vote",
                     type: 'post',
-                    data: { isLiked:true,card_id },
+                    data: { isLiked: true, card_id },
                     success: function () {
                         console.log("succesfully");
                     },
@@ -97,12 +107,49 @@ $(document).ready(function () {
                     }
                 });
             }
-            else{
+            else {
                 $('.toast-warning-out-of-vote').toast("show");
             }
-            
+
         }
-        
+
+    });
+
+    var comment_delete_id;
+    $(document).on("click", ".btn-open-modal-delete-cmt", function () {
+        comment_delete_id = $(this).attr("comment_id");
+    });
+
+    $(document).on("click", ".btn-delete-cmt", function () {
+
+        $.ajax({
+            url: window.location.href + "/delete-cmt",
+            type: 'post',
+            data: { comment_id: comment_delete_id },
+            success: function () {
+                console.log("succesfully");
+            },
+            error: function (e) {
+                console.log(e.message);
+            }
+        });
+
+        $(".btn-open-modal-delete-cmt").each(function () {
+            if (comment_delete_id == $(this).attr("comment_id")) {
+                $(this).closest(".comment-box").remove();
+                // let card_id = $(this).closest(".list-cmt").closest(".task-retro").attr("card_id");
+                // $('.icon-comment').each(function () {
+                //     console.log(card_id);
+                //     console.log("-----");
+                //     console.log($(this).closest(".task-retro").attr("card_id"));
+                //     if ($(this).closest(".task-retro").attr("card_id") == card_id) {
+                //         let new_total_cmt = parseInt($(this).text());
+                //         new_total_cmt--;
+                //         $(this).text(new_total_cmt.toString() + " ");
+                //     }
+                // });
+            }
+        });
     });
 
 });

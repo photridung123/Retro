@@ -1,6 +1,6 @@
 const boardModel = require("../models/boardModel");
 const userModels = require("../models/userModel");
-const {ObjectId} = require('mongodb');
+const { ObjectId } = require('mongodb');
 
 exports.index = async (req, res, next) => {
     // Get from model
@@ -11,20 +11,20 @@ exports.index = async (req, res, next) => {
 
     //GET MAX VOTE
     let max_vote = parseInt(board.max_vote);
-    if(vote_of_current_user){
-        max_vote -=vote_of_current_user.length;
+    if (vote_of_current_user) {
+        max_vote -= vote_of_current_user.length;
     }
 
     //GET COLUMN
     let columns = await boardModel.FindColumns(board_id);
-    if(columns.length>0){
-        for(let i=0;i<columns.length;i++){
+    if (columns.length > 0) {
+        for (let i = 0; i < columns.length; i++) {
             let cards = await boardModel.FindCards(columns[i]._id);
-            
+
             console.log(cards);
             //FORMAT CARD
-            if(cards.length>0){
-                for(let j=0;j<cards.length;j++){
+            if (cards.length > 0) {
+                for (let j = 0; j < cards.length; j++) {
                     let user = await userModels.getUser(cards[j].card_owner);
                     cards[j].card_owner = user.user_name;
                     let votes = await boardModel.FindVotes(cards[j]._id);
@@ -33,22 +33,22 @@ exports.index = async (req, res, next) => {
                     cards[j].total_comment = 0;
 
                     //FORMAT VOTE OF CARD
-                    if(votes.length>0)  cards[j].total_vote = votes.length;
+                    if (votes.length > 0) cards[j].total_vote = votes.length;
 
                     //FORMAT CMT OF CARD
-                    if(comments.length>0)  {
+                    if (comments.length > 0) {
                         cards[j].total_comment = comments.length;
-                        for(let k=0;k<comments.length;k++){
+                        for (let k = 0; k < comments.length; k++) {
                             let temp = await userModels.getUser(comments[k].comment_owner);
-                            comments[k].comment_owner = temp.user_name; 
+                            comments[k].comment_owner = temp.user_name;
                         }
-                        cards[j].comments = comments; 
+                        cards[j].comments = comments;
                     }
 
                     //FORMAT VOTE OF CARD
-                    for(let k=0;k<vote_of_current_user.length;k++){
-                        if(vote_of_current_user[k].card_id.toString() == cards[j]._id.toString())
-                        cards[j].like = true; 
+                    for (let k = 0; k < vote_of_current_user.length; k++) {
+                        if (vote_of_current_user[k].card_id.toString() == cards[j]._id.toString())
+                            cards[j].like = true;
                     }
                 }
                 columns[i].cards = cards;
@@ -56,7 +56,7 @@ exports.index = async (req, res, next) => {
         }
     }
     let total_columns = 0;
-    if(columns.length>0) total_columns = columns.length;
+    if (columns.length > 0) total_columns = columns.length;
 
     // Pass data to view to display
     res.render('board',
@@ -70,30 +70,35 @@ exports.index = async (req, res, next) => {
         });
 };
 
-exports.AddCmt = async (req,res) =>{
+exports.AddCmt = async (req, res) => {
 
-    
+
     let cmt = {
-        comment_text : req.body.comment_text,
+        comment_text: req.body.comment_text,
         comment_owner: res.locals.user._id,
-        card_id : ObjectId(req.body.card_id)
+        card_id: ObjectId(req.body.card_id)
     }
-    console.log(cmt);
     await boardModel.AddComment(cmt);
 }
 
-exports.Vote = async (req,res) =>{
+exports.Vote = async (req, res) => {
 
-  let isLike = req.body.isLike;
-  if(isLike=='false'){
-        await boardModel.DeleteVote(req.body.card_id,res.locals.user._id);
-  }
-  else{
+    let isLike = req.body.isLike;
+    if (isLike == 'false') {
+        await boardModel.DeleteVote(req.body.card_id, res.locals.user._id);
+    }
+    else {
         let vote = {
-            card_id :ObjectId(req.body.card_id),
-            vote_owner : ObjectId(res.locals.user._id)
+            card_id: ObjectId(req.body.card_id),
+            vote_owner: ObjectId(res.locals.user._id)
         }
 
         await boardModel.AddVote(vote);
-  }
+    }
+}
+
+exports.DeleteCmt = async (req, res) => {
+
+    console.log(req.body);
+    await boardModel.DeleteCmt(req.body.comment_id);
 }

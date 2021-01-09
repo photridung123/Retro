@@ -6,5 +6,6 @@ const boardController = require('../controllers/boardController');
 router.get('/:id', boardController.index);
 router.post('/:id/add-cmt', boardController.AddCmt);
 router.post('/:id/vote', boardController.Vote);
+router.post('/:id/delete-cmt', boardController.DeleteCmt);
 
 module.exports = router;

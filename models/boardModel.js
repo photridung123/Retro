@@ -86,6 +86,11 @@ exports.AddComment = async (cmt) => {
     await commentCollection.insertOne(cmt);
 }
 
+exports.DeleteCmt = async (comment_id) => {
+    const commentCollection = db().collection(TBL_COMMENT);
+    await commentCollection.deleteOne({_id:ObjectId(comment_id)});
+}
+
 exports.DeleteVote = async (card_id,vote_owner) => {
     const voteCollection = db().collection(TBL_VOTE);
     await voteCollection.deleteOne({
