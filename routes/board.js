@@ -3,6 +3,7 @@ const router = express.Router();
 const boardController = require('../controllers/boardController');
 
 /* GET home page. */
-router.get('/', boardController.index);
+router.get('/:id', boardController.index);
+
 
 module.exports = router;

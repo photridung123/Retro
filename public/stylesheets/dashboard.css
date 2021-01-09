@@ -42,3 +42,8 @@ h1{
 .group-boards{
     padding-bottom: 1rem;
 }
+
+.form-add-col i {
+    padding-bottom: 0.5rem;
+    padding-left: 26rem;
+}

@@ -25,7 +25,7 @@
                 </div>
             </div>
             <div class="modal-footer justify-content-center team-divider">
-                <button type="button" class="btn btn-primary okBtn">Yes</button>
+                <button type="button" class="btn btn-primary okBtn btn-delete-board" data-dismiss="modal">Yes</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">No, keep it</button>
             </div>
         </div>
@@ -49,40 +49,54 @@
                     <label for="MaxVote"><strong>Max vote per user</strong></label>
                     <input type="text" class="form-control" id="MaxVote" placeholder="Enter max vote">
                 </div>
-                <div class="form-group" id="Columns">
+                <div class="form-group form-add-col" id="Columns">
                     <label for="Columns"><strong>Columns</strong></label>
 
-                    <i class="fas fa-times-circle d-block " aria-hidden="true"></i>
-                    <input type="text" class="form-control mb-3" id="column-1" placeholder="Enter name column">
+                    <div class="control">
+                        <i class="fas fa-times-circle d-block icon_remove" aria-hidden="true"></i>
+                        <input type="text" class="form-control mb-3" id="col1" placeholder="Enter name column">
+                    </div>
 
-                    <i class="fas fa-times-circle d-block" aria-hidden="true"></i>
-                    <input type="text" class="form-control mb-3" id="column-2" placeholder="Enter name column">
+                    <div class="control">
+                        <i class="fas fa-times-circle d-block icon_remove" aria-hidden="true"></i>
+                        <input type="text" class="form-control mb-3" id="col2" placeholder="Enter name column">
+                    </div>
 
-                    <i class="fas fa-times-circle d-block" aria-hidden="true"></i>
-                    <input type="text" class="form-control mb-3" id="column-3" placeholder="Enter name column">
-
+                    <div class="control">
+                        <i class="fas fa-times-circle d-block icon_remove" aria-hidden="true"></i>
+                        <input type="text" class="form-control mb-3" id="col3" placeholder="Enter name column">
+                    </div>
                 </div>
                 <div style="text-align: center;">
-                    <button type="button" id="btn-add-col" class="btn btn-primary">Add new column</button>
+                    <button type="button" id="btn-add-col-form" class="btn btn-primary">Add new column</button>
                 </div>
             </div>
             <div class="modal-footer justify-content-center team-divider">
                 <div class="row justify-content-center">
-                    <button type="button" class="btn btn-primary okBtn reset-btn">Create</button>
-                    <button type="button" class="btn btn-secondary reset-btn" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary okBtn btn-add-board"
+                        data-dismiss="modal">Create</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-<div class="container-board container-fluid">
-    <h1>My boards</h1>
-
+<div class="container-board container-fluid" user_id={{user._id}}>
+    <div class="d-flex justify-content-between">
+        <h1>My boards</h1>
+        <div class="d-flex justify-content-end align-items-end ">
+            <div class="toast toast-warning-delete-board" role="alert" aria-live="assertive" aria-atomic="true"
+                data-delay="4000">
+                <div class="toast-header">Delete Unsuccesfully</div>
+                <div class="toast-body">The owner only is allow to remove this board!</div>
+            </div>
+        </div>
+    </div>
     <div class="group-boards">
         <h3><span>Public boards</span></h3>
         <div class="d-flex flex-wrap align-items-start">
-            <button type="button" class="select-box" data-toggle="modal" data-target="#CreateBoardModal">
+            <button type="button" class="select-box btn-open-form-add-board" data-toggle="modal"
+                data-target="#CreateBoardModal" owner_id={{user._id}}>
                 <svg viewBox="0 0 16 16" class="bi bi-plus-circle-fill add-icon" fill="currentColor"
                     xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd"
@@ -90,11 +104,11 @@
                 </svg>
             </button>
             {{#each public_boards}}
-            <a href={{this.boardURL}}>
+            <a href={{this.board_URL}}>
                 <div class="board-cards">
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">{{this.boardName}}</h5>
+                            <h5 class="card-title">{{this.board_name}}</h5>
                             <div class="pt-4">
                                 <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-clock"
                                     fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -110,8 +124,9 @@
                         </div>
 
                         <div class="card-footer">
-                            <a href="#" class="pl-5 pr-4 card-link copy-url" value={{this.boardURL}}>Clone</a>
-                            <a href="#" class="card-link" data-toggle="modal" data-target="#ModalDelete">Delete</a>
+                            <a href="#" class="pl-5 pr-4 card-link copy-url" value={{this.board_URL}}>Clone</a>
+                            <a href="#" class="card-link btn-open-modal-delete-board" data-toggle="modal"
+                                board_id={{this._id}} data-target="#ModalDelete">Delete</a>
                         </div>
                     </div>
                 </div>
@@ -119,12 +134,12 @@
             {{/each}}
         </div>
     </div>
-
     {{#each team}}
     <div class="group-boards">
-        <h3><span>{{this.teamName}}</span></h3>
+        <h3><span>{{this.team_name}}</span></h3>
         <div class="d-flex flex-wrap align-items-start">
-            <button type="button" class="select-box" data-toggle="modal" data-target="#CreateBoardModal">
+            <button type="button" class="select-box btn-open-form-add-board" data-toggle="modal"
+                data-target="#CreateBoardModal" owner_id={{this._id}}>
                 <svg viewBox="0 0 16 16" class="bi bi-plus-circle-fill add-icon" fill="currentColor"
                     xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd"
@@ -132,11 +147,11 @@
                 </svg>
             </button>
             {{#each this.team_boards}}
-            <a href={{this.boardURL}}>
+            <a href={{this.board_URL}}>
                 <div class="board-cards">
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">{{this.boardName}}</h5>
+                            <h5 class="card-title">{{this.board_name}}</h5>
                             <div class="pt-4">
                                 <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-clock"
                                     fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -152,8 +167,8 @@
                         </div>
 
                         <div class="card-footer">
-                            <a href="#" class="card-link row justify-content-center" data-toggle="modal"
-                                data-target="#ModalDelete">Delete</a>
+                            <a href="#" class="card-link row justify-content-center btn-open-modal-delete-board"
+                                data-toggle="modal" data-target="#ModalDelete" board_id={{this._id}}>Delete</a>
                         </div>
                     </div>
                 </div>
@@ -163,3 +178,6 @@
     </div>
     {{/each}}
 </div>
+
+
+<!-- Then put toasts within -->

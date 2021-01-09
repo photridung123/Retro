@@ -15,11 +15,13 @@ $(document).ready(function () {
     dragula(container, {
         revertOnSpill: false,
         accepts: function(el, target) {
-            return  !el.classList.contains('no-drap')
+            return  !el.classList.contains('no-drag')
           },
         moves: function(el, container, handle) {
             return  !el.classList.contains('no-drag')
           }
+    }).on('drop', function(el) {
+        console.log(el.closest(".drag-task"));
     });
 
 });
