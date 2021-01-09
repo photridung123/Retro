@@ -21,7 +21,7 @@
                     <div class="form-group">
                         <label class="name-group">Name</label><br>
                         <input type="text" id="name" name="newUserName" placeholder="{{user.user_name}}"
-                            data-toggle="tooltip" data-placement="bottom" required />
+                            data-toggle="tooltip" data-placement="bottom"/>
                     </div>
                     <div class="form-group">
                         <label class="name-group">Email</label><br>
@@ -64,23 +64,25 @@
                             <th>Bill</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="payment-history">
                         {{#each payment_history}}
-                        {{#if this.current}}
-                        <tr class="table-primary">
-                            <td>{{this.startDay}}</td>
-                            <td>{{this.endDay}}</td>
-                            <td>{{this.type}}</td>
-                            <td>{{this.bill}}</td>
+                        {{!-- {{#if this.current}} --}}
+                        <tr class="table-danger">
+                            <td>{{./startDay}}</td>
+                            <td>{{./endDay}}</td>
+                            {{#each ./pricing}}
+                            <td>{{./name}}</td>
+                            <td>{{./price}}</td>
+                            {{/each}}
                         </tr>
-                        {{else}}
+                        {{!-- {{else}}
                         <tr class="table-danger">
                             <td>{{this.startDay}}</td>
                             <td>{{this.endDay}}</td>
                             <td>{{this.type}}</td>
                             <td>{{this.bill}}</td>
                         </tr>
-                        {{/if}}
+                        {{/if}} --}}
                         {{/each}}
                     </tbody>
                 </table>
