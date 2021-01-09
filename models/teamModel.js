@@ -92,7 +92,7 @@ exports.joinTeam = async(invitationToken) => {
         ]}, {
             $set:
             {
-              inteam: "true"
+              inteam: true
             }
         })
     }
@@ -146,12 +146,12 @@ exports.getMyTeam = async (id) => {
             }
         },
         {
-            $unset: ["members._id", "members.team-id", "members.memberInfo._id", "members.memberInfo.user_password", "members.memberInfo.user_avatar", "members.memberInfo.date_created", "members.memberInfo.user_dob"]
+            $unset: ["members._id", "members.team-id", "members.memberInfo._id", "members.memberInfo.user_password", "members.memberInfo.date_created", "members.memberInfo.user_dob"]
         },
     ]).toArray();
     picked = lodash.filter(teams, { 'members': [{ 'user-id': id }] });
     // picked = lodash.merge(picked.members,picked.members.memberInfo)
-    //console.log(JSON.stringify(picked));
+    console.log(JSON.stringify(picked));
 
     return picked;
 }
@@ -161,4 +161,10 @@ exports.createNewTeam = async(teamInfo) => {
     const result = await teamCollection.insertOne(teamInfo);
     console.log(`New listing created with the following id: ${result.insertedId}`);
     return result.insertedId;
+}
+
+exports.getTeamById = async(teamid) => {
+    const teamCollection = db().collection('tbl_teams');  
+    const team = await teamCollection.findOne({_id: ObjectId(teamid)});
+    return team;
 }

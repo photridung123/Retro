@@ -43,29 +43,53 @@ $("document").ready(function(){
 
     $("#updateUserInfoButton").click(function(e){
         e.preventDefault(e);
-        let data;
+        let name;
         if($("#name").val()=='')
         {
-            data = $("#name").attr("placeholder");
+            name = $("#name").attr("placeholder");
         }
         else
         {
-            data = $("#name").val();
+            name = $("#name").val();
         }
 
-        mydata = {
-            newUserName: data
+        data = {
+            newUserName: name,
         }
         
         $.ajax({
             type: "POST",
             url: "/account/change/username",
             dataType: "json",
-            data: mydata,
+            data: data,
             success: function(data) {
-                if( typeof(data.redirect) == "string" )
-                window.location = data.redirect
+                if(data.respond){
+                    $("#navbarDropdownMenuLink-4").get(0).firstChild.nodeValue = name+" ";
+                    $("#name").attr("placeholder",name);
+                }
+            }
+        })
+
+        let file = $("#newImage")[0].files[0];
+        let formdata = new FormData();
+        formdata.append("newImage", file);
+
+        $.ajax({
+            type: "POST",
+            url: "/account/change/avatar",
+            dataType: "json",
+            data: formdata,
+            processData: false,
+            contentType: false,
+            success: function(data) {
+                if(data.imageUrl != "undefined") {
+                    url = data.imageUrl;
+                    string = "?" + new Date().getTime();
+                    $("#userAvatar").attr("src",url + string);
+                }
             }
         })
     })
+
+    $("#payment-history").children().eq(0).addClass("table-primary").removeClass("table-danger");
 })

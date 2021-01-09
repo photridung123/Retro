@@ -17,7 +17,8 @@ exports.index = async function (req, res) {
             layout: 'dashboard/main', 
             title: "Team", 
             username: res.locals.user.user_name,
-            ID: 1
+            ID: 1,
+            avatar: res.locals.user.user_avatar
         })
 };
 
@@ -25,6 +26,17 @@ exports.delTeam = (req, res, next) => {
     // Get from model
     teamModel.delUserTeamByTeamId(req.body.id);
     teamModel.delTeamByTeamId(req.body.id);
+    // Pass data to view to display
+};
+
+exports.leaTeam = async function(req, res, next) {
+    // Get from model
+    await teamModel.delUserTeam(req.body.teamid,req.body.userid);
+    team = await teamModel.getTeamById(req.body.teamid);
+
+    number = parseInt(team.total_member);
+    --number;
+    teamModel.setTotalMember(team._id,number);
     // Pass data to view to display
 };
 
@@ -63,7 +75,7 @@ exports.addMem = async function (req, res, next) {
                 teamModel.setTotalMember(team._id, number);
             }
 
-            if (userTeam == null || userTeam.inteam === "false") {
+            if (userTeam == null || userTeam.inteam == false ) {
 
 
                 // generate invitation code

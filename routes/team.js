@@ -9,5 +9,6 @@ router.post('/addMem', teamController.addMem);
 router.post('/addTeam', teamController.addTeam);
 router.post('/delTeam', teamController.delTeam);
 router.post('/delMem', teamController.delMem);
+router.post('/leaTeam', teamController.leaTeam);
 
 module.exports = router;

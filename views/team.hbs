@@ -46,6 +46,24 @@
             </div>
         </div>
     </div>
+    <!-- Modal leave team -->
+    <div class="modal fade" id="leaveTeamModal" tabindex="-1" role="dialog" aria-labelledby="leaveTeamModalTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header justify-content-center team-divider">
+                    <h5 class="modal-titler" id="leaveTeamModalTitle">Do yout want to leave this team?</h5>
+                </div>
+                <div class="modal-footer justify-content-center team-divider">
+                    <div class="row">
+                        <button type="button" class="btn btn-primary okBtn" id="leaveTeamBtn"
+                            data-dismiss="modal">Yes</button>
+                        <button type="button" class="btn btn-secondary cancelBtn" data-dismiss="modal">No</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- Modal delete team -->
     <div class="modal fade" id="deleteTeamModal" tabindex="-1" role="dialog" aria-labelledby="deleteTeamModalTitle"
         aria-hidden="true">
@@ -104,7 +122,8 @@
 
     <div class="d-flex flex-wrap align-items-start">
         {{!-- button + phải có team.js --}}
-        <button type="button" class="select-box" data-toggle="modal" id="addNewTeamButton" data-target="#createTeamModal">
+        <button type="button" class="select-box" data-toggle="modal" id="addNewTeamButton"
+            data-target="#createTeamModal">
             <svg viewBox="0 0 16 16" class="bi bi-plus-circle-fill add-icon" fill="currentColor"
                 xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd"
@@ -130,13 +149,15 @@
                     {{#each ./memberInfo}}
                     {{#if_not_equal ./user_email @root.ownerEmail }}
                     <div class="pt-1 d-flex justify-content-between can-be-delete">
-                        <div class="d-inline member-info" name="{{@root.memberId}}" style="font-size: 1.25rem;">
-                            {{./user_name}} </div>
-                        {{#if_equal @root.inteam "true"}}
+                        <div class="d-inline member-info" name="{{@root.memberId}}" style="font-size: 1.25rem;">{{./user_name}}</div>
+                        <div class="d-inline"><img id="userAvatar" src="{{./user_avatar}}" width="15px" height="15px" class="rounded-circle z-depth-0" alt=""></div>
+                        {{#if_equal @root.inteam true}}
+                        {{#if_equal @root.user.user_email @root.ownerEmail}}
                         <button type="button d-inline" class="close delete-member" aria-label="Close"
                             data-toggle="modal" data-target="#deleteMemberModal">
                             <span aria-hidden="true">&times;</span>
                         </button>
+                        {{/if_equal}}
                         {{else}}
                         <div class="d-inline title-tag" style=" font-weight: bolder;">Pending</div>
                         {{/if_equal}}
@@ -155,6 +176,13 @@
                         <div class="pt-2">
                             <button type="button" class="btn btn-secondary delBtn" id="delTeaBtn" data-toggle="modal"
                                 data-target="#deleteTeamModal">Delete</button>
+                        </div>
+                    </div>
+                    {{else}}
+                    <div class="row justify-content-center">
+                        <div class="pt-2">
+                            <button type="button" class="btn btn-secondary leaBtn" id="leaTeaBtn" data-toggle="modal"
+                                data-target="#leaveTeamModal">Leave</button>
                         </div>
                     </div>
                     {{/if_equal}}

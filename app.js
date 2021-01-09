@@ -5,6 +5,8 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const session = require('express-session');
 const passport = require('./passport');
+const schedule = require('node-schedule');
+const accountModel = require('./models/accountModel');
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
@@ -31,48 +33,48 @@ app.set('view engine', 'hbs');
 app.set('view options', { layout: 'layouts/main' });
 hbs.registerPartials(__dirname + '/views/partials');
 hbs.registerPartials(__dirname + '/views/partials');
-hbs.registerHelper('if_eq', function(a, b, opts) {
+hbs.registerHelper('if_eq', function (a, b, opts) {
   if (a == b) {
-      return opts.fn(this);
+    return opts.fn(this);
   } else {
-      return opts.inverse(this);
+    return opts.inverse(this);
   }
 });
-hbs.registerHelper('add', function(a, b) {
+hbs.registerHelper('add', function (a, b) {
   return a + b;
 });
-hbs.registerHelper('if_equal', function(a, b, opts) {
+hbs.registerHelper('if_equal', function (a, b, opts) {
   if (a == b) {
-      return opts.fn(this)
+    return opts.fn(this)
   } else {
-      return opts.inverse(this)
+    return opts.inverse(this)
   }
 });
-hbs.registerHelper('if_not_equal', function(a, b, opts) {
+hbs.registerHelper('if_not_equal', function (a, b, opts) {
   if (a != b) {
-      return opts.fn(this)
+    return opts.fn(this)
   } else {
-      return opts.inverse(this)
+    return opts.inverse(this)
   }
 });
 hbs.registerHelper('assign', function (varName, varValue, options) {
   if (!options.data.root) {
-      options.data.root = {};
+    options.data.root = {};
   }
   options.data.root[varName] = varValue;
 });
 
-hbs.registerHelper('format_date', function(current_datetime) {
-  const months = ["January", "February", "March","April", "May", "June", "July", "August", "September", "October", "November", "December"];
-  return current_datetime.getDate()  + " " + months[current_datetime.getMonth()];
+hbs.registerHelper('format_date', function (current_datetime) {
+  const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  return current_datetime.getDate() + " " + months[current_datetime.getMonth()];
 });
 
 // passport
-app.use(session({secret: 'tripleD',resave: false,saveUninitialized: true,})); // TODO: đưa secret vào env
+app.use(session({ secret: 'tripleD', resave: false, saveUninitialized: true, })); // TODO: đưa secret vào env
 app.use(passport.initialize());
 app.use(passport.session());
 // pass req.user to res.locals
-app.use(function(req,res,next){
+app.use(function (req, res, next) {
   res.locals.user = req.user;
   next();
 })
@@ -80,17 +82,17 @@ app.use(function(req,res,next){
 
 function checkAcessible(req, res, next) {
   if (req.user) {
-      next();
+    next();
   } else {
-      res.redirect('/login');
+    res.redirect('/login');
   }
 }
 
 function isLogged(req, res, next) {
   if (req.user) {
-      res.redirect('/dashboard');
+    res.redirect('/dashboard');
   } else {
-      next();
+    next();
   }
 }
 
@@ -101,25 +103,25 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/logout',logoutRouter);
-app.use('/pricing',pricingRouter);
-app.use('/register', isLogged ,registerRouter);
-app.use('/login', isLogged ,loginRouter);
-app.use('/forgot', isLogged ,forgotRouter);
-app.use('/team', checkAcessible ,teamRouter);
-app.use('/dashboard', checkAcessible ,dashboardRouter);
-app.use('/analytics', checkAcessible ,analyticsRouter);
-app.use('/account', checkAcessible ,accountRouter);
-app.use('/board', checkAcessible ,boardRouter);
+app.use('/logout', logoutRouter);
+app.use('/pricing', pricingRouter);
+app.use('/register', isLogged, registerRouter);
+app.use('/login', isLogged, loginRouter);
+app.use('/forgot', isLogged, forgotRouter);
+app.use('/team', checkAcessible, teamRouter);
+app.use('/dashboard', checkAcessible, dashboardRouter);
+app.use('/analytics', checkAcessible, analyticsRouter);
+app.use('/account', checkAcessible, accountRouter);
+app.use('/board', checkAcessible, boardRouter);
 app.use('/join', joinRouter);
 app.use('/', isLogged, indexRouter);
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   res.status(404).render('404')
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
@@ -128,5 +130,27 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+// schedule
+
+
+let rule = new schedule.RecurrenceRule();
+rule.minute = 59;
+
+let updateSubscription = schedule.scheduleJob(rule, async function () {
+  userIds = await accountModel.getAllUserId();
+  if(userIds) {
+    for (var i in userIds) {
+      now = new Date();
+      history = await accountModel.getCurrentHistory(userIds[i]);
+      if(now > history.endDay) { 
+        accountModel.addNewPricingHistory(userIds[i],"premium");
+        accountModel.updateUserPricing(userIds[i],"premium");
+      }
+    }
+  }
+})
+
+
 
 module.exports = app;
