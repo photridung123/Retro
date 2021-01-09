@@ -68,9 +68,13 @@ exports.AddBoard = async (req, res) => {
     }
 
     let board_type = "public";
+    let team = await teamModels.getTeamById(board.owner_id);
+    if(team && team.length>0){
+        board_type = "team";
+    }
 
-    board.tea
-   
+    board.board_type = board_type;
+
     const result = await boardModel.AddBoards(board);
     if (list_col.length > 0) {
         for (let i = 0; i < list_col.length; i++) {
