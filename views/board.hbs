@@ -1,8 +1,13 @@
 <div class="page-heading-board d-flex justify-content-between">
     <h2>{{board_name}}</h2>
+    <div class="toast toast-warning-out-of-vote" role="alert" aria-live="assertive" aria-atomic="true"
+        data-delay="4000">
+        <div class="toast-header">Out of Vote</div>
+        <div class="toast-body">You have run out of votes</div>
+    </div>
     <button type="button" class="btn-add-col">New column</button>
 </div>
-<div class="board-body d-flex justify-content-between" total_columns={{total_columns}}>
+<div class="board-body d-flex justify-content-between" total_columns={{total_columns}} max_vote={{max_vote}}>
     {{#each columns}}
     <div class="col-retro">
         <div class="d-flex justify-content-between">
@@ -22,7 +27,11 @@
                 <div class="d-flex justify-content-between ">
                     <div class="task-owner">{{this.card_owner}}</div>
                     <div class="icon-feedback pr-3">
-                        <i class="fas fa-thumbs-up mr-3"> {{this.total_vote}}</i>
+                        {{#if this.like}}
+                        <i class="fas fa-thumbs-down mr-3 icon-vote"> {{this.total_vote}}</i>
+                        {{else}}
+                        <i class="fas fa-thumbs-up mr-3 icon-vote"> {{this.total_vote}}</i>
+                        {{/if}}
                         <i class='fas fa-comment-alt'> {{this.total_comment}}</i>
                     </div>
                 </div>

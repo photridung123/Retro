@@ -47,7 +47,7 @@ exports.index = async (req, res, next) => {
 
                     //FORMAT VOTE OF CARD
                     for(let k=0;k<vote_of_current_user.length;k++){
-                        if(vote_of_current_user[k].card_id == cards[j]._id)
+                        if(vote_of_current_user[k].card_id.toString() == cards[j]._id.toString())
                         cards[j].like = true; 
                     }
                 }
@@ -58,10 +58,6 @@ exports.index = async (req, res, next) => {
     let total_columns = 0;
     if(columns.length>0) total_columns = columns.length;
 
-    console.log("--------------------");
-    for(let i =0;i<columns.length;i++){
-        console.log(columns[i]);
-    }
     // Pass data to view to display
     res.render('board',
         {
@@ -84,4 +80,20 @@ exports.AddCmt = async (req,res) =>{
     }
     console.log(cmt);
     await boardModel.AddComment(cmt);
+}
+
+exports.Vote = async (req,res) =>{
+
+  let isLike = req.body.isLike;
+  if(isLike=='false'){
+        await boardModel.DeleteVote(req.body.card_id,res.locals.user._id);
+  }
+  else{
+        let vote = {
+            card_id :ObjectId(req.body.card_id),
+            vote_owner : ObjectId(res.locals.user._id)
+        }
+
+        await boardModel.AddVote(vote);
+  }
 }
