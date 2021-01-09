@@ -1,6 +1,12 @@
+const teamModel = require('../models/teamModel');
+
 exports.index = (req, res, next) => {
     // Get from model
-    
+    teams = teamModel.getAllMyTeam(res.locals.user._id);
+
+    for (var i in teams) {
+        //teams[i] = 
+    }
     // Pass data to view to display
     res.render('analytics',
     {
@@ -50,7 +56,6 @@ exports.index = (req, res, next) => {
         layout: 'dashboard/main', 
         title: "Analytics", 
         ID: 1,
-        username: res.locals.user.user_name,
-        avatar: res.locals.user.user_avatar
+        username: res.locals.user.user_name
     })
 };
