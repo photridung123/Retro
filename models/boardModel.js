@@ -132,3 +132,9 @@ exports.DeleteColsById = async (column_id) =>{
     const columnCollection = db().collection(TBL_COLUMNS);
     await columnCollection.deleteOne({ _id: ObjectId(column_id)});
 }
+
+
+exports.AddCard = async (card) => {
+    const cardCollection = db().collection(TBL_CARDS);
+    return await cardCollection.insertOne(card);
+}

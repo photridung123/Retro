@@ -8,22 +8,29 @@ $(document).ready(function () {
     }
 
 
-    //Drag & drop bang dragula js
-    let container = [];
-    for (let i = 0; i < total_columns; i++) {
-        container[i] = document.getElementById("drag-item-" + i.toString());
-    }
-    dragula(container, {
-        revertOnSpill: false,
-        accepts: function (el, target) {
-            return !el.classList.contains('no-drag')
-        },
-        moves: function (el, container, handle) {
-            return !el.classList.contains('no-drag')
+    var drake = window.dragula();
+    setupDragula();
+    function setupDragula() {
+        drake.destroy();
+        //Drag & drop bang dragula js
+        let container = [];
+        for (let i = 0; i < 5; i++) {
+            let temp = document.getElementById("drag-item-" + i.toString());
+            if (temp)
+                container.push(temp);
         }
-    }).on('drop', function (el) {
-        console.log(el.closest(".drag-task"));
-    });
+        dragula(container, {
+            revertOnSpill: false,
+            accepts: function (el, target) {
+                return !el.classList.contains('no-drag')
+            },
+            moves: function (el, container, handle) {
+                return !el.classList.contains('no-drag')
+            }
+        }).on('drop', function (el) {
+            console.log(el.closest(".drag-task"));
+        });
+    }
 
 
 
@@ -174,7 +181,8 @@ $(document).ready(function () {
                     $(".board-body").append("<div class=\"col-retro\"><div class=\"d-flex justify-content-between\">"
                         + "<div class=\"col-name\">" + column_name + "</div><i class=\"fas fa-trash icon-trash btn-open-modal-delete-col\""
                         + "data-toggle=\"modal\" data-target=\"#modaldeleteCol\" column_id =" + data.comment_id + "></i></div>"
-                        + "<button type=\"button\" class=\"btn-add-task\">+</button><div class=\"drag-task\" id=\"drag-item-" +
+                        + "<button type=\"button\" class=\"btn-add-task btn-open-modal-add-card\""
+                        + "data-toggle=\"modal\" data-target=\"#AddCardModal\" column_id =" + data.comment_id + ">+</button><div class=\"drag-task\" id=\"drag-item-" +
                         total_columns + "\"><div class=\"no-drag\">.</div></div></div>")
                 },
                 error: function (e) {
@@ -182,6 +190,7 @@ $(document).ready(function () {
                 }
             });
             total_columns++;
+            setupDragula();
         }
         else {
             $('.toast-warning-max-col').toast("show");
@@ -194,8 +203,8 @@ $(document).ready(function () {
         card_delete_id = $(this).attr("card_id");
     })
 
-    $(document).on("click", ".btn-delete-card", async function () {
-        await $.ajax({
+    $(document).on("click", ".btn-delete-card",  function () {
+        $.ajax({
             url: window.location.href + "/delete-card",
             type: 'post',
             data: { card_id: card_delete_id },
@@ -210,7 +219,7 @@ $(document).ready(function () {
             if ($(this).attr("card_id") == card_delete_id) {
                 $(this).remove();
             }
-        });
+        })
     });
 
     //delete column
@@ -231,6 +240,7 @@ $(document).ready(function () {
             }
         });
         total_columns--;
+        setupDragula();
         if (total_columns == 1) {
             $('.icon-trash').hide();
         }
@@ -247,5 +257,49 @@ $(document).ready(function () {
             }
         });
     });
+
+    //add card
+    let column_add_card;
+    $(document).on("click", ".btn-open-modal-add-card", function () {
+        column_add_card = $(this).attr("column_id");
+    });
+
+    $(document).on("click", ".btn-add-new-card", async function () {
+
+        let card_name = $("#CardName").val();
+        let card = [];
+        await $.ajax({
+            url: window.location.href + "/add-card",
+            type: 'post',
+            data: { card_name, column_id: column_add_card },
+            success: function (data) {
+                console.log(data);
+                card = data;
+            },
+            error: function (e) {
+                console.log(e.message);
+            }
+        });
+        $(".btn-open-modal-add-card").each(function () {
+            if ($(this).attr("column_id") == column_add_card) {
+                // $(this).parents(".col-retro").find(".drag-task").append("<p>hello</p>");
+                $(this).parents(".col-retro").find(".drag-task").append("<div class=\"task-retro\" card_id="
+                    + card.card_id + "><div class=\"d-flex justify-content-between\"><div class=\"task-name\">"
+                    + card_name + "</div><div class=\"row mr-3\"><i class=\"fas fa-pen icon-open-comment\"></i><i class=\"fa fa-times btn-open-modal-delete-card\" card_id="
+                    + card.card_id + " data-toggle=\"modal\" data-target=\"#modaldeletecard\"></i></div></div>"
+                    + "<div class=\"d-flex justify-content-between info-card\"><div class=\"task-owner\">"
+                    + card.card_owner + "</div><div class=\"icon-feedback pr-3\"><i class=\"fas fa-thumbs-up mr-3 icon-vote\"> 0</i>"
+                    + "<i class='fas fa-comment-alt icon-comment'> 0</i></div></div><div class=\"list-cmt\">"
+                    + "<div class=\"input-group pt-3 form-box-cmt\" style=\"padding-left:3%;padding-right:15%\">"
+                    + "<textarea class=\"current-user-comment-box form-control\" rows=\"1\" style=\"resize:none\"placeholder=\"Enter your comment...\"></textarea>"
+                    + "<span class=\"input-group-addon btn btn-primary btn-add-cmt\">Send</span></div><div class=\"icon-close-cmt\">"
+                    + "<i class=\"fa fa-sort-up\"></i></div></div></div>");
+            }
+            $(".list-cmt").hide();
+
+        });
+    });
+
 });
+
 

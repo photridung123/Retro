@@ -140,3 +140,16 @@ exports.DeleteCard = async (req, res) => {
     await boardModel.DeleteCmtByCardId(req.body.card_id);
     await boardModel.DeleteVoteByCardId(req.body.card_id);
 }
+
+exports.AddCard = async (req, res) => {
+
+    let card = {
+        column_id: ObjectId(req.body.column_id),
+        card_name : req.body.card_name,
+        card_owner : ObjectId(res.locals.user._id)
+    }
+
+    const result = await boardModel.AddCard(card);
+    const user=  await userModels.getUser(res.locals.user._id);
+    res.send({card_id:result.insertedId,card_owner:user.user_name});
+}

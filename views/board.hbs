@@ -86,6 +86,29 @@
     </div>
 </div>
 
+{{!-- MODAL ADD CARD --}}
+<div class="modal fade" id="AddCardModal" tabindex="-1" role="dialog" aria-labelledby="AddCardModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header justify-content-center mt-3 team-divider">
+                <h3 class="modal-titler" id="AddCardModalTitle" style="font-weight: bolder;">Add Card</h3>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <input type="text" class="form-control" id="CardName" placeholder="Enter new card name">
+                </div>
+            </div>
+            <div class="modal-footer justify-content-center team-divider">
+                <div class="row justify-content-center">
+                    <button type="button" class="btn btn-primary okBtn btn-add-new-card"
+                        data-dismiss="modal">Add</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="page-heading-board d-flex justify-content-between">
     <h2>{{board_name}}</h2>
     <div class="toast toast-warning-out-of-vote" role="alert" aria-live="assertive" aria-atomic="true"
@@ -108,7 +131,7 @@
             <div class="col-name">{{this.column_name}}</div>
             <i class="fas fa-trash icon-trash btn-open-modal-delete-col" data-toggle="modal" data-target="#modaldeleteCol" column_id ={{this._id}}></i>
         </div>
-        <button type="button" class="btn-add-task">+</button>
+        <button type="button" class="btn-add-task btn-open-modal-add-card" data-toggle="modal" data-target="#AddCardModal" column_id ={{this._id}}>+</button>
 
         <div class="drag-task" id="drag-item-{{@key}}">
             <div class="no-drag">.</div>
