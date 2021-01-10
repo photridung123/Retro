@@ -1,6 +1,7 @@
 const boardModel = require("../models/boardModel");
 const userModels = require("../models/userModel");
 const { ObjectId } = require('mongodb');
+const { response } = require("express");
 
 exports.index = async (req, res, next) => {
     // Get from model
@@ -12,8 +13,11 @@ exports.index = async (req, res, next) => {
     //GET MAX VOTE
     let max_vote = parseInt(board.max_vote);
     if (vote_of_current_user) {
+
+        console.log(vote_of_current_user);
         max_vote -= vote_of_current_user.length;
     }
+    console.log("----------");
 
     //GET COLUMN
     let columns = await boardModel.FindColumns(board_id);
@@ -78,16 +82,18 @@ exports.AddCmt = async (req, res) => {
         comment_owner: res.locals.user._id,
         card_id: ObjectId(req.body.card_id)
     }
-    await boardModel.AddComment(cmt);
+    const result = await boardModel.AddComment(cmt);
+    res.send({comment_id:result.insertedId});
 }
 
 exports.Vote = async (req, res) => {
 
-    let isLike = req.body.isLike;
-    if (isLike == 'false') {
+    let isLiked = req.body.isLiked;
+ 
+    if (isLiked == 'false') {
         await boardModel.DeleteVote(req.body.card_id, res.locals.user._id);
     }
-    else {
+    if (isLiked == 'true')  {
         let vote = {
             card_id: ObjectId(req.body.card_id),
             vote_owner: ObjectId(res.locals.user._id)
@@ -99,6 +105,5 @@ exports.Vote = async (req, res) => {
 
 exports.DeleteCmt = async (req, res) => {
 
-    console.log(req.body);
     await boardModel.DeleteCmt(req.body.comment_id);
 }

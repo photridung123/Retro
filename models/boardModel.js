@@ -83,7 +83,8 @@ exports.FindComments = async (card_id) => {
 
 exports.AddComment = async (cmt) => {
     const commentCollection = db().collection(TBL_COMMENT);
-    await commentCollection.insertOne(cmt);
+    const result = await commentCollection.insertOne(cmt);
+    return result;
 }
 
 exports.DeleteCmt = async (comment_id) => {
