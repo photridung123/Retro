@@ -151,7 +151,7 @@ exports.getMyTeam = async (id) => {
     ]).toArray();
     picked = lodash.filter(teams, { 'members': [{ 'user-id': id }] });
     // picked = lodash.merge(picked.members,picked.members.memberInfo)
-    console.log(JSON.stringify(picked));
+    //console.log(JSON.stringify(picked));
 
     return picked;
 }
@@ -173,4 +173,13 @@ exports.getAllMyTeam = async(userid) => {
     const teamCollection = db().collection('tbl_user_team');
     const team = await teamCollection.find({['user-id']:ObjectId(userid)}).toArray();
     return team;
+}
+
+exports.countParticipationByTeamId = async(teamId) => {
+    const teamCollectinon = db().collection('tbl_user_team');
+    const count = await teamCollectinon.count({$and: [
+        { 'team-id': ObjectId(teamId) },
+        { inteam: true }
+    ]})
+    return count;
 }

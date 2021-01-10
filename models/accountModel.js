@@ -119,12 +119,6 @@ exports.getUserPricingHistory = async (userId) => {
   return history;
 }
 
-// exports.getAllCurrentHistory = async() => { 
-//   my = await db().collection('tbl_pricing_history').find({}).sort({startDay : -1}).toArray();
-//   console.log(my);
-//   return my;
-// }
-
 exports.getAllUserId = async () => {
   userIds = await db().collection('tbl_users').distinct("_id");
   return userIds;

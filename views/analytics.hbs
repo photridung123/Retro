@@ -1,7 +1,9 @@
 <div class="container" style="padding-top: 3rem; padding-bottom: 5rem">
-    {{#each team}}
+    {{#each team_boards}}
+    {{assign "totalmember" ./total_member}}
+    {{assign "participation" ./participation}}
     <div class="group-boards" style="padding-top: 3rem;">
-        <h2>{{this.teamName}}</h2>
+        <h2>{{./name}}</h2>
         <div class ="card">
             <table class="table">
                 <thead>
@@ -16,15 +18,15 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {{#each this.team_boards}}
+                    {{#each ./boards}}
                         <tr>
-                        <td>{{this.boardName}}</td>
-                        <td>{{format_date this.date_created}}</td>
-                        <td>{{this.total_card}}</td>
-                        <td>{{this.votes}}</td>
-                        <td>{{this.wroters}} of {{../this.owner}}</td>
-                        <td>{{this.voters}} of {{../this.owner}}</td>
-                        <td>{{this.participation}}</td>
+                        <td>{{./board_name}}</td>
+                        <td>{{./date_created}}</td>
+                        <td>{{./cards}}</td>
+                        <td>{{./current_vote}}</td>
+                        <td>{{./wroters}} of {{@root.totalmember}}</td>
+                        <td>{{./voters}} of {{@root.totalmember}}</td>
+                        <td>{{@root.participation}}%</td>
                         </tr>
                     {{/each}}
                 </tbody>
@@ -49,10 +51,10 @@
             <tbody>
                 {{#each public_boards}}
                 <tr>
-                <td>{{this.boardName}}</td>
-                <td>{{format_date this.date_created}}</td>
-                <td>{{this.total_card}}</td>
-                <td>{{this.votes}}</td>
+                <td>{{this.board_name}}</td>
+                <td>{{this.date_created}}</td>
+                <td>{{this.cards}}</td>
+                <td>{{this.current_vote}}</td>
                 <td>{{this.wroters}}</td>
                 <td>{{this.voters}}</td>
                 </tr>
