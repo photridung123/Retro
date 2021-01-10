@@ -8,16 +8,19 @@ $(document).ready(function () {
     }
 
 
+    var list_col_id = [];
+    $(".col-retro").each(function () {
+        list_col_id.push($(this).attr("column_id"));
+    });
+
     var drake = window.dragula();
     setupDragula();
     function setupDragula() {
         drake.destroy();
         //Drag & drop bang dragula js
         let container = [];
-        for (let i = 0; i < 5; i++) {
-            let temp = document.getElementById("drag-item-" + i.toString());
-            if (temp)
-                container.push(temp);
+        for (let i = 0; i < list_col_id.length; i++) {
+            container[i] = document.getElementById("drag-item-" + list_col_id[i].toString());
         }
         dragula(container, {
             revertOnSpill: false,
@@ -29,6 +32,27 @@ $(document).ready(function () {
             }
         }).on('drop', function (el) {
             console.log(el.closest(".drag-task"));
+           
+            let column_id = $(el).parents(".drag-task").attr("id");
+            column_id = column_id.replace("drag-item-", "");
+            console.log(column_id);
+            let list_card_id = [];
+            $(el).parents(".drag-task").children(".task-retro").each(function(){
+                list_card_id.push($(this).attr("card_id"));
+            });
+            console.log(list_card_id);
+
+            $.ajax({
+                url: window.location.href + "/update-drag-drop",
+                type: 'post',
+                data: { column_id,list_card_id: JSON.stringify(list_card_id) },
+                success: function (data) {               
+                    console.log(data);
+                },
+                error: function (e) {
+                    console.log(e.message);
+                }
+            });
         });
     }
 
@@ -166,31 +190,32 @@ $(document).ready(function () {
         });
     }
 
-    $(document).on("click", ".btn-add-new-col", async function () {
+    $(document).on("click", ".btn-add-new-col", function () {
         let board_id = $(".board-body").attr("board_id");
         let column_name = $("#ColName").val();
 
         if (total_columns < 5) {
 
-            await $.ajax({
+            $.ajax({
                 url: window.location.href + "/add-column",
                 type: 'post',
                 data: { board_id, column_name },
                 success: function (data) {
                     console.log("succesfully");
-                    $(".board-body").append("<div class=\"col-retro\"><div class=\"d-flex justify-content-between\">"
+                    $(".board-body").append("<div class=\"col-retro\" column_id =" + data.comment_id + "><div class=\"d-flex justify-content-between\">"
                         + "<div class=\"col-name\">" + column_name + "</div><i class=\"fas fa-trash icon-trash btn-open-modal-delete-col\""
                         + "data-toggle=\"modal\" data-target=\"#modaldeleteCol\" column_id =" + data.comment_id + "></i></div>"
                         + "<button type=\"button\" class=\"btn-add-task btn-open-modal-add-card\""
                         + "data-toggle=\"modal\" data-target=\"#AddCardModal\" column_id =" + data.comment_id + ">+</button><div class=\"drag-task\" id=\"drag-item-" +
-                        total_columns + "\"><div class=\"no-drag\">.</div></div></div>")
+                        data.comment_id + "\"><div class=\"no-drag\">.</div></div></div>");
+                    total_columns++;
+                    list_col_id.push(data.comment_id)
+                    setupDragula();
                 },
                 error: function (e) {
                     console.log(e.message);
                 }
             });
-            total_columns++;
-            setupDragula();
         }
         else {
             $('.toast-warning-max-col').toast("show");
@@ -203,7 +228,7 @@ $(document).ready(function () {
         card_delete_id = $(this).attr("card_id");
     })
 
-    $(document).on("click", ".btn-delete-card",  function () {
+    $(document).on("click", ".btn-delete-card", function () {
         $.ajax({
             url: window.location.href + "/delete-card",
             type: 'post',
@@ -228,7 +253,7 @@ $(document).ready(function () {
         column_delete_id = $(this).attr("column_id");
     })
 
-    $(document).on("click", ".btn-delete-column", async function () {
+    $(document).on("click", ".btn-delete-column", function () {
 
 
         $(".btn-open-modal-delete-col").each(function () {
@@ -240,12 +265,17 @@ $(document).ready(function () {
             }
         });
         total_columns--;
+        let index = list_col_id.indexOf(column_delete_id);
+
+        if (index > -1) {
+           list_col_id.splice(index, 1);
+        }
         setupDragula();
         if (total_columns == 1) {
             $('.icon-trash').hide();
         }
 
-        await $.ajax({
+        $.ajax({
             url: window.location.href + "/delete-column",
             type: 'post',
             data: { column_id: column_delete_id },

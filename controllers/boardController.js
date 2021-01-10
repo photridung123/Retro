@@ -153,3 +153,23 @@ exports.AddCard = async (req, res) => {
     const user=  await userModels.getUser(res.locals.user._id);
     res.send({card_id:result.insertedId,card_owner:user.user_name});
 }
+
+exports.UpdateDragDrop = async (req, res) => {
+
+    let column_id = req.body.column_id;
+    let list_card_id = JSON.parse(req.body.list_card_id);
+
+    if(list_card_id.length>0){
+        for(let i=0;i<list_card_id.length;i++){
+           
+            let old_card = await boardModel.FindCardById(list_card_id[i]);
+            if(old_card){
+                old_card.column_id = ObjectId(column_id);
+                old_card._id = ObjectId(old_card._id);
+                old_card.card_owner = ObjectId(old_card.card_owner);
+                await boardModel.DeleteCardByID(list_card_id[i]);
+                await boardModel.AddCard(old_card);
+            }
+        }
+    }
+}

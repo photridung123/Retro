@@ -11,4 +11,5 @@ router.post('/:id/delete-card', boardController.DeleteCard);
 router.post('/:id/add-card', boardController.AddCard);
 router.post('/:id/add-column', boardController.AddCol);
 router.post('/:id/delete-column', boardController.DelCol);
+router.post('/:id/update-drag-drop',boardController.UpdateDragDrop);
 module.exports = router;

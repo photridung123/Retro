@@ -138,3 +138,18 @@ exports.AddCard = async (card) => {
     const cardCollection = db().collection(TBL_CARDS);
     return await cardCollection.insertOne(card);
 }
+
+exports.FindCardById = async (card_id) => {
+    const cardCollection = db().collection(TBL_CARDS);
+    return await cardCollection.findOne({
+        _id: ObjectId(card_id)
+    })
+}
+// exports.UpdateDragDrop = async (card_id,column_id) =>{
+//     const cardCollection = db().collection(TBL_CARDS);
+//     cardCollection.insertOne({_id: ObjectId(card_id)}, { $set:
+//         {
+//           column_id: ObjectId(column_id)
+//         }
+//      });
+// }

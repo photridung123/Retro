@@ -126,14 +126,14 @@
 <div class="board-body d-flex justify-content-between" total_columns={{total_columns}} max_vote={{max_vote}}
     user_name="{{user.user_name}}" board_id={{board_id}}>
     {{#each columns}}
-    <div class="col-retro">
+    <div class="col-retro" column_id ={{this._id}}>
         <div class="d-flex justify-content-between">
             <div class="col-name">{{this.column_name}}</div>
             <i class="fas fa-trash icon-trash btn-open-modal-delete-col" data-toggle="modal" data-target="#modaldeleteCol" column_id ={{this._id}}></i>
         </div>
         <button type="button" class="btn-add-task btn-open-modal-add-card" data-toggle="modal" data-target="#AddCardModal" column_id ={{this._id}}>+</button>
 
-        <div class="drag-task" id="drag-item-{{@key}}">
+        <div class="drag-task" id="drag-item-{{this._id}}">
             <div class="no-drag">.</div>
             {{#each this.cards}}
             <div class="task-retro" card_id={{this._id}}>
