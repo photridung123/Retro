@@ -63,6 +63,11 @@ exports.DeleteCards = async (col_id) => {
     cardCollection.deleteMany({ column_id: ObjectId(col_id) });
 }
 
+exports.DeleteCardByID = async (card_id) =>{
+    const cardCollection = db().collection(TBL_CARDS);
+    cardCollection.deleteOne({ _id: ObjectId(card_id) });
+}
+
 exports.GetVoteByUserID = async (user_id) => {
     const voteCollection = db().collection(TBL_VOTE);
     const votes = await voteCollection.find({ vote_owner: ObjectId(user_id) }).toArray();
@@ -92,6 +97,11 @@ exports.DeleteCmt = async (comment_id) => {
     await commentCollection.deleteOne({_id:ObjectId(comment_id)});
 }
 
+exports.DeleteCmtByCardId = async (card_id) => {
+    const commentCollection = db().collection(TBL_COMMENT);
+    await commentCollection.deleteMany({card_id:ObjectId(card_id)});
+}
+
 exports.DeleteVote = async (card_id,vote_owner) => {
     const voteCollection = db().collection(TBL_VOTE);
     await voteCollection.deleteOne({
@@ -102,7 +112,23 @@ exports.DeleteVote = async (card_id,vote_owner) => {
     });
 }
 
+exports.DeleteVoteByCardId = async (card_id) => {
+    const voteCollection = db().collection(TBL_VOTE);
+    await voteCollection.deleteMany({ card_id: ObjectId(card_id)});
+       
+}
+
 exports.AddVote = async (vote) => {
     const voteCollection = db().collection(TBL_VOTE);
     await voteCollection.insertOne(vote);
+}
+
+exports.AddCols = async (column) => {
+    const columnCollection = db().collection(TBL_COLUMNS);
+    return await columnCollection.insertOne(column);
+}
+
+exports.DeleteColsById = async (column_id) =>{
+    const columnCollection = db().collection(TBL_COLUMNS);
+    await columnCollection.deleteOne({ _id: ObjectId(column_id)});
 }

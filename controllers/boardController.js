@@ -107,3 +107,36 @@ exports.DeleteCmt = async (req, res) => {
 
     await boardModel.DeleteCmt(req.body.comment_id);
 }
+
+exports.AddCol = async (req,res) => {
+    let col = {
+        board_id :ObjectId(req.body.board_id),
+        column_name : req.body.column_name
+    }
+    const result = await boardModel.AddCols(col);
+    res.send({comment_id:result.insertedId});
+}
+
+exports.DelCol = async (req,res) => {
+   
+    let cards = await boardModel.FindCards(req.body.column_id);
+
+    //DELETE CARD AND BODY OF CARD
+    if(cards && cards.length>0){
+        for(let i = 0;i<cards.length;i++){
+            await boardModel.DeleteCardByID(cards[i]._id);
+            await boardModel.DeleteCmtByCardId(cards[i]._id);
+            await boardModel.DeleteVoteByCardId(cards[i]._id);
+        }
+    }
+
+    //delete col
+    await boardModel.DeleteColsById(req.body.column_id);
+}
+
+exports.DeleteCard = async (req, res) => {
+
+    await boardModel.DeleteCardByID(req.body.card_id);
+    await boardModel.DeleteCmtByCardId(req.body.card_id);
+    await boardModel.DeleteVoteByCardId(req.body.card_id);
+}

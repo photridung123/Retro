@@ -25,6 +25,8 @@ $(document).ready(function () {
         console.log(el.closest(".drag-task"));
     });
 
+
+
     $(".list-cmt").hide();
     $(document).on("click", ".icon-open-comment", function () {
         let parent = $(this).closest(".task-retro");
@@ -156,5 +158,94 @@ $(document).ready(function () {
             console.log("-------");
         });
     }
+
+    $(document).on("click", ".btn-add-new-col", async function () {
+        let board_id = $(".board-body").attr("board_id");
+        let column_name = $("#ColName").val();
+
+        if (total_columns < 5) {
+
+            await $.ajax({
+                url: window.location.href + "/add-column",
+                type: 'post',
+                data: { board_id, column_name },
+                success: function (data) {
+                    console.log("succesfully");
+                    $(".board-body").append("<div class=\"col-retro\"><div class=\"d-flex justify-content-between\">"
+                        + "<div class=\"col-name\">" + column_name + "</div><i class=\"fas fa-trash icon-trash btn-open-modal-delete-col\""
+                        + "data-toggle=\"modal\" data-target=\"#modaldeleteCol\" column_id =" + data.comment_id + "></i></div>"
+                        + "<button type=\"button\" class=\"btn-add-task\">+</button><div class=\"drag-task\" id=\"drag-item-" +
+                        total_columns + "\"><div class=\"no-drag\">.</div></div></div>")
+                },
+                error: function (e) {
+                    console.log(e.message);
+                }
+            });
+            total_columns++;
+        }
+        else {
+            $('.toast-warning-max-col').toast("show");
+        }
+
+    })
+
+    let card_delete_id;
+    $(document).on("click", ".btn-open-modal-delete-card", function () {
+        card_delete_id = $(this).attr("card_id");
+    })
+
+    $(document).on("click", ".btn-delete-card", async function () {
+        await $.ajax({
+            url: window.location.href + "/delete-card",
+            type: 'post',
+            data: { card_id: card_delete_id },
+            success: function () {
+                console.log("succesfully");
+            },
+            error: function (e) {
+                console.log(e.message);
+            }
+        });
+        $(".task-retro").each(function () {
+            if ($(this).attr("card_id") == card_delete_id) {
+                $(this).remove();
+            }
+        });
+    });
+
+    //delete column
+    let column_delete_id;
+    $(document).on("click", ".btn-open-modal-delete-col", function () {
+        column_delete_id = $(this).attr("column_id");
+    })
+
+    $(document).on("click", ".btn-delete-column", async function () {
+
+
+        $(".btn-open-modal-delete-col").each(function () {
+            console.log($(this).attr("column_id"));
+            console.log(column_delete_id);
+            if ($(this).attr("column_id") == column_delete_id) {
+                console.log("-----");
+                $(this).parents(".col-retro").remove();
+            }
+        });
+        total_columns--;
+        if (total_columns == 1) {
+            $('.icon-trash').hide();
+        }
+
+        await $.ajax({
+            url: window.location.href + "/delete-column",
+            type: 'post',
+            data: { column_id: column_delete_id },
+            success: function () {
+                console.log("succesfully");
+            },
+            error: function (e) {
+                console.log(e.message);
+            }
+        });
+    });
 });
 
