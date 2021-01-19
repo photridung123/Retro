@@ -143,9 +143,15 @@ let updateSubscription = schedule.scheduleJob(rule, async function () {
     for (var i in userIds) {
       now = new Date();
       history = await accountModel.getCurrentHistory(userIds[i]);
+      userPricing = await accountModel.getUserPricing(userIds[i]);
       if(now > history.endDay) { 
-        accountModel.addNewPricingHistory(userIds[i],"premium");
-        accountModel.updateUserPricing(userIds[i],"premium");
+        if(userPricing == "basic") {
+          accountModel.addNewPricingHistory(userIds[i],"premium");
+          accountModel.updateUserPricing(userIds[i],"premium");
+        } else {
+          accountModel.updatePublicBoard(userIds[i]);
+          accountModel.updatePublicBoard(userIds[i]);
+        }
       }
     }
   }
