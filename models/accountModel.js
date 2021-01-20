@@ -65,7 +65,7 @@ exports.addNewUserPricing = async (userId, pricingName) => {
     publicBoard = 3;
   }
   else {
-    teamBoard = 200;
+    teamBoard = 5;
     publicBoard = 5;
     teamNumber = 1;
   }
