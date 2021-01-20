@@ -25,7 +25,7 @@ exports.addUser = async function(req,res) {
             username: req.body.username,
             email: req.body.email,
             password: req.body.password,
-            avatar: null,
+            avatar: "https://res.cloudinary.com/dkgqk2joa/image/upload/v1611127524/users/images/avatar_notdmh.png",
             dob: null,
             date: currentDate,
         }

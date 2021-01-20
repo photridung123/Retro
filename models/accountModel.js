@@ -118,8 +118,6 @@ exports.getTeamNumber = async(userId) => {
 }
 
 exports.updateTeamNumber = async(userId,number) => {
-  console.log("THISSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS");
-  console.log(number);
   const userPricingCollection = db().collection('tbl_user_pricing');
   await userPricingCollection.updateOne({ ['user-id']: ObjectId(userId) },{$set:{teamNumber: parseInt(number)}});
 }

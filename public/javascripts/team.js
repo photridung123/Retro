@@ -4,6 +4,16 @@ $("document").ready(function () {
     let team;
     let userId;
     let teamNumber;
+    let type;
+
+    $.ajax({
+        type: "GET",
+        url: '/account/user/type',
+        dataType: "json",
+        success: function (data){
+            type = data.type;
+        }
+    })
 
     $.ajax({
         type: "GET",
@@ -96,7 +106,10 @@ $("document").ready(function () {
     $("#delTeamBtn").on("click", function() {
         let mydata = team.attr("name");
         teamNumber = 1;
-        $("#addNewTeamButton").prop("disabled", false); 
+        $.ajax({
+            type: "POST",
+            url: '/team/delTeamBoard'
+          });
         $.ajax({
             type: "POST",
             url: '/team/delTeam',
@@ -144,11 +157,24 @@ $("document").ready(function () {
         member.remove();
     })
 
-    $("#addNewTeamButton").on("mouseenter",function(){
-        if(teamNumber === 0) {
-            $("#addNewTeamButton").prop("disabled", true);   
-        } else {
-            $("#addNewTeamButton").prop("disabled", false);   
+    // $("#addNewTeamButton").on("mouseenter",function(){
+    //     if(teamNumber === 0) {
+    //         $("#addNewTeamButton").prop("disabled", true);   
+    //     } else {
+    //         $("#addNewTeamButton").prop("disabled", false);   
+    //     }
+    // });
+
+    $("#addNewTeamButton").on("click",function(){
+        if(teamNumber === 0 && type=="basic") {
+            $('#warningCantCreateTeamBasic').modal('show'); 
+        }
+        if(teamNumber === 0 && type=="premium") {
+            $('#warningCantCreateTeamPremimum').modal('show'); 
+        }
+
+        if(teamNumber === 1) {
+            $('#createTeamModal').modal('show');
         }
     });
 })

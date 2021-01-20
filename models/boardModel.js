@@ -145,7 +145,6 @@ exports.FindCardById = async (card_id) => {
     })
 }
 
-
 exports.UpdateCurrentVote = async (board_id, new_current_vote) => {
     const boardCollection = db().collection(TBL_BOARD);
     await boardCollection.updateOne({ _id: ObjectId(board_id) }, {

@@ -22,10 +22,6 @@ exports.index = async (req, res, next) => {
 
         board = await boardModel.FindBoards(team._id, "team");
 
-        let participation = await teamModel.countParticipationByTeamId(team._id);
-        
-        participation = (participation/team.total_member)*100;
-
         for (let l in board) {
 
 
@@ -34,6 +30,10 @@ exports.index = async (req, res, next) => {
             let wrt = [];
             let vt = [];
             let count = 0;
+
+            let participation = await teamModel.countParticipationByBoardId(board[l]._id);
+        
+            participation = (participation/team.total_member)*100;
 
             board[l].date_created = dateFormat(board[l].date_created, "paddedShortDate");
             columns = await boardModel.FindColumns(board[l]._id);
@@ -66,7 +66,7 @@ exports.index = async (req, res, next) => {
         }
         tempBoards.push(target);
     }
-    console.log("team",JSON.stringify(tempBoards));
+    //console.log("team",JSON.stringify(tempBoards));
 
     // public board
     publicBoards = await boardModel.FindBoards(res.locals.user._id, "public");

@@ -1,6 +1,7 @@
 const teamModel = require("../models/teamModel");
-const accountModel = require("../models/accountModel")
-const { ObjectId } = require('mongodb')
+const accountModel = require("../models/accountModel");
+const boardModel = require("../models/boardModel");
+const { ObjectId } = require('mongodb');
 const nodemailer = require("nodemailer");
 const { v4: uuidv4 } = require('uuid');
 require('dotenv').config();
@@ -130,4 +131,28 @@ exports.addTeam = async function(req,res,next) {
     await teamModel.addUserTeam(userTeam);
     await accountModel.updateTeamNumber(res.locals.user._id,0);
     res.redirect("/team");
+}
+
+exports.delTeamBoard = async function(req,res,next) {
+    teamId = await teamModel.getTeamByOwner(res.locals.user._id);
+    boards = await boardModel.FindBoards(teamId._id,"team");
+    
+    for (let i in boards) {
+        await boardModel.DeleteBoard(boards[i]._id);
+        let cols = await boardModel.FindColumns(boards[i]._id);
+        if (cols.length > 0) {
+            for (let j = 0; j < cols.length; j++) {
+    
+                const list_card = await boardModel.FindCards(cols[j]._id);
+                
+                for(let k=0;k<list_card.length;k++){
+                    await boardModel.DeleteVoteByCardId(list_card[k]._id);
+                    await boardModel.DeleteCmtByCardId(list_card[k]._id);
+                    await boardModel.DeleteCardByID(list_card[k]._id);
+                }
+                
+            }
+        }
+        await boardModel.DeleteCols(boards[i]._id);
+    }
 }

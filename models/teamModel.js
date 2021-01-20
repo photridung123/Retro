@@ -2,6 +2,7 @@
 const { db } = require('../db/db');
 const { ObjectId } = require('mongodb');
 const lodash = require('lodash');
+const boardModel = require('../models/boardModel');
 
 exports.add = (team) => {
     const teamCollection = db().collection('tbl_teams');
@@ -31,21 +32,21 @@ exports.getUserIdByEmail = async (email) => {
     };
 }
 
-exports.delUserTeamByTeamId = async(teamId) => {
+exports.delUserTeamByTeamId = async (teamId) => {
     const teamCollection = db().collection('tbl_user_team');
     teamCollection.deleteMany({
-        'team-id' : ObjectId(teamId)
+        'team-id': ObjectId(teamId)
     });
 }
 
-exports.delTeamByTeamId = async(teamId) => {
+exports.delTeamByTeamId = async (teamId) => {
     const teamCollectinon = db().collection('tbl_teams');
     teamCollectinon.deleteOne({
         _id: ObjectId(teamId)
     });
 }
 
-exports.delUserTeam = async(teamId, userId) => {
+exports.delUserTeam = async (teamId, userId) => {
     const teamCollection = db().collection('tbl_user_team');
     teamCollection.deleteOne({
         $and: [
@@ -72,36 +73,39 @@ exports.addUserTeam = async (user_team) => {
     console.log(`New listing created with the following id: ${result.insertedId}`);
 }
 
-exports.setTotalMember = async (teamId,total_member) => {
+exports.setTotalMember = async (teamId, total_member) => {
     const teamCollection = db().collection('tbl_teams');
-    teamCollection.updateOne({_id: ObjectId(teamId)}, { $set:
+    teamCollection.updateOne({ _id: ObjectId(teamId) }, {
+        $set:
         {
-          total_member: total_member
+            total_member: total_member
         }
-     });
+    });
 }
 
-exports.joinTeam = async(invitationToken) => {
+exports.joinTeam = async (invitationToken) => {
     const invitationCollection = db().collection("tbl_invitation_token");
     const teamCollectinon = db().collection("tbl_user_team");
-    const userInvited = await invitationCollection.findOne({"invitation-token": invitationToken});
-    if(userInvited) {
-        teamCollectinon.updateOne({$and: [
-            { 'team-id': ObjectId(userInvited.teamId) },
-            { 'user-id': ObjectId(userInvited.userId) }
-        ]}, {
+    const userInvited = await invitationCollection.findOne({ "invitation-token": invitationToken });
+    if (userInvited) {
+        teamCollectinon.updateOne({
+            $and: [
+                { 'team-id': ObjectId(userInvited.teamId) },
+                { 'user-id': ObjectId(userInvited.userId) }
+            ]
+        }, {
             $set:
             {
-              inteam: true
+                inteam: true
             }
         })
     }
-    invitationCollection.deleteOne({"invitation-token": invitationToken});
+    invitationCollection.deleteOne({ "invitation-token": invitationToken });
 }
 
-exports.addInvitationToken = async(invitationToken,userId,teamId) => {
+exports.addInvitationToken = async (invitationToken, userId, teamId) => {
     const invitationCollection = db().collection("tbl_invitation_token");
-    invitationCollection.createIndex({ expireAfterSeconds: 86400});
+    invitationCollection.createIndex({ expireAfterSeconds: 86400 });
     invitationCollection.insert({
         "createAt": new Date(),
         "userId": ObjectId(userId),
@@ -156,30 +160,75 @@ exports.getMyTeam = async (id) => {
     return picked;
 }
 
-exports.createNewTeam = async(teamInfo) => {
-    const teamCollection = db().collection('tbl_teams');  
+exports.createNewTeam = async (teamInfo) => {
+    const teamCollection = db().collection('tbl_teams');
     const result = await teamCollection.insertOne(teamInfo);
     console.log(`New listing created with the following id: ${result.insertedId}`);
     return result.insertedId;
 }
 
-exports.getTeamById = async(teamid) => {
-    const teamCollection = db().collection('tbl_teams');  
-    const team = await teamCollection.findOne({_id: ObjectId(teamid)});
+exports.getTeamById = async (teamid) => {
+    const teamCollection = db().collection('tbl_teams');
+    const team = await teamCollection.findOne({ _id: ObjectId(teamid) });
     return team;
 }
 
-exports.getAllMyTeam = async(userid) => {
+exports.getAllMyTeam = async (userid) => {
     const teamCollection = db().collection('tbl_user_team');
-    const team = await teamCollection.find({['user-id']:ObjectId(userid)}).toArray();
+    const team = await teamCollection.find({ ['user-id']: ObjectId(userid) }).toArray();
     return team;
 }
 
-exports.countParticipationByTeamId = async(teamId) => {
-    const teamCollectinon = db().collection('tbl_user_team');
-    const count = await teamCollectinon.count({$and: [
-        { 'team-id': ObjectId(teamId) },
-        { inteam: true }
-    ]})
-    return count;
+exports.countParticipationByBoardId = async (boardId) => {
+    // const teamCollectinon = db().collection('tbl_user_team');
+    // const count = await teamCollectinon.count({$and: [
+    //     { 'team-id': ObjectId(teamId) },
+    //     { inteam: true }
+    // ]})
+    // return count;
+
+    let numCards = [];
+    let numComments = [];
+    let numVotes = [];
+
+    //const boardCollection = db().collection('tbl_boards');
+    // const commentCollection = db().collection('tbl_comment');
+    // const voteCollection = db().collection('tbl_vote');
+    //board = await boardCollection.findOne({ _id: ObjectId(boardId) });
+
+    let cols = await boardModel.FindColumns(boardId);
+    if (cols.length > 0) {
+        for (let j = 0; j < cols.length; j++) {
+
+            const list_card = await boardModel.FindCards(cols[j]._id);
+
+            for (let k = 0; k < list_card.length; k++) {
+
+                numCards.push(list_card[k].card_owner.toString());
+
+
+                let list_comments = await boardModel.FindComments(list_card[k]._id);
+
+                for(let a = 0; a < list_comments.length; a++) {
+                    numComments.push(list_comments[a].comment_owner.toString());
+                }
+
+                let list_votes = await boardModel.FindVotes(list_card[k]._id);
+
+                for(let c = 0; c <list_votes.length; c++) {
+                    numVotes.push(list_votes[c].vote_owner.toString());
+                }
+            }
+        }
+        let array = numComments.concat(numVotes);
+        let final = numCards.concat(array);
+        let unique = final.filter(onlyUnique);
+        return unique.length; 
+    } else {
+        return 0;
+    }
 }
+
+function onlyUnique(value, index, self) {
+    return self.indexOf(value) === index;
+  }
