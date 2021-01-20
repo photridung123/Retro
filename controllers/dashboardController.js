@@ -15,7 +15,7 @@ exports.index = async (req, res, next) => {
                 total_card += cards.length;
             }
         public_boards[i].total_card = total_card;
-        public_boards[i].board_URL = "http://localhost:3000/board/" + public_boards[i]._id;
+        public_boards[i].board_URL = "https://d-retro.herokuapp.com/board/" + public_boards[i]._id;
     }
 
     //FIND TEAM BOARDS
@@ -100,7 +100,7 @@ exports.AddBoard = async (req, res) => {
     }
 
     board.total_card = 0;
-    board.board_URL = "http://localhost:3000/board/" + result.insertedId;
+    board.board_URL = "https://d-retro.herokuapp.com/board/" + result.insertedId;
     res.send({ new_board: board });
 }
 
