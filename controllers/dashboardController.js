@@ -75,13 +75,13 @@ exports.AddBoard = async (req, res) => {
         const team = await teamModels.getTeamById(req.body.owner_id);
         const user_pricing = await accountModels.getUserPricingFull(team.owner);
         let amount_team_board = parseInt(user_pricing['team-board']);
-        await accountModels.UpdateAmountTeamBoard(amount_team_board--, team.owner);
+        await accountModels.UpdateAmountTeamBoard(amount_team_board-1, team.owner);
     }
     else {
 
         const user_pricing = await accountModels.getUserPricingFull(res.locals.user._id);
         let amount_public_board = parseInt(user_pricing['public-board']);
-        await accountModels.UpdateAmountPublicBoard(amount_public_board--, res.locals.user._id);
+        await accountModels.UpdateAmountPublicBoard(amount_public_board-1, res.locals.user._id);
     }
 
     board.board_type = board_type;
@@ -117,16 +117,16 @@ exports.DeleteBoard = async (req, res) => {
             //update team board amount
             const user_pricing = await accountModels.getUserPricingFull(team.owner);
             let amount_team_board = parseInt(user_pricing['team-board']);
-            await accountModels.UpdateAmountTeamBoard(amount_team_board++, team.owner);
+            await accountModels.UpdateAmountTeamBoard(amount_team_board+1, team.owner);
         }
     }
     else {
         //update public board amount
         const user_pricing = await accountModels.getUserPricingFull(res.locals.user._id);
         let amount_public_board = parseInt(user_pricing['public-board']);
-        await accountModels.UpdateAmountPublicBoard(amount_public_board++, res.locals.user._id);
+        await accountModels.UpdateAmountPublicBoard(amount_public_board+1, res.locals.user._id);
     }
-    
+
     //delete board
     await boardModel.DeleteBoard(board_id);
     let cols = await boardModel.FindColumns(board_id);

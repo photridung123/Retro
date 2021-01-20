@@ -44,17 +44,18 @@ $(document).ready(function () {
             type: 'post',
             data: { owner_id, board_type: $(this).attr("board_type") },
             success: function (data) {
-                console.log(data);
                 let amount = parseInt(data.amount_board);
                 if (amount > 0) {
                     flagAddBoard = true;
+                }
+                else {
+                    flagAddBoard = false;
                 }
             },
             error: function (e) {
                 console.log(e.message);
             }
         });
-        console.log(board_type);
     });
 
     function format_date(date) {
@@ -101,6 +102,9 @@ $(document).ready(function () {
                     console.log(e.message);
                 }
             });
+        }
+        else {
+            $('.toast-warning-full-board').toast('show')
         }
     });
 
