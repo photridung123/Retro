@@ -40,7 +40,6 @@ $(document).ready(function () {
             $(el).parents(".drag-task").children(".task-retro").each(function(){
                 list_card_id.push($(this).attr("card_id"));
             });
-            console.log(list_card_id);
 
             $.ajax({
                 url: window.location.href + "/update-drag-drop",
