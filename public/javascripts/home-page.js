@@ -30,8 +30,8 @@ $(document).ready(function () {
 
   function init_card() {
 
-    console.log("checked");
-    width = $(window).width();
+    width = window.innerWidth;
+    console.log(width);
     max_card = (width > 995) ? 3 : 1;
     $('.quote').hide();
 
