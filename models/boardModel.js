@@ -63,7 +63,7 @@ exports.DeleteCards = async (col_id) => {
     cardCollection.deleteMany({ column_id: ObjectId(col_id) });
 }
 
-exports.DeleteCardByID = async (card_id) =>{
+exports.DeleteCardByID = async (card_id) => {
     const cardCollection = db().collection(TBL_CARDS);
     cardCollection.deleteOne({ _id: ObjectId(card_id) });
 }
@@ -94,15 +94,15 @@ exports.AddComment = async (cmt) => {
 
 exports.DeleteCmt = async (comment_id) => {
     const commentCollection = db().collection(TBL_COMMENT);
-    await commentCollection.deleteOne({_id:ObjectId(comment_id)});
+    await commentCollection.deleteOne({ _id: ObjectId(comment_id) });
 }
 
 exports.DeleteCmtByCardId = async (card_id) => {
     const commentCollection = db().collection(TBL_COMMENT);
-    await commentCollection.deleteMany({card_id:ObjectId(card_id)});
+    await commentCollection.deleteMany({ card_id: ObjectId(card_id) });
 }
 
-exports.DeleteVote = async (card_id,vote_owner) => {
+exports.DeleteVote = async (card_id, vote_owner) => {
     const voteCollection = db().collection(TBL_VOTE);
     await voteCollection.deleteOne({
         $and: [
@@ -114,8 +114,7 @@ exports.DeleteVote = async (card_id,vote_owner) => {
 
 exports.DeleteVoteByCardId = async (card_id) => {
     const voteCollection = db().collection(TBL_VOTE);
-    await voteCollection.deleteMany({ card_id: ObjectId(card_id)});
-       
+    await voteCollection.deleteMany({ card_id: ObjectId(card_id) });
 }
 
 exports.AddVote = async (vote) => {
@@ -128,9 +127,9 @@ exports.AddCols = async (column) => {
     return await columnCollection.insertOne(column);
 }
 
-exports.DeleteColsById = async (column_id) =>{
+exports.DeleteColsById = async (column_id) => {
     const columnCollection = db().collection(TBL_COLUMNS);
-    await columnCollection.deleteOne({ _id: ObjectId(column_id)});
+    await columnCollection.deleteOne({ _id: ObjectId(column_id) });
 }
 
 
@@ -145,11 +144,14 @@ exports.FindCardById = async (card_id) => {
         _id: ObjectId(card_id)
     })
 }
-// exports.UpdateDragDrop = async (card_id,column_id) =>{
-//     const cardCollection = db().collection(TBL_CARDS);
-//     cardCollection.insertOne({_id: ObjectId(card_id)}, { $set:
-//         {
-//           column_id: ObjectId(column_id)
-//         }
-//      });
-// }
+
+
+exports.UpdateCurrentVote = async (board_id, new_current_vote) => {
+    const boardCollection = db().collection(TBL_BOARD);
+    await boardCollection.updateOne({ _id: ObjectId(board_id) }, {
+        $set:
+        {
+            current_vote: new_current_vote
+        }
+    })
+}

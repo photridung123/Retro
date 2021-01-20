@@ -89,18 +89,23 @@ exports.AddCmt = async (req, res) => {
 exports.Vote = async (req, res) => {
 
     let isLiked = req.body.isLiked;
- 
+    let board_id = req.params.id;
+    const board = await boardModel.FindBoardByBoardId(board_id);
+    let new_current_vote = parseInt(board.current_vote) ;
     if (isLiked == 'false') {
         await boardModel.DeleteVote(req.body.card_id, res.locals.user._id);
+        const board = await boardModel.FindBoardByBoardId(board_id);
+        new_current_vote--;       
     }
     if (isLiked == 'true')  {
         let vote = {
             card_id: ObjectId(req.body.card_id),
             vote_owner: ObjectId(res.locals.user._id)
         }
-
         await boardModel.AddVote(vote);
+        new_current_vote++;
     }
+    await boardModel.UpdateCurrentVote(board_id,new_current_vote);
 }
 
 exports.DeleteCmt = async (req, res) => {
