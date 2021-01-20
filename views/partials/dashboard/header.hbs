@@ -1,0 +1,47 @@
+<nav class="navbar navbar-expand-lg bg-dark navbar-dark">
+
+    <!-- Brand -->
+    <a class="navbar-brand pl-4" href="/dashboard">
+        <img src="../../images/logo-name.png" width="150" height="auto" alt="">
+    </a>
+
+    <!-- Toggler/collapsibe Button -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Navbar links -->
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+        <ul class="navbar-nav mr-auto font-weight-bold text-white pl-5">
+            <li class="nav-item {{#if_eq title "Dashboard"}} active {{/if_eq}} pl-5 ml-5">
+                <a class="nav-link" href="/dashboard">
+                    <img src="../../images/icons/dashboard.png" width="30px" height="30px">
+                    Dashboard
+                </a>
+            </li>
+            <li class="nav-item {{#if_eq title "Team"}} active {{/if_eq}} pl-5">
+
+                <a class="nav-link" href="/team">
+                    <img src="../../images/icons/team.png" width="30px" height="30px">
+                    Team
+                </a>
+            </li>
+            <li class="nav-item {{#if_eq title "Analytics"}} active {{/if_eq}} pl-5">
+
+                <a class="nav-link" href="/analytics">
+                    <img src="../../images/icons/analytics.png" width="30px" height="30px">
+                    Analytics
+                </a>
+            </li>
+        </ul>
+        <div class="dropdown ">
+            <a class="nav-link dropdown-toggle text-white" id="navbarDropdownMenuLink-4" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">{{user.user_name}} <img id="userAvatar" src="{{user.user_avatar}}" width="30px" height="30px" class="rounded-circle z-depth-0"
+                    alt=""></a>
+            <div class="dropdown-menu dropdown-menu-right dropdown-info" aria-labelledby="navbarDropdownMenuLink-4">
+                <a class="dropdown-item" href="/account">My account</a>
+                <a class="dropdown-item" href="/logout">Log out</a>
+            </div>
+        </div>
+    </div>
+</nav>

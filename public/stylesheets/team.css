@@ -1,0 +1,125 @@
+.my-team{
+    font-weight: bold;
+    font-size: 45px;
+    margin-left: 4rem;
+    padding-bottom: 1rem;
+}
+
+.select-box{
+    border: 3pt black solid;
+    padding: 2rem;
+    margin-left: 4rem;
+    background-color: #eaeaea;
+}
+
+.select-box:hover{
+    border: 3pt green solid;
+    color: green;
+    padding: 2rem;
+    margin-left: 4rem;
+    background-color: #eaeaea;
+}
+
+.okBtn{
+    background-color: red;
+    border-color: red;
+    width: 5rem;
+    margin-right: 5rem;
+    border-radius: 0%;
+}
+
+.cancelBtn{
+    background-color: #C4C4C4;
+    border-color: #C4C4C4;
+    width: 5rem;
+    margin-left: 5rem;
+    border-radius: 0%;
+} 
+
+.delBtn{
+    background-color: red;
+    border-color: red;
+    width: 8rem;
+    border-radius: 0%;
+}
+
+.addBtn{
+    background-color: blue;
+    border-color: blue;
+    width: 8rem;
+    border-radius: 0%;
+} 
+
+.leaBtn{
+    background-color: red;
+    border-color: red;
+    width: 8rem;
+    border-radius: 0%;
+}
+
+.add-icon{
+    width: 3em;
+    height: 2em;
+}
+
+.team-divider{
+    border: none;
+}
+
+.myteam-input{
+    width: 25rem;
+}
+
+.team-cards{
+    margin-left: 1rem;
+    margin-bottom: 1rem;
+}
+
+.delete-member:focus{
+    outline: none;
+}
+
+.inviteBtn{
+    margin-top: 1rem;
+    width: 25rem;
+    border-radius: 0%;
+    background-color:#BB1EBB;
+    margin-bottom: 2rem;
+}
+
+.inviteBtn:hover{
+    background-color: rgb(160, 44, 160);
+}
+
+.memberIncresement{
+    color:#0000FF;
+    font-size: 18pt;
+    margin-top: 1rem;
+    margin-left: 2rem;
+    border: none;
+    background-color: white;
+}
+
+.memberIncresement:focus{
+    outline:none;
+}
+
+.team-page{
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+    /* padding-top: 4rem;
+    padding-bottom:5rem; */
+}
+
+.delete-member:hover{
+    color:red;
+    outline:none;
+}
+
+.title-members{
+    font-weight: bolder;
+    font-size: 1rem;
+    padding-top: 0.75rem;
+    padding-bottom: 0.5rem;
+}

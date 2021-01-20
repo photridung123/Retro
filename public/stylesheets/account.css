@@ -1,0 +1,138 @@
+.content-form{
+    margin-left: 20rem;
+    margin-right: 20rem;
+}
+
+#name{
+    width: 350px;
+    border: none;
+    outline: none;
+    border-bottom: solid 1px grey;
+}
+
+#name:focus{
+    border-bottom: solid 2px orange;
+}
+.name-group{
+    color: grey;
+    margin-bottom: 0rem;
+}
+.form-group{
+    padding-left: 2rem;
+    padding-top: .5rem;
+}
+
+#newImage{
+    
+    border-radius: 2px;
+}
+
+.change-link{
+    color: #B721B7;
+}
+
+.content-form{
+    margin-left: 20rem;
+    margin-right: 20rem;
+}
+
+.btn-changeEmail{
+    margin-bottom: .5rem;
+    background-color: #FF0000;
+}
+
+.btn-cancelChange{
+    margin-top: 0rem;
+    background-color: #C4C4C4;
+}
+.square {
+    height: 40px;
+    width: 40px;
+    display: inline-block;
+    margin-right: 1rem;
+  }
+
+#square1{
+    background-color: #b8daff;
+}
+#square2{
+    margin-left: 5rem;
+    background-color: #f5c6cb;
+}
+
+.passwordAlert {
+    color: red;
+}
+
+
+@media (max-width: 1199px) {
+    .content-form{
+        margin-left: 15rem;
+        margin-right: 15rem;
+    }
+}
+
+
+@media (max-width: 991px) {
+    .content-form{
+        margin-left: 8rem;
+        margin-right: 8rem;
+    }
+    #square2{
+        margin-left: 4rem;
+        background-color: #f5c6cb;
+    }
+    #name{
+        width: 320px;
+        border: none;
+        outline: none;
+        border-bottom: solid 1px grey;
+    }
+    #updateUserInfoButton{
+        width: 350px;
+    }
+}
+
+
+@media (max-width: 767px) {
+    .content-form{
+        margin-left: 3rem;
+        margin-right: 3rem;
+    }
+    #name{
+        width: 300px;
+        border: none;
+        outline: none;
+        border-bottom: solid 1px grey;
+    }
+    #updateUserInfoButton{
+        width: 330px;
+    }
+    #square2{
+        margin-left: 2rem;
+        background-color: #f5c6cb;
+    }
+}
+
+@media (max-width: 545px) {
+    .content-form{
+        margin-left: 2rem;
+        margin-right: 2rem;
+    }
+    #name{
+        width: 280px;
+        border: none;
+        outline: none;
+        border-bottom: solid 1px grey;
+    }
+    #updateUserInfoButton{
+        width: 310px;
+    }
+    #square2{
+        margin-left: 1rem;
+        background-color: #f5c6cb;
+    }
+    #square1{
+        margin-left: 0rem;
+    }
+}

@@ -1,0 +1,217 @@
+<link rel="stylesheet" href="/stylesheets/team.css">
+<script src='/javascripts/team.js'></script>
+<div class="container-fluid team-page">
+    <p class="my-team"> My teams </p>
+    <!-- Modal create team -->
+    <form action="/team/addTeam" method="POST" id="addTeamForm">
+        <div class="modal fade" id="createTeamModal" tabindex="-1" role="dialog" aria-labelledby="createTeamModalTitle"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header justify-content-center team-divider">
+                        <h5 class="modal-titler" id="createTeamModalTitle">Team name</h5>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row justify-content-center">
+                            <input type="text" class="myteam-input" id="teamname" name="newTeam"
+                                placeholder="Enter team name">
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-center team-divider">
+                        <div class="row">
+                            <button type="submit" class="btn btn-primary okBtn" id="addTeamBtn">Ok</button>
+                            <button type="button" class="btn btn-secondary cancelBtn" id="cancelBtn"
+                                data-dismiss="modal">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <!-- Modal delete memeber -->
+    <div class="modal fade" id="deleteMemberModal" tabindex="-1" role="dialog" aria-labelledby="deleteMemberModalTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header justify-content-center team-divider">
+                    <h5 class="modal-titler" id="deleteMemberModalTitle">Do yout want to delete this member?</h5>
+                </div>
+                <div class="modal-footer justify-content-center team-divider">
+                    <div class="row">
+                        <button type="button" class="btn btn-primary okBtn" id="delMemberBtn"
+                            data-dismiss="modal">Yes</button>
+                        <button type="button" class="btn btn-secondary cancelBtn" data-dismiss="modal">No</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal basic memeber -->
+    <div class="modal" id="warningCantCreateTeamBasic" tabindex="-1" role="dialog" aria-labelledby="warningCantCreateTeamBasicTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header justify-content-center team-divider">
+                    <h5 class="modal-titler" id="warningCantCreateTeamTitle">You're a basic member. You can't create team.</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+     <!-- Modal premimum memeber -->
+    <div class="modal" id="warningCantCreateTeamPremimum" tabindex="-1" role="dialog" aria-labelledby="warningCantCreateTeamPremimumTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header justify-content-center team-divider">
+                    <h5 class="modal-titler" id="warningCantCreateTeamPremimumTitle">You have reach the maximum number of team allowed.</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal leave team -->
+    <div class="modal fade" id="leaveTeamModal" tabindex="-1" role="dialog" aria-labelledby="leaveTeamModalTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header justify-content-center team-divider">
+                    <h5 class="modal-titler" id="leaveTeamModalTitle">Do yout want to leave this team?</h5>
+                </div>
+                <div class="modal-footer justify-content-center team-divider">
+                    <div class="row">
+                        <button type="button" class="btn btn-primary okBtn" id="leaveTeamBtn"
+                            data-dismiss="modal">Yes</button>
+                        <button type="button" class="btn btn-secondary cancelBtn" data-dismiss="modal">No</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal delete team -->
+    <div class="modal fade" id="deleteTeamModal" tabindex="-1" role="dialog" aria-labelledby="deleteTeamModalTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header justify-content-center team-divider">
+                    <h5 class="modal-titler" id="deleteTeamModalTitle">Do yout want to delete this team?</h5>
+                </div>
+                <div class="modal-footer justify-content-center team-divider">
+                    <div class="row">
+                        <button type="button" class="btn btn-primary okBtn" id="delTeamBtn"
+                            data-dismiss="modal">Yes</button>
+                        <button type="button" class="btn btn-secondary cancelBtn" data-dismiss="modal">No</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal add member -->
+    <form id="inviteForm" autocomplete="off">
+        <div class="modal fade" id="addMoreMemberModal" tabindex="-1" role="dialog"
+            aria-labelledby="addMoreMemberModalTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header team-divider">
+                        <h5 class="modal-titler pl-4" id="addMoreMemberModalTitle">Invite members</h5>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row justify-content-center">
+                            <div class="input-boxes">
+                                <div class="pt-2">
+                                    <input type="email" class="myteam-input" id="member1" name="member1"
+                                        placeholder="Member's email" autocomplete="new-email">
+                                </div>
+                                <div class="pt-2">
+                                    <input type="email" class="myteam-input" id="member2" name="member2"
+                                        placeholder="Member's email" autocomplete="new-email">
+                                </div>
+                                <div class="pt-2">
+                                    <input type="email" class="myteam-input" id="member3" name="member3"
+                                        placeholder="Member's email" autocomplete="new-email">
+                                </div>
+                            </div>
+                        </div>
+                        <button type="button" class="memberIncresement"> + member </button>
+                        <div class="row justify-content-center">
+                            <button type="submit" class="btn btn btn-primary inviteBtn" id="submitAddBtn"
+                                data-dismiss="modal">Invite
+                                members</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <div class="d-flex flex-wrap align-items-start">
+        {{!-- button + phải có team.js --}}
+        <button type="button" class="select-box" id="addNewTeamButton"
+           >
+            <svg viewBox="0 0 16 16" class="bi bi-plus-circle-fill add-icon" fill="currentColor"
+                xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd"
+                    d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
+            </svg>
+        </button>
+        {{#each teams}}
+        <div class="team-cards pl-4" name="{{./_id}}">
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h4 class="card-title">{{name}}</h4>
+                    {{#each ./ownerInfo}}
+                    {{assign 'ownerEmail' ./user_email}}
+                    <div class="pt-1 d-flex justify-content-between">
+                        <div class="d-inline" style="font-size: 1.25rem;">{{user_name}}</div>
+                        <div class="d-inline title-tag" style=" font-weight: bolder;">Owner</div>
+                    </div>
+                    <div class="title-members">Members</div>
+                    {{/each}}
+                    {{#each ./members}}
+                    {{assign "memberId" ./user-id}}
+                    {{assign 'inteam' ./inteam}}
+                    {{#each ./memberInfo}}
+                    {{#if_not_equal ./user_email @root.ownerEmail }}
+                    <div class="pt-1 d-flex justify-content-between can-be-delete">
+                        <div class="d-inline member-info" name="{{@root.memberId}}" style="font-size: 1.25rem;">{{./user_name}}</div>
+                        {{#if_equal @root.inteam true}}
+                        {{#if_equal @root.user.user_email @root.ownerEmail}}
+                        <button type="button d-inline" class="close delete-member" aria-label="Close"
+                            data-toggle="modal" data-target="#deleteMemberModal">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        {{/if_equal}}
+                        {{else}}
+                        <div class="d-inline title-tag" style=" font-weight: bolder;">Pending</div>
+                        {{/if_equal}}
+                    </div>
+                    {{/if_not_equal}}
+                    {{/each}}
+                    {{/each}}
+                    {{#if_equal @root.user.user_email @root.ownerEmail}}
+                    <div class="row justify-content-center">
+                        <div class="pt-5">
+                            <button type="button" class="btn btn-primary addBtn" id="addBtn" data-toggle="modal"
+                                data-target="#addMoreMemberModal">Add people</button>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="pt-2">
+                            <button type="button" class="btn btn-secondary delBtn" id="delTeaBtn" data-toggle="modal"
+                                data-target="#deleteTeamModal">Delete</button>
+                        </div>
+                    </div>
+                    {{else}}
+                    <div class="row justify-content-center">
+                        <div class="pt-2">
+                            <button type="button" class="btn btn-secondary leaBtn" id="leaTeaBtn" data-toggle="modal"
+                                data-target="#leaveTeamModal">Leave</button>
+                        </div>
+                    </div>
+                    {{/if_equal}}
+                </div>
+            </div>
+        </div>
+        {{/each}}
+    </div>
+    <div class="row">
+    </div>
+</div>

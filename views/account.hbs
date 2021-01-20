@@ -1,0 +1,134 @@
+<script src='/javascripts/account.js'></script>
+<div class="container mt-3">
+    <div class="card content-form">
+        <br>
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" style="padding-left: 2rem">
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#profile">User profile</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#payment">Payment</a>
+            </li>
+        </ul>
+
+        <!-- Tab panes -->
+        <div class="tab-content">
+
+            <!-- account Tab -->
+            <div id="profile" class="container tab-pane active" style="padding-bottom: 1rem;">
+                <form id="accountForm">
+                    <div class="form-group">
+                        <label class="name-group">Name</label><br>
+                        <input type="text" id="name" name="newUserName" placeholder="{{user.user_name}}"
+                            data-toggle="tooltip" data-placement="bottom"/>
+                    </div>
+                    <div class="form-group">
+                        <label class="name-group">Email</label><br>
+                        <b id="user_email" name="{{user.user_email}}">{{user.user_email}}</b><br>
+                        <a class="change-link" data-toggle="modal" data-target="#changeEmailModal" href="">Change
+                            email</a>
+                    </div>
+                    <div class="form-group">
+                        <label class="name-group">Password</label><br>
+                        <a class="change-link" href="#">Reset password</a>
+                    </div>
+                    <div class="form-group">
+                        <label class="name-group">Registered</label><br>
+                        <b>{{user.date_created}}</b>
+                    </div>
+                    <div class="form-group">
+                        <label class="name-group">Subscription</label><br>
+                        <b>Premium</b>
+                    </div>
+                    <div class="form-group">
+                        <label class="name-group">User picture</label><br>
+                        <input id="newImage" type="file" class="file-select ng-pristine ng-untouched ng-valid ng-empty"
+                            accept="image/*" aria-invalid="false">
+                    </div>
+                    <div class="row justify-content-center">
+                        <button type="submit" class="btn btn btn-primary inviteBtn" id="updateUserInfoButton">Update</button>
+                    </div>
+                </form>
+            </div>
+
+
+            <!-- payment Tab -->
+            <div id="payment" class="container tab-pane fade"><br>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Start date</th>
+                            <th>End date</th>
+                            <th>Type</th>
+                            <th>Bill</th>
+                        </tr>
+                    </thead>
+                    <tbody id="payment-history">
+                        {{#each payment_history}}
+                        {{!-- {{#if this.current}} --}}
+                        <tr class="table-danger">
+                            <td>{{./startDay}}</td>
+                            <td>{{./endDay}}</td>
+                            {{#each ./pricing}}
+                            <td>{{./name}}</td>
+                            <td>{{./price}}</td>
+                            {{/each}}
+                        </tr>
+                        {{!-- {{else}}
+                        <tr class="table-danger">
+                            <td>{{this.startDay}}</td>
+                            <td>{{this.endDay}}</td>
+                            <td>{{this.type}}</td>
+                            <td>{{this.bill}}</td>
+                        </tr>
+                        {{/if}} --}}
+                        {{/each}}
+                    </tbody>
+                </table>
+                <div style="margin-left: 1rem; padding-bottom: 2rem">
+                    <div class="square" id="square1"></div>
+                    <span>Current service</span>
+                    <div class="square" id="square2"></div>
+                    <span>Used service</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal change email -->
+    <form id="changeEmailForm">
+        <div class="modal fade" id="changeEmailModal" tabindex="-1" role="dialog"
+            aria-labelledby="changeEmailModalTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header team-divider">
+                        <h3 class="modal-titler" style="font-weight: bolder; padding-left: 9rem">Change email</h3>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row justify-content-center">
+                            <div class="input-boxes">
+                                <div class="pt-2">
+                                    <input type="email" class="myteam-input" id="newEmail" name="newEmail"
+                                        placeholder="Enter new email">
+                                </div>
+                                <div class="pt-2">
+                                    <input type="password" class="myteam-input" id="password" name="password"
+                                        placeholder="Confirm password">
+                                </div>
+                                <span id="alertWrongPassword"></span>
+                            </div>
+                        </div>
+                        <div class="row justify-content-center">
+                            <button type="submit" class="btn btn btn-primary inviteBtn btn-changeEmail"
+                                id="changeEmailButton">Change</button>
+                        </div>
+                        <div class="row justify-content-center">
+                            <button type="button" class="btn btn btn-primary inviteBtn btn-cancelChange"
+                                id="cancelChangeEmailButton" data-dismiss="modal">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

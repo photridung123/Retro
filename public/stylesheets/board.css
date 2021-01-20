@@ -1,0 +1,163 @@
+.page-heading-board{
+
+    background-color: white;
+    padding: 1.5rem 2.5rem ;
+}
+
+.btn-add-col{
+    background-color: #2533AE;
+    color: white;
+    font-weight: bolder;
+    border-color: #2533AE;
+    border-radius: 5%;
+    height: 40px;
+}
+
+.btn-add-col:hover{
+    background-color: #0b1885;
+
+}
+
+.board-body{
+    padding: 1rem 2rem;
+}
+
+.board-body .col-retro .col-name{
+    font-weight: bolder;
+    padding-bottom: 0.5rem;
+    font-size: 20px;
+}
+
+.board-body .col-retro .btn-add-task{
+    background-color: #F29EEA;
+    font-weight: bolder;
+    font-size: 30px;
+    border-color: #F29EEA;
+    height: 50px;
+}
+
+.board-body .col-retro .btn-add-task:hover{
+    background-color: #dd43ce;
+}
+
+.task-retro {
+    margin-top: 1rem;
+    padding-top: 0.75rem;
+    background-color: #2BCF80;
+}
+
+.task-retro .task-name{
+    padding-left: 1rem;
+    padding-bottom: 1rem;
+    font-weight: bolder;
+    font-size: large;
+}
+
+.task-retro .fa-pen{
+
+    padding-right: 1rem;
+}
+
+.task-retro .task-owner{
+    padding-left: 2rem;
+    padding-bottom: 1rem;
+    font-weight: bolder;
+}
+
+
+
+/* Dragula CSS  */
+.gu-mirror {
+    position: fixed !important;
+    margin: 0 !important;
+    z-index: 9999 !important;
+    opacity: 0.8;
+    list-style-type: none;
+  }
+  
+  .gu-hide {
+    display: none !important;
+  }
+  
+  .gu-unselectable {
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+    user-select: none !important;
+  }
+  
+  .gu-transit {
+    opacity: 0.2;
+  }
+  
+  .no-drag{
+    color:#EAEAEA;
+     font-size: 2px;
+  }
+
+
+/* Chinh kich thuoc column dua tren so luong */
+::root {
+    counter-reset: total_columns 0;
+}
+
+.col-retro {
+    counter-increment: total_columns 1;
+}
+
+.drag-task, .btn-add-task{
+    width: 100%;
+}
+
+.col-retro:first-child:nth-last-child(1),
+.col-retro:first-child:nth-last-child(1) ~.col-retro{
+    width: 100vw;
+   
+}
+
+.col-retro:first-child:nth-last-child(2),
+.col-retro:first-child:nth-last-child(2) ~.col-retro{
+    width: 45vw;
+   
+}
+
+.col-retro:first-child:nth-last-child(3),
+.col-retro:first-child:nth-last-child(3) ~.col-retro{
+    width: 30vw;
+   
+}
+
+.col-retro:first-child:nth-last-child(4),
+.col-retro:first-child:nth-last-child(4) ~.col-retro{
+    width: 23vw;
+   
+}
+
+.col-retro:first-child:nth-last-child(5),
+.col-retro:first-child:nth-last-child(5) ~.col-retro{
+    width: 18vw;
+   
+}
+
+
+.list-cmt{
+    padding-bottom: 0.5rem;
+}
+.comment-box{
+    margin-left: 15%;
+    padding: 0.5rem;
+    margin-right: 15%;
+    text-align: center;
+    background-color: white;
+    border-radius: 3%;
+}
+
+.current-user-comment-box{
+    margin-left: 15%
+}
+
+.icon-close-cmt{
+    text-align: center;
+    font-size: 25px;
+    padding-top: 1rem;
+}

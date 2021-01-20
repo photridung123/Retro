@@ -1,0 +1,49 @@
+
+.container-board{
+    padding-bottom: 5rem;
+}
+
+body{
+    background-color: #EAEAEA;
+    position: relative;
+    min-height: 100vh;
+}
+
+h1{
+    margin: 2rem 1rem;
+}
+
+.group-boards h3 {
+    width: 100%; 
+    border-bottom: 1px solid #BDBDBD; 
+    line-height: 1rem;
+    margin: 2rem 0.5rem ; 
+ } 
+
+.group-boards h3 span { 
+    background: #EAEAEA;
+    padding:0 10px; 
+}
+
+.board-cards{
+   
+   padding: 0 2rem;
+   padding-bottom: 1rem;
+}
+
+.container-board a {
+    color: black;
+}
+.container-board a:hover{
+    text-decoration: none;
+    color: blue;
+}
+
+.group-boards{
+    padding-bottom: 1rem;
+}
+
+.form-add-col i {
+    padding-bottom: 0.5rem;
+    padding-left: 26rem;
+}

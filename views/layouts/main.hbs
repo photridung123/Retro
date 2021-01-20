@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Home</title>
+    <title>{{title}}</title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
     <link rel="stylesheet" href='/stylesheets/home-page.css'>
     <link rel="stylesheet" href='/stylesheets/bootstrap.css'>
@@ -9,11 +9,15 @@
     <script src='/javascripts/jquery-3.5.1.js'></script>
     <script src='/javascripts/bootstrap.min.js'></script>  
     <script src='/javascripts/home-page.js'></script>  
+<<<<<<< HEAD
+=======
+    <script src='/javascripts/header.js'></script>
+>>>>>>> dev
   </head>
 
   <body>
     {{!-- header --}}
-    {{> page/header}}
+    {{> page/header title=this.title username=this.username avatar=this.avatar}}
 
     {{!-- content --}}
     {{{body}}}

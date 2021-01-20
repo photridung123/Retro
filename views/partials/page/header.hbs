@@ -13,14 +13,11 @@
     <!-- Navbar links -->
     <div class="collapse navbar-collapse" id="collapsibleNavbar">
         <ul class="navbar-nav mr-auto font-weight-bold text-white">
-            <li class="nav-item active">
+            <li class="nav-item {{#if_eq title "Home"}} active {{/if_eq}}">
                 <a class="nav-link" href="/">Home</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item {{#if_eq title "Pricing"}} active {{/if_eq}}">
                 <a class="nav-link" href="/pricing">Pricing</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/features">Features</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/login">Login</a>
