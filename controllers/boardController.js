@@ -14,10 +14,8 @@ exports.index = async (req, res, next) => {
     let max_vote = parseInt(board.max_vote);
     if (vote_of_current_user) {
 
-        console.log(vote_of_current_user);
         max_vote -= vote_of_current_user.length;
     }
-    console.log("----------");
 
     //GET COLUMN
     let columns = await boardModel.FindColumns(board_id);
@@ -25,7 +23,6 @@ exports.index = async (req, res, next) => {
         for (let i = 0; i < columns.length; i++) {
             let cards = await boardModel.FindCards(columns[i]._id);
 
-            console.log(cards);
             //FORMAT CARD
             if (cards.length > 0) {
                 for (let j = 0; j < cards.length; j++) {
@@ -163,7 +160,7 @@ exports.UpdateDragDrop = async (req, res) => {
 
     let column_id = req.body.column_id;
     let list_card_id = JSON.parse(req.body.list_card_id);
-
+    let new_list_card = [];
     if(list_card_id.length>0){
         for(let i=0;i<list_card_id.length;i++){
            
@@ -173,8 +170,11 @@ exports.UpdateDragDrop = async (req, res) => {
                 old_card._id = ObjectId(old_card._id);
                 old_card.card_owner = ObjectId(old_card.card_owner);
                 await boardModel.DeleteCardByID(list_card_id[i]);
-                await boardModel.AddCard(old_card);
+                new_list_card.push(old_card);
             }
+        }
+        for(let i=0;i<new_list_card.length;i++){
+            await boardModel.AddCard(new_list_card[i]);
         }
     }
 }

@@ -81,6 +81,7 @@
         </div>
     </div>
 </div>
+
 <div class="container-board container-fluid" user_id={{user._id}}>
     <div class="d-flex justify-content-between">
         <h1>My boards</h1>
@@ -90,13 +91,18 @@
                 <div class="toast-header">Delete Unsuccesfully</div>
                 <div class="toast-body">The owner only is allow to remove this board!</div>
             </div>
+            <div class="toast toast-warning-full-board" role="alert" aria-live="assertive" aria-atomic="true"
+                data-delay="4000">
+                <div class="toast-header">Add Board Unsuccesfully</div>
+                <div class="toast-body">Your amount board is full.</div>
+            </div>
         </div>
     </div>
     <div class="group-boards">
         <h3><span>Public boards</span></h3>
         <div class="d-flex flex-wrap align-items-start">
             <button type="button" class="select-box btn-open-form-add-board" data-toggle="modal"
-                data-target="#CreateBoardModal" owner_id={{user._id}}>
+                data-target="#CreateBoardModal" owner_id={{user._id}} board_type="public">
                 <svg viewBox="0 0 16 16" class="bi bi-plus-circle-fill add-icon" fill="currentColor"
                     xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd"
@@ -139,7 +145,7 @@
         <h3><span>{{this.team_name}}</span></h3>
         <div class="d-flex flex-wrap align-items-start">
             <button type="button" class="select-box btn-open-form-add-board" data-toggle="modal"
-                data-target="#CreateBoardModal" owner_id={{this._id}}>
+                data-target="#CreateBoardModal" owner_id={{this._id}} board_type="team">
                 <svg viewBox="0 0 16 16" class="bi bi-plus-circle-fill add-icon" fill="currentColor"
                     xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="evenodd"

@@ -1,5 +1,6 @@
 const boardModel = require("../models/boardModel");
 const teamModels = require("../models/teamModel");
+const accountModels = require("../models/accountModel");
 const { ObjectId } = require('mongodb');
 exports.index = async (req, res, next) => {
 
@@ -71,6 +72,16 @@ exports.AddBoard = async (req, res) => {
     let team = await teamModels.getTeamById(board.owner_id);
     if (team) {
         board_type = "team";
+        const team = await teamModels.getTeamById(req.body.owner_id);
+        const user_pricing = await accountModels.getUserPricingFull(team.owner);
+        let amount_team_board = parseInt(user_pricing['team-board']);
+        await accountModels.UpdateAmountTeamBoard(amount_team_board-1, team.owner);
+    }
+    else {
+
+        const user_pricing = await accountModels.getUserPricingFull(res.locals.user._id);
+        let amount_public_board = parseInt(user_pricing['public-board']);
+        await accountModels.UpdateAmountPublicBoard(amount_public_board-1, res.locals.user._id);
     }
 
     board.board_type = board_type;
@@ -102,23 +113,49 @@ exports.DeleteBoard = async (req, res) => {
         if (team.owner != res.locals.user._id.toString()) {
             return res.send({ LackOfPermissions: true });
         }
+        else {
+            //update team board amount
+            const user_pricing = await accountModels.getUserPricingFull(team.owner);
+            let amount_team_board = parseInt(user_pricing['team-board']);
+            await accountModels.UpdateAmountTeamBoard(amount_team_board+1, team.owner);
+        }
     }
+    else {
+        //update public board amount
+        const user_pricing = await accountModels.getUserPricingFull(res.locals.user._id);
+        let amount_public_board = parseInt(user_pricing['public-board']);
+        await accountModels.UpdateAmountPublicBoard(amount_public_board+1, res.locals.user._id);
+    }
+
+    //delete board
     await boardModel.DeleteBoard(board_id);
     let cols = await boardModel.FindColumns(board_id);
     if (cols.length > 0) {
         for (let i = 0; i < cols.length; i++) {
 
             const list_card = await boardModel.FindCards(cols[i]._id);
-            
-            for(let j=0;j<list_card.length;j++){
+
+            for (let j = 0; j < list_card.length; j++) {
                 await boardModel.DeleteVoteByCardId(list_card[j]._id);
                 await boardModel.DeleteCmtByCardId(list_card[j]._id);
                 await boardModel.DeleteCardByID(list_card[j]._id);
             }
-            
+
         }
     }
     await boardModel.DeleteCols(board_id);
     return res.send({ DeleteBoardSuccess: true });
 
+}
+
+exports.getCurrentBoard = async (req, res) => {
+    let type = req.body.board_type;
+    if (type == "public") {
+        const user_pricing = await accountModels.getUserPricingFull(res.locals.user._id);
+        return res.send({ amount_board: parseInt(user_pricing['public-board']) });
+    } else {
+        const team = await teamModels.getTeamById(req.body.owner_id);
+        const user_pricing = await accountModels.getUserPricingFull(team.owner);
+        return res.send({ amount_board: parseInt(user_pricing['team-board']) });
+    }
 }

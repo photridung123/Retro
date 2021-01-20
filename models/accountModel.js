@@ -111,6 +111,21 @@ exports.getUserPricing = async (userId) => {
   return pricing.name;
 }
 
+exports.getUserPricingFull = async (userId) => {
+  const userPricingCollection = db().collection('tbl_user_pricing');
+  const result = await userPricingCollection.findOne({ ['user-id']: ObjectId(userId) });
+  return result;
+}
+exports.UpdateAmountTeamBoard = async(amount_team_board,user_id) =>{
+  const userPricingCollection = db().collection('tbl_user_pricing');
+  await userPricingCollection.updateOne({ ['user-id']: ObjectId(user_id) },{$set:{['team-board']: amount_team_board}});
+}
+
+exports.UpdateAmountPublicBoard = async(amount_public_board,user_id) =>{
+  const userPricingCollection = db().collection('tbl_user_pricing');
+  await userPricingCollection.updateOne({ ['user-id']: ObjectId(user_id) },{$set:{['public-board']: amount_public_board}});
+}
+
 exports.getTeamNumber = async(userId) => {
   const userPricingCollection = db().collection('tbl_user_pricing');
   userPricing = await userPricingCollection.findOne({ ['user-id']: ObjectId(userId) });

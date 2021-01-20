@@ -1,4 +1,3 @@
-$.noConflict();
 $("document").ready(function(){
 
     setInterval(function () {
