@@ -3,14 +3,14 @@ $("document").ready(function () {
     let current = 4;
     let team;
     let userId;
-    let type;
+    let teamNumber;
 
     $.ajax({
         type: "GET",
-        url: '/account/user/type',
+        url: '/account/user/team-number',
         dataType: "json",
         success: function (data){
-            type = data.type;
+            teamNumber = data.teamNumber;
         }
     })
 
@@ -95,6 +95,8 @@ $("document").ready(function () {
 
     $("#delTeamBtn").on("click", function() {
         let mydata = team.attr("name");
+        teamNumber = 1;
+        $("#addNewTeamButton").prop("disabled", false); 
         $.ajax({
             type: "POST",
             url: '/team/delTeam',
@@ -103,6 +105,14 @@ $("document").ready(function () {
                 id: mydata
             }
           });
+        $.ajax({
+            type: "POST",
+            url: '/account/change/team-number',
+            dataType : "json",
+            data: {
+                teamNumber: parseInt(1)
+            }
+            });
         team.remove();
     })
 
@@ -135,12 +145,11 @@ $("document").ready(function () {
     })
 
     $("#addNewTeamButton").on("mouseenter",function(){
-        if($("#delTeaBtn").length || type=="basic") {
+        if(teamNumber === 0) {
             $("#addNewTeamButton").prop("disabled", true);   
+        } else {
+            $("#addNewTeamButton").prop("disabled", false);   
         }
-    })
-    $("#delTeamBtn").on("click",function(){
-        $("#addNewTeamButton").prop("disabled", false);   
-    })
+    });
 })
 

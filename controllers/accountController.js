@@ -101,3 +101,12 @@ exports.getUserId = async (req, res, next) => {
     userId = res.locals.user._id;
     res.send({ id: userId });
 }
+
+exports.getTeamNumber = async (req,res,next) => {
+    teamNumber = await accountModel.getTeamNumber(res.locals.user._id);
+    res.send({ teamNumber: teamNumber});
+}
+
+exports.changeTeamNumber = async(req,res,next) => {
+    await accountModel.updateTeamNumber(res.locals.user._id,req.body.teamNumber);
+}

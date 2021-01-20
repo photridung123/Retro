@@ -128,5 +128,6 @@ exports.addTeam = async function(req,res,next) {
         'inteam': true
     }
     await teamModel.addUserTeam(userTeam);
+    await accountModel.updateTeamNumber(res.locals.user._id,0);
     res.redirect("/team");
 }

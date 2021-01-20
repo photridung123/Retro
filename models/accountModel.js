@@ -60,12 +60,14 @@ exports.updateUserAvatar = async (id, avatar) => {
 exports.addNewUserPricing = async (userId, pricingName) => {
   let teamBoard = 0;
   let publicBoard = 0;
+  let teamNumber = 0;
   if(pricingName == "basic") {
     publicBoard = 3;
   }
   else {
     teamBoard = 200;
     publicBoard = 5;
+    teamNumber = 1;
   }
   const pricingCollection = db().collection('tbl_pricing');
   pricing = await pricingCollection.findOne({ name: pricingName });
@@ -74,7 +76,8 @@ exports.addNewUserPricing = async (userId, pricingName) => {
     ['user-id']: ObjectId(userId),
     ['pricing-id']: ObjectId(pricing._id),
     ['public-board']: parseInt(publicBoard),
-    ['team-board']: parseInt(teamBoard)
+    ['team-board']: parseInt(teamBoard),
+    teamNumber: parseInt(teamNumber)
   }
   await userPricingCollection.insertOne(userPricing);
 }
@@ -106,6 +109,19 @@ exports.getUserPricing = async (userId) => {
   currentPricing = userPricing['pricing-id'];
   pricing = await pricingCollection.findOne({ _id: ObjectId(currentPricing) });
   return pricing.name;
+}
+
+exports.getTeamNumber = async(userId) => {
+  const userPricingCollection = db().collection('tbl_user_pricing');
+  userPricing = await userPricingCollection.findOne({ ['user-id']: ObjectId(userId) });
+  return userPricing.teamNumber;
+}
+
+exports.updateTeamNumber = async(userId,number) => {
+  console.log("THISSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS");
+  console.log(number);
+  const userPricingCollection = db().collection('tbl_user_pricing');
+  await userPricingCollection.updateOne({ ['user-id']: ObjectId(userId) },{$set:{teamNumber: parseInt(number)}});
 }
 
 exports.getUserPricingHistory = async (userId) => {
